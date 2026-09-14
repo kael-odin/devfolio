@@ -1,4 +1,5 @@
-import { memo, useState } from "react";
+import { memo, useMemo, useState } from "react";
+import { getName } from "@data/personal";
 import { motion, AnimatePresence } from "motion/react";
 import { Menu, X } from "lucide-react";
 import {
@@ -62,6 +63,16 @@ const NavBar = ({
    onNavigate,
    onToggleMenu,
 }: NavBarProps) => {
+   const initials = useMemo(
+      () =>
+         getName()
+            .split(/s+/)
+            .slice(0, 2)
+            .map((w) => w[0] ?? "")
+            .join("")
+            .toUpperCase(),
+      [],
+   );
    // The mount slide keeps its slow entrance; every later y change (hide on
    // scroll down, show on scroll up) uses the quicker slide.
    const [entered, setEntered] = useState(false);
@@ -128,7 +139,7 @@ const NavBar = ({
                }}
                aria-label="Scroll to top"
             >
-               SG
+               {initials}
             </button>
 
             {/* Desktop nav links + CTA. Contact is the pill, so the link list skips it;
