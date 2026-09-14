@@ -66,7 +66,7 @@ const NavBar = ({
    const initials = useMemo(
       () =>
          getName()
-            .split(/s+/)
+            .split(/\s+/)
             .slice(0, 2)
             .map((w) => w[0] ?? "")
             .join("")
