@@ -1,0 +1,99 @@
+name: Portfolio CI/CD
+
+on:
+   push:
+      branches: [main]
+   pull_request:
+      branches: [main]
+   # A push made by the Credly workflow's GITHUB_TOKEN does not trigger another
+   # push workflow, so rebuild the site after a successful badge sync.
+   workflow_run:
+      workflows: ["Sync Credly Badges"]
+      types: [completed]
+
+concurrency:
+   group: "pages-${{ github.ref }}"
+   cancel-in-progress: true
+
+jobs:
+   ci:
+      permissions:
+         contents: read
+      if: >
+         github.event_name != 'workflow_run' ||
+         github.event.workflow_run.conclusion == 'success'
+      runs-on: ubuntu-latest
+      timeout-minutes: 20
+      steps:
+         - name: Checkout code
+           uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+
+         - name: Setup pnpm
+           uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6
+           with:
+              version: 11.10.0
+
+         - name: Setup Node.js
+           uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+           with:
+              node-version: 24
+              cache: pnpm
+
+         - name: Install dependencies
+           run: pnpm install --frozen-lockfile
+
+         - name: Check formatting
+           run: pnpm format:check
+
+         - name: Lint code and scripts
+           run: pnpm lint
+
+         - name: Type-check
+           run: pnpm type-check
+
+         - name: Validate portfolio data
+           run: pnpm validate:data
+
+         - name: Run tests
+           run: pnpm test
+
+         - name: Security audit
+           run: pnpm audit --audit-level=high
+
+         # Deployment builds self-host the latest released CV. Pull requests
+         # intentionally skip this network dependency; Vite can still compile
+         # and test the viewer's failure state without generated public files.
+         - name: Prepare resume
+           if: github.event_name != 'pull_request'
+           run: pnpm fetch:resume
+
+         - name: Build with Vite
+           run: pnpm build
+
+         - name: Setup Pages
+           if: github.event_name != 'pull_request'
+           uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6
+
+         - name: Upload Pages artifact
+           if: github.event_name != 'pull_request'
+           uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5
+           with:
+              path: build
+
+   deploy:
+      if: >
+         (github.event_name == 'push' && github.ref == 'refs/heads/main') ||
+         (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success')
+      needs: ci
+      runs-on: ubuntu-latest
+      permissions:
+         contents: read
+         pages: write
+         id-token: write
+      environment:
+         name: github-pages
+         url: ${{ steps.deployment.outputs.page_url }}
+      steps:
+         - name: Deploy to GitHub Pages
+           id: deployment
+           uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5

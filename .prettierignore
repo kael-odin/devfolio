@@ -1,0 +1,8 @@
+# Build output
+build/
+
+# Generated lock file; pnpm owns its formatting.
+pnpm-lock.yaml
+
+# Knowledge graph output (gitignored, but keep prettier off it locally too)
+graphify-out/

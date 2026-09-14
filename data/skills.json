@@ -1,0 +1,84 @@
+{
+   "languages": [
+      "Python",
+      "JavaScript",
+      "TypeScript",
+      "Java",
+      "SQL",
+      "Bash",
+      "HTML/CSS"
+   ],
+   "frontend": ["React", "Next.js", "Vite", "Tailwind CSS", "Motion", "Redux"],
+   "backend": [
+      "Node.js",
+      "Express.js",
+      "FastAPI",
+      "REST API",
+      "GraphQL",
+      "PostgreSQL",
+      "MongoDB",
+      "Redis"
+   ],
+   "cloud_devops": [
+      "AWS (EC2, S3, Lambda)",
+      "Terraform",
+      "Docker",
+      "GitHub Actions",
+      "CI/CD Pipelines",
+      "Linux"
+   ],
+   "ai_ml": [
+      "OpenAI API",
+      "PyTorch",
+      "Scikit-learn",
+      "Pandas / NumPy",
+      "RAG Pipelines",
+      "MLOps"
+   ],
+   "tools_platforms": [
+      "Git",
+      "VS Code",
+      "Postman",
+      "Figma",
+      "Notion",
+      "Linux Terminal"
+   ],
+   "cs_fundamentals": [
+      "Data Structures & Algorithms",
+      "Object-Oriented Programming",
+      "Computer Networks",
+      "Operating Systems",
+      "Software Engineering",
+      "Database Management Systems"
+   ],
+   "soft_skills": [
+      "Leadership",
+      "Problem Solving",
+      "Communication",
+      "Teamwork",
+      "Critical Thinking",
+      "Adaptability"
+   ],
+   "areas_of_interest": [
+      "Full-Stack Development",
+      "AI/ML Engineering",
+      "DevOps & Cloud",
+      "Open Source",
+      "AI Agents & MCP",
+      "Game Development"
+   ],
+   "hero_stack": [
+      "TypeScript",
+      "React",
+      "Node.js",
+      "Python",
+      "PostgreSQL",
+      "Docker",
+      "GitHub Actions",
+      "Terraform",
+      "Tailwind CSS",
+      "FastAPI",
+      "Redis",
+      "Vite"
+   ]
+}

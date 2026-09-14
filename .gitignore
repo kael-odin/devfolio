@@ -1,0 +1,46 @@
+# dependencies
+node_modules/
+.pnpm-debug.log*
+
+# testing
+/coverage
+
+# production (Vite outputs to /build, see vite.config.js)
+/build
+
+# env files
+.env
+.env.local
+.env.*.local
+
+# editor directories and files
+.vscode/
+.idea
+*.sw?
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# logs
+*.log
+
+# AI tools
+.claude
+CLAUDE.md
+.playwright-mcp
+
+# Vite
+vite.config.js.timestamp-*
+
+# Claude session memory (local only)
+.remember/
+
+# graphify knowledge graph artifacts
+graphify-out/
+
+# Resume PDF + pre-rendered page images are generated at deploy time (CI) or
+# via pnpm fetch:resume (dev) -- never committed; the source of truth is the
+# latex-resume release.
+public/resume.pdf
+public/resume-pages/

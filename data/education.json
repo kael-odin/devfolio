@@ -1,0 +1,26 @@
+[
+   {
+      "id": 1,
+      "date": "September 2021 - July 2024",
+      "title": "Your Degree (SHORT)",
+      "institution": "Your University",
+      "department": "Department of Your Major",
+      "location": "Your City, Your Country",
+      "cgpa": "X.XX",
+      "achievements": [
+         "An achievement or honor (replace me)",
+         "Another line, e.g. relevant coursework or a role you held"
+      ],
+      "skills": ["Skill One", "Skill Two", "Skill Three"]
+   },
+   {
+      "id": 2,
+      "date": "May 2018 - August 2021",
+      "title": "Your Earlier Degree",
+      "institution": "Your Previous School",
+      "department": "Department of Your Major",
+      "location": "Your City, Your Country",
+      "cgpa": "",
+      "skills": ["Skill One", "Skill Two"]
+   }
+]

@@ -1,0 +1,42 @@
+{
+   "contact_options": [
+      {
+         "id": 1,
+         "icon": "MdOutlineEmail",
+         "title": "Email Me",
+         "value": "you@example.com",
+         "link": "mailto:you@example.com",
+         "message": "Send a Mail"
+      },
+      {
+         "id": 2,
+         "icon": "BsLinkedin",
+         "title": "LinkedIn",
+         "value": "your-handle",
+         "link": "https://www.linkedin.com/in/your-handle/",
+         "message": "Connect"
+      },
+      {
+         "id": 3,
+         "icon": "FiGithub",
+         "title": "GitHub",
+         "value": "your-github-username",
+         "link": "https://github.com/your-github-username",
+         "message": "Follow"
+      },
+      {
+         "id": 4,
+         "icon": "FiCalendar",
+         "title": "Book a Call",
+         "value": "cal.com/your-handle",
+         "link": "https://cal.com/your-handle",
+         "message": "Schedule"
+      }
+   ],
+   "email_config": {
+      "service_id": "YOUR_SERVICE_ID",
+      "template_id": "YOUR_TEMPLATE_ID",
+      "public_key": "YOUR_PUBLIC_KEY",
+      "validation_pattern": "^[\\w.%+-]+@[\\w.-]+\\.[a-zA-Z]{2,}$"
+   }
+}

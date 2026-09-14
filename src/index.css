@@ -1,0 +1,970 @@
+@import "tailwindcss";
+
+/* ===== Minimal Dark Theme (akobir-style) =====
+   Near-black canvas, flat surfaces, one blue accent, white pill CTAs.
+   No glassmorphism, no gradient text, no glow. */
+@theme {
+   --font-sans: "Inter Variable", "Inter", system-ui, -apple-system, sans-serif;
+   --font-mono:
+      "JetBrains Mono Variable", "JetBrains Mono", ui-monospace, monospace;
+   /* Display face for the hero headline + section titles ONLY -- body stays
+      Inter. This heading/body pairing is what keeps the big type from reading
+      as a Tailwind default. */
+   --font-display:
+      "Bricolage Grotesque Variable", "Bricolage Grotesque", "Inter Variable",
+      system-ui, sans-serif;
+
+   --color-bg-primary: #0b1012;
+   --color-bg-secondary: #0e1418;
+   --color-bg-tertiary: #10161a;
+   --color-bg-card: #0e1417;
+   --color-bg-card-hover: #131a1e;
+   --color-border: #1d2529;
+   --color-border-hover: #2b353a;
+   --color-border-glow: #2563eb;
+
+   --color-text-primary: #f4f6f7;
+   --color-text-secondary: #9ca9b0;
+   --color-text-muted: #76838b;
+
+   --color-accent-blue: #2563eb;
+   --color-accent-cyan: #60a5fa;
+   --color-accent-purple: #38bdf8;
+   --color-accent-green: #22c55e;
+   --color-accent-amber: #f59e0b;
+   --color-accent-pink: #38bdf8;
+
+   --color-glow-cyan: rgb(96 165 250 / 0.15);
+   --color-glow-purple: rgb(56 189 248 / 0.15);
+}
+
+/* RGB channel tokens -- use with rgb(var(--ch-*) / <alpha>) */
+:root {
+   --ch-cyan: 34 211 238;
+   --ch-blue: 37 99 235;
+   --ch-purple: 96 165 250;
+   --ch-pink: 56 189 248;
+   --ch-amber: 245 158 11;
+   --ch-green: 34 197 94;
+   --ch-red: 239 68 68;
+   --ch-indigo: 96 165 250;
+   --ch-white: 255 255 255;
+   --ch-black: 0 0 0;
+   --ch-bg: 11 16 18;
+   --ch-bg-sec: 14 20 24;
+   --ch-glass: 16 22 26;
+   --ch-glass-h: 22 30 35;
+   --ch-bg-mid: 13 18 22;
+   --ch-cyan-light: 103 232 249;
+}
+
+/* ===== Base Reset =====
+   Must stay inside the base layer. Unlayered CSS beats every cascade layer, so
+   an unlayered universal padding reset silently nullified all Tailwind padding
+   and margin utilities, which sit in the utilities layer. Tailwind preflight
+   does the same reset inside the base layer; this mirrors it.
+   NOTE: keep apostrophes, backticks and braces out of comments in this file --
+   the Tailwind v4 CSS parser trips on them (Unterminated string). */
+@layer base {
+   *,
+   *::before,
+   *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+   }
+}
+
+html {
+   color-scheme: dark;
+   /* Lenis owns smooth scrolling; CSS smooth here would double-drive programmatic
+      scrolls (scrollIntoView) and fight it. Keep auto. */
+   scroll-behavior: auto;
+   /* Below-fold reveal variants park elements at translateX(+-120px) until they
+      animate in; clip so that never widens the page on phones. */
+   overflow-x: clip;
+   /* Stop iOS rubber-band and Android scroll chaining at the page extremes.
+      This must live on the root, which owns the viewport scroller. On body it
+      made body a scroll container that can never scroll, and with chaining
+      forbidden every wheel and touch delta died there; Lenis hid that by
+      driving the wheel itself, so Reduced mode (native scrolling) could not
+      scroll at all. */
+   overscroll-behavior-y: none;
+   -webkit-font-smoothing: antialiased;
+   -moz-osx-font-smoothing: grayscale;
+   /* Always reserve the scrollbar gutter so opening a modal (which locks body
+      scroll) doesn't shift the page wider. */
+   scrollbar-gutter: stable;
+}
+
+body {
+   font-family: var(--font-sans);
+   background-color: var(--color-bg-primary);
+   color: var(--color-text-primary);
+   line-height: 1.7;
+   /* clip, not hidden: hidden would turn body into a scroll container again
+      (overflow-y auto) and re-break wheel scrolling. clip only clips. */
+   overflow-x: clip;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+   width: 6px;
+}
+
+::-webkit-scrollbar-track {
+   background: rgb(var(--ch-bg) / 0.8);
+}
+
+::-webkit-scrollbar-thumb {
+   background: rgb(var(--ch-white) / 0.15);
+   border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+   background: rgb(var(--ch-white) / 0.3);
+}
+
+/* Selection */
+::selection {
+   background-color: #1d4ed8;
+   color: #fff;
+}
+
+/* Focus */
+:focus-visible {
+   outline: 2px solid var(--color-accent-cyan);
+   outline-offset: 3px;
+}
+
+/* Navigation focuses landmarks for orientation, without framing the whole page. */
+:is(section, main)[tabindex="-1"]:focus {
+   outline: none;
+}
+
+/* Skip to content -- visible only when focused (WCAG 2.4.1 Bypass Blocks) */
+.skip-link {
+   position: fixed;
+   top: 8px;
+   left: 8px;
+   z-index: 1000;
+   padding: 10px 18px;
+   border-radius: 8px;
+   background: var(--color-bg-card);
+   color: var(--color-text-primary);
+   border: 1px solid rgb(var(--ch-white) / 0.12);
+   font-size: 0.875rem;
+   font-weight: 600;
+   transform: translateY(-150%);
+   transition: transform 0.2s ease;
+}
+
+.skip-link:focus {
+   transform: translateY(0);
+}
+
+/* Links */
+a {
+   color: inherit;
+   text-decoration: none;
+}
+
+/* Images */
+img {
+   max-width: 100%;
+   height: auto;
+   display: block;
+}
+
+/* ===== Keyframes ===== */
+@keyframes glow-pulse {
+   0%,
+   100% {
+      opacity: 0.4;
+   }
+   50% {
+      opacity: 1;
+   }
+}
+
+@keyframes shimmer {
+   0% {
+      background-position: -200% 0;
+   }
+   100% {
+      background-position: 200% 0;
+   }
+}
+
+@keyframes scroll-hint {
+   0% {
+      opacity: 0;
+      transform: translateY(0);
+   }
+   30% {
+      opacity: 1;
+   }
+   100% {
+      opacity: 0;
+      transform: translateY(12px);
+   }
+}
+
+@keyframes spin {
+   to {
+      transform: rotate(360deg);
+   }
+}
+
+/* Learning-badge rail: the track holds two copies of the list, so sliding it
+   by half its own width lands exactly on the second copy and the loop is
+   seamless. */
+@keyframes badge-rail {
+   to {
+      transform: translateX(-50%);
+   }
+}
+
+/* ===== Animation Utilities ===== */
+.animate-glow-pulse {
+   animation: glow-pulse 2s ease-in-out infinite;
+}
+
+.animate-scroll-hint {
+   animation: scroll-hint 1.8s ease-in-out infinite;
+}
+
+html[data-motion="reduced"] *,
+html[data-motion="reduced"] *::before,
+html[data-motion="reduced"] *::after {
+   scroll-behavior: auto !important;
+   animation-duration: 0.01ms !important;
+   animation-iteration-count: 1 !important;
+   transition-duration: 0.01ms !important;
+}
+
+html[data-motion="reduced"]
+   :is(.btn-primary, .btn-outline, .btn-pill):is(:hover, :focus-visible),
+html[data-motion="reduced"]
+   .project-card:is(:hover, :has(:focus-visible))
+   .project-cover-img {
+   transform: none;
+}
+
+/* The footer underline is state, not decoration: Reduced shows it in full
+   the moment a link is hovered or focused instead of drawing it in. */
+html[data-motion="reduced"] .footer-link:is(:hover, :focus-visible)::after {
+   transform: none;
+}
+
+html[data-motion="reduced"] :is(a, button) .action-arrow,
+html[data-motion="reduced"] .project-action:active {
+   transform: none;
+}
+
+/* ===== Display Headings (Bricolage Grotesque) ===== */
+.display-heading {
+   font-family: var(--font-display);
+   font-weight: 800;
+   letter-spacing: -0.03em;
+}
+
+/* ===== Section headings ===== */
+.section-header {
+   margin: 0 auto clamp(32px, 4vw, 48px);
+   text-align: left;
+}
+
+.section-header-eyebrow {
+   display: flex;
+   align-items: baseline;
+   gap: 12px;
+   margin-bottom: 12px;
+   color: var(--color-text-secondary);
+   font-family: var(--font-mono);
+   font-size: 12px;
+}
+
+.section-header-number {
+   color: var(--color-accent-cyan);
+   font-variant-numeric: tabular-nums;
+}
+
+.section-header-heading {
+   display: flex;
+   align-items: center;
+   gap: clamp(16px, 3vw, 32px);
+}
+
+.section-header-heading h2 {
+   min-width: 0;
+   max-width: 90%;
+   overflow: hidden;
+   font-size: clamp(1.75rem, 3vw, 2.25rem);
+   line-height: 1.15;
+   text-wrap: balance;
+}
+
+.section-header-rule {
+   flex: 1;
+   min-width: 16px;
+   height: 1px;
+   background: var(--color-border-hover);
+}
+
+.subsection-heading {
+   display: flex;
+   align-items: center;
+   gap: 10px;
+   margin-bottom: 20px;
+   padding-bottom: 12px;
+   border-bottom: 1px solid var(--color-border);
+   text-align: left;
+}
+
+.subsection-heading > svg {
+   flex-shrink: 0;
+}
+
+.subsection-heading h3 {
+   min-width: 0;
+   color: var(--color-text-primary);
+   font-size: 20px;
+   font-weight: 700;
+   line-height: 1.3;
+   letter-spacing: -0.02em;
+}
+
+.subsection-count {
+   display: grid;
+   place-items: center;
+   flex-shrink: 0;
+   min-width: 24px;
+   height: 24px;
+   margin-left: auto;
+   border: 1px solid var(--color-border-hover);
+   border-radius: 6px;
+   color: var(--color-text-secondary);
+   font-family: var(--font-mono);
+   font-size: 12px;
+   font-weight: 600;
+}
+
+.hero-latest-link {
+   display: inline-flex;
+   align-items: center;
+   min-height: 44px;
+   color: var(--color-text-secondary);
+   text-decoration: underline;
+   text-decoration-color: var(--color-border-hover);
+   text-underline-offset: 4px;
+   transition:
+      color 0.2s ease,
+      text-decoration-color 0.2s ease;
+}
+
+.badge-pill.hero-role {
+   max-width: 100%;
+   padding: 6px 12px;
+   font-size: 12px;
+   text-wrap: balance;
+}
+
+.hero-actions {
+   grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr);
+}
+
+.hero-latest-link:is(:hover, :focus-visible) {
+   color: var(--color-accent-cyan);
+   text-decoration-color: currentColor;
+}
+
+.mobile-nav-link {
+   display: flex;
+   align-items: center;
+   gap: 12px;
+   min-height: 48px;
+   padding: 12px 16px;
+   border: 0;
+   border-radius: 10px;
+   background: transparent;
+   color: var(--color-text-secondary);
+   font-size: 14px;
+   font-weight: 500;
+   text-align: left;
+   cursor: pointer;
+   transition:
+      color 0.2s ease,
+      background-color 0.2s ease;
+}
+
+.mobile-nav-link:is(:hover, :focus-visible),
+.mobile-nav-link[aria-current="location"] {
+   background: rgb(var(--ch-white) / 0.08);
+   color: var(--color-text-primary);
+}
+
+.mobile-nav-number {
+   color: var(--color-text-muted);
+   font-family: var(--font-mono);
+   font-size: 11px;
+   font-variant-numeric: tabular-nums;
+}
+
+.mobile-nav-link[aria-current="location"] .mobile-nav-number {
+   color: var(--color-accent-cyan);
+}
+
+.mobile-nav-link > .action-arrow {
+   margin-left: auto;
+   color: var(--color-accent-cyan);
+}
+
+/* ===== Flat Card (was glass-card) ===== */
+.glass-card {
+   background: var(--color-bg-card);
+   border: 1px solid rgb(var(--ch-white) / 0.06);
+   border-radius: 20px;
+   transition:
+      background 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+      border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-card:hover,
+.glass-card:focus-visible,
+.glass-card:has(:focus-visible) {
+   border-color: rgb(var(--ch-white) / 0.14);
+   background: var(--color-bg-card-hover);
+}
+
+/* ===== Project cards ===== */
+/* Screenshot zooms subtly when the card is hovered or holds keyboard focus. */
+.project-cover-img {
+   transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.project-card:hover .project-cover-img,
+.project-card:has(:focus-visible) .project-cover-img {
+   transform: scale(1.045);
+}
+
+.line-clamp-3 {
+   display: -webkit-box;
+   -webkit-line-clamp: 3;
+   line-clamp: 3;
+   -webkit-box-orient: vertical;
+   overflow: hidden;
+}
+
+/* Timeline spine list: the rail lives in a 0px first column that spans all rows
+   but the last, so every card must be pinned to the second column (inline
+   grid-column on the spine item wins over this rule). */
+.timeline-spine-list > * {
+   grid-column: 2;
+   min-width: 0;
+}
+
+/* ===== Dashed Category Rule (tech-stack separators) ===== */
+.dashed-rule {
+   display: flex;
+   align-items: center;
+   gap: 16px;
+   color: var(--color-text-muted);
+   font-size: 12px;
+   font-weight: 600;
+   letter-spacing: 0.2em;
+   text-align: left;
+   text-transform: uppercase;
+}
+
+.dashed-rule--centered {
+   text-align: center;
+}
+
+.dashed-rule::after,
+.dashed-rule--centered::before {
+   content: "";
+   flex: 1;
+   border-top: 1px dashed rgb(var(--ch-white) / 0.12);
+}
+
+/* ===== Section Alternating Backgrounds (flattened -- one canvas) ===== */
+.section-dark,
+.section-darker {
+   background: transparent;
+}
+
+/* ===== Buttons ===== */
+.btn-primary {
+   background: var(--color-accent-blue);
+   color: #fff;
+   font-weight: 600;
+   border: 1px solid transparent;
+   border-radius: 8px;
+   padding: 12px 28px;
+   cursor: pointer;
+   transition:
+      background 0.25s ease,
+      transform 0.25s ease;
+}
+
+.btn-primary:hover,
+.btn-primary:focus-visible {
+   background: #1d4ed8;
+   transform: translateY(-1px);
+}
+
+.btn-outline {
+   background: rgb(var(--ch-white) / 0.08);
+   color: var(--color-text-primary);
+   font-weight: 600;
+   border: 1px solid rgb(var(--ch-white) / 0.06);
+   border-radius: 8px;
+   padding: 12px 28px;
+   cursor: pointer;
+   transition:
+      background 0.25s ease,
+      border-color 0.25s ease,
+      transform 0.25s ease;
+}
+
+.btn-outline:hover,
+.btn-outline:focus-visible {
+   background: rgb(var(--ch-white) / 0.14);
+   border-color: rgb(var(--ch-white) / 0.12);
+   transform: translateY(-1px);
+}
+
+/* White pill CTA (nav "Contact Me", akobir-style) */
+.btn-pill {
+   background: #fff;
+   color: #0b1012;
+   font-weight: 600;
+   border: none;
+   border-radius: 8px;
+   padding: 8px 18px;
+   cursor: pointer;
+   transition:
+      background 0.25s ease,
+      transform 0.25s ease;
+}
+
+.btn-pill:hover,
+.btn-pill:focus-visible {
+   background: #e2e8f0;
+   transform: translateY(-1px);
+}
+
+/* ===== Text actions and disclosures ===== */
+.text-action {
+   display: inline-flex;
+   align-items: center;
+   justify-content: center;
+   gap: 8px;
+   min-height: 44px;
+   padding: 8px 0;
+   border: 0;
+   border-radius: 6px;
+   background: transparent;
+   color: var(--action-accent, var(--color-accent-cyan));
+   font-size: 13px;
+   font-weight: 600;
+   line-height: 1.5;
+   text-decoration: none;
+   text-underline-offset: 5px;
+   cursor: pointer;
+}
+
+.text-action:is(:hover, :focus-visible) {
+   text-decoration: underline;
+}
+
+.action-arrow {
+   flex-shrink: 0;
+   transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+:is(a, button):focus-visible .action-arrow {
+   transform: translateX(3px);
+}
+
+:is(a, button):focus-visible .action-arrow--external {
+   transform: translate(2px, -2px);
+}
+
+@media (hover: hover) {
+   :is(a, button):hover .action-arrow {
+      transform: translateX(3px);
+   }
+
+   :is(a, button):hover .action-arrow--external {
+      transform: translate(2px, -2px);
+   }
+}
+
+.disclosure > summary {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   gap: 12px;
+   min-height: 44px;
+   padding: 10px 12px;
+   border: 1px solid var(--color-border);
+   border-radius: 10px;
+   background: rgb(var(--ch-white) / 0.02);
+   color: var(--color-text-secondary);
+   font-size: 13px;
+   font-weight: 600;
+   line-height: 1.5;
+   list-style: none;
+   cursor: pointer;
+   transition:
+      background-color 0.2s ease,
+      border-color 0.2s ease,
+      color 0.2s ease;
+}
+
+.disclosure > summary::-webkit-details-marker {
+   display: none;
+}
+
+.disclosure-label {
+   display: inline-flex;
+   align-items: center;
+   gap: 8px;
+}
+
+.disclosure-label > svg,
+.disclosure-chevron {
+   flex-shrink: 0;
+   color: var(--disclosure-accent);
+}
+
+.disclosure > summary:is(:hover, :focus-visible),
+.disclosure[open] > summary {
+   border-color: color-mix(in srgb, var(--disclosure-accent) 35%, transparent);
+   background: color-mix(in srgb, var(--disclosure-accent) 6%, transparent);
+   color: var(--color-text-primary);
+}
+
+.disclosure-chevron {
+   transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.disclosure[open] > summary .disclosure-chevron {
+   transform: rotate(180deg);
+}
+
+.disclosure-content {
+   padding: 12px 2px 0;
+}
+
+.disclosure[open] > .disclosure-content {
+   animation: disclosure-enter 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes disclosure-enter {
+   from {
+      opacity: 0;
+      transform: translateY(-6px);
+   }
+   to {
+      opacity: 1;
+      transform: translateY(0);
+   }
+}
+
+/* ===== Tag / Badge ===== */
+.tag {
+   display: inline-flex;
+   align-items: center;
+   gap: 4px;
+   font-family: var(--font-mono);
+   font-size: 0.75rem;
+   padding: 4px 10px;
+   border-radius: 6px;
+   transition:
+      background 0.25s ease,
+      border-color 0.25s ease;
+}
+
+.tag-purple {
+   background: rgb(var(--ch-blue) / 0.12);
+   color: var(--color-accent-purple);
+   border: 1px solid rgb(var(--ch-blue) / 0.2);
+}
+
+.tag-purple:hover,
+.tag-purple:focus-visible {
+   background: rgb(var(--ch-blue) / 0.2);
+   border-color: rgb(var(--ch-blue) / 0.35);
+}
+
+/* Section header pill badge (akobir "Tech Stack" / "DevSpark" chip) */
+.badge-pill {
+   display: inline-flex;
+   align-items: center;
+   gap: 8px;
+   font-size: 13px;
+   font-weight: 500;
+   color: var(--color-text-secondary);
+   background: rgb(var(--ch-white) / 0.05);
+   border: 1px solid rgb(var(--ch-white) / 0.08);
+   border-radius: 9999px;
+   padding: 6px 16px;
+}
+
+/* ===== Badge Rail (learning badges marquee) =====
+   BadgeRail.tsx sets the loop length and gap as custom properties. Each copy
+   of the list carries its own trailing gap, so the seam is spaced like every
+   other badge. Hover (pointer devices only) and keyboard focus pause the
+   loop. clip, not hidden: focus must never scroll the container, the
+   component slides the track into view instead. */
+.badge-rail {
+   overflow: clip;
+   -webkit-mask-image: linear-gradient(
+      to right,
+      transparent,
+      #000 10%,
+      #000 90%,
+      transparent
+   );
+   mask-image: linear-gradient(
+      to right,
+      transparent,
+      #000 10%,
+      #000 90%,
+      transparent
+   );
+}
+
+.badge-rail__track {
+   display: flex;
+   width: max-content;
+   animation: badge-rail var(--rail-duration, 48s) linear infinite;
+}
+
+.badge-rail__group {
+   display: flex;
+   align-items: flex-start;
+   flex-shrink: 0;
+   gap: var(--rail-gap, 24px);
+   padding-right: var(--rail-gap, 24px);
+   list-style: none;
+}
+
+.badge-rail:focus-within .badge-rail__track {
+   animation-play-state: paused;
+}
+
+@media (hover: hover) {
+   .badge-rail:hover .badge-rail__track {
+      animation-play-state: paused;
+   }
+}
+
+/* ===== Form Input ===== */
+.form-input {
+   width: 100%;
+   background: rgb(var(--ch-white) / 0.04);
+   border: 1px solid rgb(var(--ch-white) / 0.08);
+   border-radius: 10px;
+   padding: 14px 18px;
+   color: var(--color-text-primary);
+   font-size: 0.9375rem;
+   transition:
+      background 0.3s ease,
+      border-color 0.3s ease;
+   outline: none;
+}
+
+.form-input::placeholder {
+   color: var(--color-text-muted);
+}
+
+.form-input:focus {
+   border-color: rgb(var(--ch-blue) / 0.6);
+   background: rgb(var(--ch-white) / 0.06);
+}
+
+.form-input--error {
+   border-color: rgb(var(--ch-red) / 0.5);
+}
+
+.form-input--error:focus {
+   border-color: rgb(var(--ch-red) / 0.6);
+}
+
+/* Field wrapper: an accent underline draws in from the left while the input
+   inside has focus. It replaces the old box-shadow focus ring (transform
+   only, no halo). grid, not block: a textarea is inline-block and would leave
+   a descender gap above the line. */
+.form-field {
+   position: relative;
+   display: grid;
+}
+
+.form-field::after {
+   content: "";
+   position: absolute;
+   left: 10px;
+   right: 10px;
+   bottom: 0;
+   height: 2px;
+   border-radius: 2px;
+   background: var(--color-accent-cyan);
+   transform: scaleX(0);
+   transform-origin: left;
+   transition: transform 0.25s ease;
+   pointer-events: none;
+}
+
+.form-field:focus-within::after {
+   transform: scaleX(1);
+}
+
+.form-field:has(.form-input--error)::after {
+   background: rgb(var(--ch-red) / 0.7);
+}
+
+/* ===== Skeleton Loading ===== */
+.skeleton {
+   background: linear-gradient(
+      90deg,
+      rgb(var(--ch-white) / 0.03) 25%,
+      rgb(var(--ch-white) / 0.06) 50%,
+      rgb(var(--ch-white) / 0.03) 75%
+   );
+   background-size: 200% 100%;
+   animation: shimmer 1.5s ease-in-out infinite;
+   border-radius: 8px;
+}
+
+/* ===== GitHub Calendar Override ===== */
+.react-activity-calendar {
+   margin: 0 auto;
+}
+
+.react-activity-calendar text {
+   fill: var(--color-text-muted) !important;
+   font-size: 0.75rem;
+}
+
+/* Calendar cell wave-in animation */
+@keyframes cell-pop-in {
+   from {
+      opacity: 0;
+      transform: scale(0);
+   }
+   to {
+      opacity: 1;
+      transform: scale(1);
+   }
+}
+
+.calendar-reveal .react-activity-calendar rect[rx] {
+   --col: 0;
+   animation: cell-pop-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+   animation-delay: calc(var(--col) * 8ms + 0.6s);
+}
+
+/* ===== Footer teal fade (akobir bottom-of-page glow) ===== */
+.footer-fade {
+   background: linear-gradient(
+      180deg,
+      transparent 0%,
+      rgb(13 60 68 / 0.55) 55%,
+      rgb(34 130 143 / 0.75) 100%
+   );
+}
+
+/* Footer column links: a hairline slides in from the left on hover (pointer
+   devices) and keyboard focus. fit-content keeps the line as wide as the
+   label, not the column. */
+.footer-link {
+   position: relative;
+   width: fit-content;
+}
+
+.footer-link::after {
+   content: "";
+   position: absolute;
+   left: 0;
+   right: 0;
+   bottom: 2px;
+   height: 1px;
+   background: currentColor;
+   transform: scaleX(0);
+   transform-origin: left;
+   transition: transform 0.25s ease;
+}
+
+.footer-link:focus-visible::after {
+   transform: scaleX(1);
+}
+
+@media (hover: hover) {
+   .footer-link:hover::after {
+      transform: scaleX(1);
+   }
+}
+
+/* ===== Print Resume Mode ===== */
+@media print {
+   body {
+      background: white !important;
+      color: black !important;
+      font-size: 11pt;
+   }
+
+   nav,
+   footer,
+   #contact,
+   #projects,
+   #stats,
+   #services,
+   #achievements,
+   canvas,
+   button,
+   .btn-primary,
+   .btn-outline,
+   .btn-pill {
+      display: none !important;
+   }
+
+   * {
+      box-shadow: none !important;
+      text-shadow: none !important;
+      color: black !important;
+      transition: none !important;
+      animation: none !important;
+   }
+
+   .section-dark,
+   .section-darker {
+      background: none !important;
+      page-break-inside: avoid;
+      padding: 20px 0 !important;
+   }
+
+   .glass-card {
+      background: none !important;
+      border: 1px solid #ddd !important;
+   }
+
+   h1,
+   h2,
+   h3,
+   h4,
+   h5,
+   h6 {
+      page-break-after: avoid;
+      color: #111 !important;
+   }
+
+   .tag {
+      border: 1px solid #ccc !important;
+      color: #333 !important;
+      background: #f9f9f9 !important;
+   }
+}

@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+      <!-- SEO Meta Tags (placeholders: replace "Your Name" etc. with your own) -->
+      <meta
+         name="description"
+         content="Your Name - Your Role. A portfolio showcasing projects, experience, skills, and open-source contributions."
+      />
+      <meta
+         name="keywords"
+         content="Your Name, Software Developer, Portfolio, Projects, Open Source"
+      />
+      <meta name="author" content="Your Name" />
+      <meta name="theme-color" content="#0b1012" />
+      <meta name="robots" content="index, follow" />
+
+      <!-- Open Graph / Facebook -->
+      <meta property="og:type" content="website" />
+      <meta property="og:title" content="Your Name | Portfolio" />
+      <meta
+         property="og:description"
+         content="Projects, experience, skills, and open-source contributions."
+      />
+      <meta property="og:site_name" content="Your Name Portfolio" />
+      <meta property="og:locale" content="en_US" />
+
+      <!-- Twitter -->
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content="Your Name | Portfolio" />
+      <meta
+         name="twitter:description"
+         content="Projects, experience, skills, and open-source contributions."
+      />
+
+      <!-- JSON-LD Structured Data (placeholders) -->
+      <script type="application/ld+json">
+         {
+            "@context": "https://schema.org",
+            "@graph": [
+               {
+                  "@type": "Person",
+                  "@id": "#person",
+                  "name": "Your Name",
+                  "jobTitle": "Your Role",
+                  "description": "A short line about what you do.",
+                  "address": {
+                     "@type": "PostalAddress",
+                     "addressLocality": "Your City",
+                     "addressCountry": "Your Country"
+                  },
+                  "sameAs": [
+                     "https://github.com/your-github-username",
+                     "https://www.linkedin.com/in/your-handle/"
+                  ],
+                  "knowsAbout": [
+                     "TypeScript",
+                     "React",
+                     "Node.js",
+                     "Python",
+                     "Docker"
+                  ]
+               },
+               {
+                  "@type": "WebSite",
+                  "@id": "#website",
+                  "name": "Your Name Portfolio",
+                  "description": "Portfolio of Your Name - projects, experience, and open source.",
+                  "author": { "@id": "#person" }
+               }
+            ]
+         }
+      </script>
+
+      <!-- Favicons -->
+      <link
+         rel="apple-touch-icon"
+         sizes="180x180"
+         href="/favicon_io/apple-touch-icon.png"
+      />
+      <link
+         rel="icon"
+         type="image/png"
+         sizes="32x32"
+         href="/favicon_io/favicon-32x32.png"
+      />
+      <link
+         rel="icon"
+         type="image/png"
+         sizes="16x16"
+         href="/favicon_io/favicon-16x16.png"
+      />
+      <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+      <link rel="manifest" href="/favicon_io/site.webmanifest" />
+
+      <title>Your Name | Portfolio</title>
+   </head>
+
+   <body>
+      <noscript>
+         <p>You need to enable JavaScript to run this app.</p>
+      </noscript>
+      <div id="root"></div>
+      <script type="module" src="/src/index.tsx"></script>
+
+      <!--
+        Analytics are injected at runtime (below) rather than declared as
+        static <script> tags so they don't block first paint AND so SRI
+        requirements don't apply -- both GTM and SimpleAnalytics serve
+        continuously-updated bundles that would break any fixed integrity hash.
+      -->
+      <script type="module">
+         if (import.meta.env.VITE_ANALYTICS_ENABLED !== "false") {
+            globalThis.addEventListener("DOMContentLoaded", function () {
+               var d = globalThis.document;
+
+               // SimpleAnalytics
+               var sa = d.createElement("script");
+               sa.async = true;
+               sa.defer = true;
+               sa.src = "https://scripts.simpleanalyticscdn.com/latest.js";
+               d.body.appendChild(sa);
+
+               // Google Analytics (gtag)
+               var ga = d.createElement("script");
+               ga.async = true;
+               ga.src =
+                  "https://www.googletagmanager.com/gtag/js?id=G-PFFMG7D8DP";
+               d.body.appendChild(ga);
+
+               globalThis.dataLayer = globalThis.dataLayer || [];
+               function gtag() {
+                  globalThis.dataLayer.push(arguments);
+               }
+               gtag("js", new Date());
+               gtag("config", "G-PFFMG7D8DP");
+            });
+         }
+      </script>
+   </body>
+</html>

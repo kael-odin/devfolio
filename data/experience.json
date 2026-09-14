@@ -1,0 +1,48 @@
+{
+   "professional_experience": [
+      {
+         "id": 1,
+         "date": "August 2024 - Present",
+         "title": "Your Job Title",
+         "position": "Full-time",
+         "company": "Your Company",
+         "location": "Your City, Your Country",
+         "summary": "One or two sentences describing what you do in this role. Replace this placeholder with your own summary.",
+         "projects": [
+            {
+               "name": "Your Project or Engagement",
+               "date": "Feb 2025 - Present",
+               "description": {
+                  "1": "First bullet: what you built or led and the outcome, with a number if you have one (e.g. cut deploy time by 40%).",
+                  "2": "Second bullet: another concrete contribution and its impact."
+               },
+               "skills": ["Skill One", "Skill Two", "Skill Three"]
+            }
+         ]
+      },
+      {
+         "id": 2,
+         "date": "June 2023 - July 2024",
+         "title": "Your Previous Job Title",
+         "position": "Full-time",
+         "company": "Your Previous Company",
+         "location": "Your City, Your Country",
+         "summary": "One or two sentences about this role. Delete this whole entry if you only have one job so far."
+      }
+   ],
+   "positions_of_responsibility": [
+      {
+         "id": 1,
+         "date": "Aug 2022 - Jun 2023",
+         "title": "Your Leadership Role",
+         "position": "Volunteer",
+         "company": "Your Organization or Community",
+         "location": "Your City, Your Country",
+         "summary": "What you were responsible for in this role.",
+         "description": {
+            "1": "A concrete thing you organized, shipped, or led."
+         },
+         "skills": ["Leadership", "Communication"]
+      }
+   ]
+}

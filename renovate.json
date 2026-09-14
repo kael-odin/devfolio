@@ -1,0 +1,23 @@
+{
+   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+   "extends": ["github>Sagargupta16/shared-workflows"],
+   "description": [
+      "Repo-level exceptions to the shared preset. Each rule names the compatibility constraint it protects; remove the rule when the constraint clears.",
+      "The TypeScript 7 compiler runs beside the TypeScript 6 API alias required by typescript-eslint. Override selectors stay protected from unsafe cross-major rewrites."
+   ],
+   "packageRules": [
+      {
+         "description": "typescript-eslint requires the TypeScript 6 programmatic API. Keep the dependency named typescript on @typescript/typescript6 while the separately aliased typescript-7 package supplies the tsc binary.",
+         "matchDepNames": ["typescript"],
+         "matchPackageNames": ["@typescript/typescript6"],
+         "matchUpdateTypes": ["major"],
+         "enabled": false
+      },
+      {
+         "description": "The ajv@<7 and nanoid@<4 selectors in pnpm-workspace.yaml overrides deliberately pin those old majors for consumers that need them (ajv 7 rewrote its API; nanoid 4+ is ESM-only). Bumping the override value across the major boundary breaks them at runtime, not at install.",
+         "matchFileNames": ["pnpm-workspace.yaml"],
+         "matchPackageNames": ["ajv", "nanoid"],
+         "enabled": false
+      }
+   ]
+}

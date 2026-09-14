@@ -1,0 +1,63 @@
+{
+   "name": "Your Name",
+   "title": "Your Role at Your Company",
+   "role": "Your Role",
+   "employer": "Your Company",
+   "location": "Your City, Your Country",
+   "timezone": "UTC",
+   "intro": "One or two sentences about who you are and what you build. Replace this placeholder text with your own introduction.",
+   "role_label": "Your Role @ Your Company",
+   "headline": "Your headline goes here.",
+   "availability": "Available for new opportunities",
+   "contact": {
+      "github": "your-github-username"
+   },
+   "about": {
+      "greeting": "👋 Hi, my name is Your Name.",
+      "current_role": "💼 A short line about what you currently do.",
+      "specialization": "🚀 A short line about what you specialize in.",
+      "education": "🎓 A short line about your education.",
+      "competitive_programming": "🏆 A short line about a highlight or hobby (delete this key if it does not apply to you)."
+   },
+   "impact": {
+      "clients_served": "3",
+      "clients_note": "Client A, Client B, Client C",
+      "workloads_migrated": "50+",
+      "aws_accounts": "135+",
+      "security_controls": "1000+",
+      "security_note": "Audited & hardened"
+   },
+   "languages": [
+      {
+         "name": "English",
+         "level": "Professional Working"
+      },
+      {
+         "name": "Your Language",
+         "level": "Native"
+      }
+   ],
+   "social_profiles": [
+      {
+         "id": 1,
+         "name": "LinkedIn",
+         "link": "https://www.linkedin.com/in/your-handle/",
+         "icon": "BsLinkedin"
+      },
+      {
+         "id": 2,
+         "name": "GitHub",
+         "link": "https://github.com/your-github-username",
+         "icon": "FaGithub"
+      },
+      {
+         "id": 3,
+         "name": "X",
+         "link": "https://x.com/your-handle/",
+         "icon": "SiX"
+      }
+   ],
+   "site": {
+      "tech_stack": ["React 19", "Vite 8", "Tailwind v4", "Motion", "Lenis"]
+   }
+}

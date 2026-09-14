@@ -1,0 +1,69 @@
+{
+   "certifications": [
+      {
+         "id": 1,
+         "name": "Example Certified Associate",
+         "type": "Industry Certification",
+         "issuer": "Example Certification Body",
+         "issueDate": "2026-01-31",
+         "badgeId": "00000000-0000-4000-8000-000000000001",
+         "badgeUrl": "https://www.credly.com/badges/00000000-0000-4000-8000-000000000001",
+         "level": "Associate",
+         "expiryDate": "2029-01-31",
+         "imageUrl": "https://images.credly.com/images/00000000-0000-4000-8000-000000000001/image.png"
+      },
+      {
+         "id": 2,
+         "name": "Example Certified Practitioner",
+         "type": "Industry Certification",
+         "issuer": "Example Certification Body",
+         "issueDate": "2025-06-15",
+         "badgeId": "00000000-0000-4000-8000-000000000002",
+         "badgeUrl": "https://www.credly.com/badges/00000000-0000-4000-8000-000000000002",
+         "level": "Foundational",
+         "imageUrl": "https://images.credly.com/images/00000000-0000-4000-8000-000000000002/image.png"
+      }
+   ],
+   "learning_badges": [
+      {
+         "id": 3,
+         "name": "Example Learning Badge",
+         "type": "Learning Badge",
+         "issuer": "Example Learning Platform",
+         "issueDate": "2025-11-20",
+         "badgeId": "00000000-0000-4000-8000-000000000003",
+         "badgeUrl": "https://www.credly.com/badges/00000000-0000-4000-8000-000000000003",
+         "imageUrl": "https://images.credly.com/images/00000000-0000-4000-8000-000000000003/image.png"
+      }
+   ],
+   "achievements": [
+      {
+         "id": 1,
+         "title": "Winner, Example Hackathon 2026",
+         "organizer": "Example Org",
+         "date": "March 2026",
+         "type": "Competition"
+      },
+      {
+         "id": 2,
+         "title": "1st Place, Example Coding Contest",
+         "organizer": "Example Platform",
+         "date": "January 2026",
+         "type": "Competition"
+      }
+   ],
+   "coding_platform_stats": {
+      "leetcode": {
+         "username": "your-handle",
+         "url": "https://leetcode.com/u/your-handle/",
+         "problems_solved": "300+",
+         "contests": "20+",
+         "best_rating": "1800",
+         "badge": "Knight"
+      },
+      "github_profile": {
+         "username": "your-github-username",
+         "url": "https://github.com/your-github-username"
+      }
+   }
+}

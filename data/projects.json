@@ -1,0 +1,120 @@
+{
+   "spotlight_project_id": 1,
+   "featured_projects": [
+      {
+         "id": 1,
+         "title": "Your Flagship Project",
+         "description": "Replace this placeholder paragraph with 2-4 sentences about the project: what problem it solves, what you built, and what the outcome was.",
+         "date": "June 2026",
+         "tools_tech": ["React", "TypeScript", "Node.js"],
+         "features": [
+            "First key feature or technical highlight of this project.",
+            "Second key feature or technical highlight of this project.",
+            "Third key feature: how users benefit from it."
+         ],
+         "github": "https://github.com/your-github-username/flagship-project-1",
+         "live": "#"
+      },
+      {
+         "id": 2,
+         "title": "Your Second Showcase Project",
+         "description": "Replace this placeholder paragraph with 2-4 sentences about the project: what problem it solves, what you built, and what the outcome was.",
+         "date": "June 2026",
+         "tools_tech": ["React", "TypeScript", "Node.js"],
+         "features": [
+            "First key feature or technical highlight of this project.",
+            "Second key feature or technical highlight of this project.",
+            "Third key feature: how users benefit from it."
+         ],
+         "github": "https://github.com/your-github-username/showcase-project-2",
+         "live": "https://example.com/showcase-project-2"
+      }
+   ],
+   "collaborative_projects": [
+      {
+         "id": 3,
+         "title": "A Team Project You Contributed To",
+         "description": "Replace this placeholder paragraph with 2-4 sentences about the project: what problem it solves, what you built, and what the outcome was.",
+         "date": "June 2026",
+         "tools_tech": ["React", "TypeScript", "Node.js"],
+         "features": [
+            "First key feature or technical highlight of this project.",
+            "Second key feature or technical highlight of this project.",
+            "Third key feature: how users benefit from it."
+         ],
+         "github": "https://github.com/your-github-username/team-project-3",
+         "live": "#"
+      }
+   ],
+   "other_projects": [
+      {
+         "id": 4,
+         "title": "Another Side Project",
+         "description": "Replace this placeholder paragraph with 2-4 sentences about the project: what problem it solves, what you built, and what the outcome was.",
+         "date": "June 2026",
+         "tools_tech": ["React", "TypeScript", "Node.js"],
+         "features": [
+            "First key feature or technical highlight of this project.",
+            "Second key feature or technical highlight of this project.",
+            "Third key feature: how users benefit from it."
+         ],
+         "github": "https://github.com/your-github-username/side-project-4",
+         "live": "https://example.com/side-project-4"
+      },
+      {
+         "id": 5,
+         "title": "One More Experiment",
+         "description": "Replace this placeholder paragraph with 2-4 sentences about the project: what problem it solves, what you built, and what the outcome was.",
+         "date": "June 2026",
+         "tools_tech": ["React", "TypeScript", "Node.js"],
+         "features": [
+            "First key feature or technical highlight of this project.",
+            "Second key feature or technical highlight of this project.",
+            "Third key feature: how users benefit from it."
+         ],
+         "github": "https://github.com/your-github-username/experiment-project-5",
+         "live": "#"
+      }
+   ],
+   "community_projects": [
+      {
+         "id": 6,
+         "title": "Your Open-Source Tool or Guide",
+         "description": "Replace this placeholder paragraph with 2-4 sentences about the project: what problem it solves, what you built, and what the outcome was.",
+         "date": "June 2026",
+         "tools_tech": ["React", "TypeScript", "Node.js"],
+         "features": [
+            "First key feature or technical highlight of this project.",
+            "Second key feature or technical highlight of this project.",
+            "Third key feature: how users benefit from it."
+         ],
+         "github": "https://github.com/your-github-username/oss-project-6",
+         "live": "https://example.com/oss-project-6"
+      }
+   ],
+   "open_source_contributions": [
+      {
+         "repo": "example/library",
+         "stars": 1200,
+         "title": "Your merged pull request title",
+         "url": "https://github.com/example/library/pull/1",
+         "merged_at": "2026-07-13",
+         "status": "merged"
+      },
+      {
+         "repo": "example/toolkit",
+         "stars": 300,
+         "title": "Your open pull request title",
+         "url": "https://github.com/example/toolkit/pull/2",
+         "status": "open"
+      }
+   ],
+   "community_discussions": [
+      {
+         "repo": "example/community",
+         "title": "A discussion you helped resolve",
+         "url": "https://github.com/orgs/community/discussions/190628",
+         "status": "accepted"
+      }
+   ]
+}
