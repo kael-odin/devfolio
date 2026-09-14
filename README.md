@@ -22,11 +22,11 @@
 
 > Template note: this is a de-personalized, placeholder-filled adaptation of [Sagargupta16/portfolio-react](https://github.com/Sagargupta16/portfolio-react) (GPL-3.0). All names, photos, resumes, badges, and project content were replaced with placeholders — edit `data/*.json` to make it yours. See [LICENSE](LICENSE).
 
-| Hero | Projects |
-| --- | --- |
-| ![Hero](docs/screenshot-hero.png) | ![Projects](docs/screenshot-projects.png) |
-| Stats | Contact |
-| ![Stats](docs/screenshot-stats.png) | ![Contact](docs/screenshot-contact.png) |
+| Hero                                | Projects                                  |
+| ----------------------------------- | ----------------------------------------- |
+| ![Hero](docs/screenshot-hero.png)   | ![Projects](docs/screenshot-projects.png) |
+| Stats                               | Contact                                   |
+| ![Stats](docs/screenshot-stats.png) | ![Contact](docs/screenshot-contact.png)   |
 
 A minimal dark personal portfolio: near-black canvas, one blue accent family, flat bordered cards, and an ambient aurora-and-beams background. Project cards carry live screenshots of deployed sites and animated SVG cover scenes for everything else. Built as a single-page scroll application with strict TypeScript, sections loaded near the viewport, data validation, and a persisted Full/Reduced motion preference.
 
