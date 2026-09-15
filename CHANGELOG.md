@@ -1,3 +1,5 @@
+> Template note: this changelog preserves the upstream project's history for attribution (GPL-3.0, original: [Sagargupta16/portfolio-react](https://github.com/Sagargupta16/portfolio-react)). New template changes are recorded at the top under "Unreleased".
+
 # Changelog
 
 All notable changes to this project are documented here. Follows [Semantic Versioning](https://semver.org/).

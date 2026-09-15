@@ -77,6 +77,21 @@ const useContactForm = () => {
          setIsLoading(true);
          setStatus({ type: "", message: "" });
 
+         // Template default: EmailJS keys are placeholders until the user
+         // fills data/contact.json -> email_config. Fail fast with guidance
+         // instead of sending a doomed request.
+         if (
+            emailConfig.service_id.startsWith("YOUR_") ||
+            emailConfig.template_id.startsWith("YOUR_") ||
+            emailConfig.public_key.startsWith("YOUR_")
+         ) {
+            showError(
+               "The contact form is not configured yet. Add your EmailJS keys to data/contact.json (email_config).",
+            );
+            setIsLoading(false);
+            return;
+         }
+
          try {
             const result = await emailjs.sendForm(
                emailConfig.service_id,

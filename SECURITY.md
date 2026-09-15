@@ -11,7 +11,7 @@
 
 If you discover a security vulnerability in this project, please report it responsibly.
 
-**Email:** sg85207@gmail.com
+**Email:** you@example.com (replace with your own contact)
 
 **What to include:**
 

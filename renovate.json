@@ -1,6 +1,6 @@
 {
    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-   "extends": ["github>Sagargupta16/shared-workflows"],
+   "extends": ["config:recommended"],
    "description": [
       "Repo-level exceptions to the shared preset. Each rule names the compatibility constraint it protects; remove the rule when the constraint clears.",
       "The TypeScript 7 compiler runs beside the TypeScript 6 API alias required by typescript-eslint. Override selectors stay protected from unsafe cross-major rewrites."

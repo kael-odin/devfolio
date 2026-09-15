@@ -4,14 +4,14 @@ This is a React and TypeScript portfolio with JSON content, reusable UI componen
 
 ## Run locally
 
-Use Node.js 24.11 or newer and the pnpm version in the `packageManager` field of [package.json](package.json).
+Use Node.js 24.11 or newer and pnpm 11 or newer (see [package.json](package.json)).
 
 ```sh
 pnpm install --frozen-lockfile
 pnpm dev
 ```
 
-Open [localhost:3000/portfolio-react/](http://localhost:3000/portfolio-react/). The `/portfolio-react/` base path is intentional and is also used by GitHub Pages.
+Open [localhost:3000/devfolio/](http://localhost:3000/devfolio/). The `/devfolio/` base path is intentional and is also used by GitHub Pages.
 
 Environment variables are optional. To disable analytics locally, copy [.env.example](.env.example) to `.env.local` and set `VITE_ANALYTICS_ENABLED=false`. The site is a client application: keep secrets out of JSON content and `VITE_*` variables.
 
@@ -140,8 +140,8 @@ Before opening a pull request, describe what changed and how you checked it usin
 
 ## Generated assets and deployment
 
-`node_modules/`, `build/`, and `graphify-out/` are generated or local files and are ignored by Git. The resume PDF and its page images under `public/` are generated from the latest `latex-resume` release.
+`node_modules/`, `build/`, and `graphify-out/` are generated or local files and are ignored by Git. The resume PDF and its page images under `public/` are generated from your public resume URL (set `RESUME_URL`; without it the CV viewer shows its download fallback).
 
 Use `pnpm fetch:resume` when working on the CV viewer locally; it needs network access. Normal application development and pull request builds do not require fetching the resume. See [scripts/prepare-resume.js](scripts/prepare-resume.js) for that pipeline.
 
-[CI](.github/workflows/ci-cd.yml) runs the code and data checks for pull requests. Verified builds from `main` fetch the resume and deploy to GitHub Pages. Keep Vite's `/portfolio-react/` base path and `build/` output aligned with that workflow.
+[CI](.github/workflows/ci-cd.yml) runs the code and data checks for pull requests. Verified builds from `main` fetch the resume and deploy to GitHub Pages. Keep Vite's `/devfolio/` base path and `build/` output aligned with that workflow.

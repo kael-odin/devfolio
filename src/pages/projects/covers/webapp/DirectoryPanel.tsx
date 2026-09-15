@@ -14,7 +14,7 @@ import {
    type PanelProps,
 } from "./shared";
 
-/* MCA NITW alumni directory: search pill, Suspense spinner while /users/all
+/* Example member directory: search pill, suspense spinner while data
    answers, three portrait cards stagger in, the middle one hovers. */
 
 const CYCLE = 5;
