@@ -4,6 +4,8 @@ import type { ProfessionalExperience, PositionOfResponsibility } from "@/types";
 import { MONO_FONT, TEXT_SECONDARY } from "@/constants/theme";
 import Disclosure from "@components/ui/Disclosure";
 import CompanyHeader from "./CompanyHeader";
+import useLanguage from "@hooks/useLanguage";
+import { st } from "@/i18n/sections";
 
 interface TimelineCardContentProps {
    item: ProfessionalExperience | PositionOfResponsibility;
@@ -18,6 +20,7 @@ const TimelineCardContent = ({
    isMobile,
    onClick,
 }: TimelineCardContentProps) => {
+   const { language } = useLanguage();
    const ml = isMobile ? 0 : 38;
    const hasDetail =
       ("projects" in item && (item.projects?.length ?? 0) > 0) ||
@@ -34,7 +37,10 @@ const TimelineCardContent = ({
          />
          {"description" in item && (
             <div style={{ marginLeft: ml, marginTop: 12 }}>
-               <Disclosure label="Responsibilities" accentColor={accentColor}>
+               <Disclosure
+                  label={st(language, "exp.resp")}
+                  accentColor={accentColor}
+               >
                   <ul
                      style={{
                         display: "flex",
@@ -114,7 +120,9 @@ const TimelineCardContent = ({
                      marginTop: 4,
                   } as CSSProperties
                }
-               aria-label={`View details for ${item.company}`}
+               aria-label={st(language, "exp.viewDetailsFor", {
+                  company: item.company,
+               })}
             >
                View details
                <ArrowRight

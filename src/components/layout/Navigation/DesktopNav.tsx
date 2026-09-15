@@ -1,5 +1,7 @@
 import { memo } from "react";
 import { motion } from "motion/react";
+import useLanguage from "@hooks/useLanguage";
+import { t } from "@/i18n/ui";
 import { EASING, TEXT_PRIMARY } from "@/constants/theme";
 
 interface NavSection {
@@ -38,6 +40,7 @@ const DesktopNav = ({
    activeSection,
    onNavigate,
 }: DesktopNavProps) => {
+   const { language } = useLanguage();
    return (
       <div
          style={{
@@ -70,7 +73,9 @@ const DesktopNav = ({
                      color: TEXT_INACTIVE,
                   }}
                   aria-current={isActive ? "location" : undefined}
-                  aria-label={`Navigate to ${section.label}`}
+                  aria-label={t(language, "nav.navigateTo", {
+                     label: section.label,
+                  })}
                >
                   {isActive && (
                      <motion.span

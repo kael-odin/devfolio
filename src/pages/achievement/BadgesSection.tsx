@@ -4,6 +4,8 @@ import type { LearningBadge } from "@/types";
 import { fadeInUp, VIEWPORT_MARGIN } from "@utils/animations";
 import { PURPLE } from "@/constants/theme";
 import useBreakpoint from "@hooks/useBreakpoint";
+import useLanguage from "@hooks/useLanguage";
+import { st } from "@/i18n/sections";
 import useMotionPreference from "@hooks/useMotionPreference";
 import BadgeRail from "./BadgeRail";
 import RailBadge from "./RailBadge";
@@ -25,6 +27,7 @@ const LOOP_S_MOBILE = 60;
 const MIN_RAIL_BADGES = 10;
 
 const BadgesSection = ({ badges }: BadgesSectionProps) => {
+   const { language } = useLanguage();
    const { isMobile } = useBreakpoint();
    const { reducedMotion } = useMotionPreference();
 
@@ -46,7 +49,7 @@ const BadgesSection = ({ badges }: BadgesSectionProps) => {
             variants={fadeInUp}
          >
             <BookOpen size={22} style={{ color: PURPLE }} aria-hidden="true" />
-            <h3>Learning & Training</h3>
+            <h3>{st(language, "ach.learning")}</h3>
             <span className="subsection-count">{badges.length}</span>
          </motion.div>
 

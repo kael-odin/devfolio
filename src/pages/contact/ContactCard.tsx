@@ -2,6 +2,8 @@ import { motion, type Variants } from "motion/react";
 import { ArrowUpRight } from "lucide-react";
 import type { ContactOption } from "@/types";
 import { staggerItem } from "@utils/animations";
+import useLanguage from "@hooks/useLanguage";
+import { t } from "@/i18n/ui";
 import useMotionPreference from "@hooks/useMotionPreference";
 import { DURATION, EASING, TEXT_MUTED, TEXT_PRIMARY } from "@/constants/theme";
 import { CONTACT_META, DEFAULT_CONTACT_META } from "./contactConstants";
@@ -27,6 +29,7 @@ const tileVariants: Variants = { [HOVER]: { scale: 1.12, rotate: 6 } };
 const arrowVariants: Variants = { [HOVER]: { x: 2, y: -2 } };
 
 const ContactCard = ({ option, isMobile }: ContactCardProps) => {
+   const { language } = useLanguage();
    const { Icon, colors } = CONTACT_META[option.icon] ?? DEFAULT_CONTACT_META;
    const { reducedMotion } = useMotionPreference();
    const opensNewTab = option.link.startsWith("https://");
@@ -51,7 +54,17 @@ const ContactCard = ({ option, isMobile }: ContactCardProps) => {
             textDecoration: "none",
             cursor: "pointer",
          }}
-         aria-label={`${option.title}: ${option.value}${opensNewTab ? " (opens in a new tab)" : ""}`}
+         aria-label={
+            opensNewTab
+               ? t(language, "contact.cardOpen", {
+                    title: option.title,
+                    value: option.value,
+                 })
+               : t(language, "contact.cardLabel", {
+                    title: option.title,
+                    value: option.value,
+                 })
+         }
       >
          <motion.div
             variants={tileVariants}

@@ -9,11 +9,14 @@ import ErrorBoundary from "@components/common/ErrorBoundary";
 import ScrollProgress from "@components/ui/ScrollProgress";
 import BackToTop from "@components/ui/BackToTop";
 import MotionPreferenceControl from "@components/ui/MotionPreferenceControl";
+import LanguageSwitch from "@components/ui/LanguageSwitch";
 import { BreakpointProvider } from "@hooks/BreakpointProvider";
+import { LanguageProvider } from "@hooks/LanguageProvider";
 import { MotionPreferenceProvider } from "@hooks/MotionPreferenceProvider";
 import { SectionNavigationProvider } from "@hooks/SectionNavigationProvider";
 import useMotionPreference from "@hooks/useMotionPreference";
-import { CONTENT_SECTIONS } from "@/constants/sections";
+import { getContentSections } from "@/constants/sections";
+import useLanguage from "@hooks/useLanguage";
 
 const LENIS_OPTIONS = {
    lerp: 0.1,
@@ -75,6 +78,8 @@ const SmoothScroll = ({ children }: { children: ReactNode }) => {
 };
 
 const AppContent = () => {
+   const { language } = useLanguage();
+   const sections = getContentSections(language);
    return (
       <SmoothScroll>
          <SectionNavigationProvider>
@@ -90,12 +95,12 @@ const AppContent = () => {
                </ErrorBoundary>
                <div className="relative min-h-dvh">
                   <a href="#main-content" className="skip-link">
-                     Skip to content
+                     {language === "zh" ? "跳转到正文" : "Skip to content"}
                   </a>
                   <Nav />
                   <main id="main-content" tabIndex={-1}>
                      <Hero />
-                     {CONTENT_SECTIONS.map(({ id, label, surface }) => {
+                     {sections.map(({ id, label, surface }) => {
                         const Section = SECTION_COMPONENTS[id];
                         return (
                            <DeferredSection
@@ -115,6 +120,7 @@ const AppContent = () => {
                   </ErrorBoundary>
                   <BackToTop />
                   <MotionPreferenceControl />
+                  <LanguageSwitch />
                </div>
             </ErrorBoundary>
          </SectionNavigationProvider>
@@ -124,9 +130,11 @@ const AppContent = () => {
 
 const App = () => (
    <BreakpointProvider>
-      <MotionPreferenceProvider>
-         <AppContent />
-      </MotionPreferenceProvider>
+      <LanguageProvider>
+         <MotionPreferenceProvider>
+            <AppContent />
+         </MotionPreferenceProvider>
+      </LanguageProvider>
    </BreakpointProvider>
 );
 

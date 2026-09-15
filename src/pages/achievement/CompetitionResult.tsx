@@ -1,6 +1,8 @@
 import type { CSSProperties } from "react";
 import { motion } from "motion/react";
 import type { Achievement } from "@/types";
+import useLanguage from "@hooks/useLanguage";
+import { st } from "@/i18n/sections";
 import useMotionPreference from "@hooks/useMotionPreference";
 import {
    CYAN,
@@ -51,6 +53,7 @@ const parsePlacement = (
 };
 
 const CompetitionResult = ({ item, index }: CompetitionResultProps) => {
+   const { language } = useLanguage();
    const { rank, event, color } = parsePlacement(item.title);
    const { reducedMotion } = useMotionPreference();
    const isRanking = rank.startsWith("Rank ");
@@ -79,7 +82,9 @@ const CompetitionResult = ({ item, index }: CompetitionResultProps) => {
          >
             {rank && (
                <span className="competition-placement-label">
-                  {isRanking ? "Rank" : "Place"}
+                  {isRanking
+                     ? st(language, "ach.rank")
+                     : st(language, "ach.place")}
                </span>
             )}
             <span className="competition-placement-value">

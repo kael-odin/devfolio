@@ -9,6 +9,8 @@ import { staggerItem } from "@utils/animations";
 import { TEXT_SECONDARY, CYAN, DURATION, EASING } from "@/constants/theme";
 import ICON_MAP from "@utils/iconMap";
 import useMotionPreference from "@hooks/useMotionPreference";
+import useLanguage from "@hooks/useLanguage";
+import { t } from "@/i18n/ui";
 
 const TILE_STYLE: React.CSSProperties = {
    width: 44,
@@ -47,7 +49,11 @@ const TILE_TRANSITION: Transition = {
 };
 
 const FooterSocial = () => {
-   const socialProfiles = useMemo(() => getSocialProfiles(), []);
+   const { language } = useLanguage();
+   const socialProfiles = useMemo(
+      () => getSocialProfiles(language),
+      [language],
+   );
    const { reducedMotion } = useMotionPreference();
    // Reduced keeps the tiles at their resting design; the press stays.
    const hover = reducedMotion ? undefined : TILE_HOVER;
@@ -77,7 +83,9 @@ const FooterSocial = () => {
                   whileFocus={hover}
                   whileTap={TILE_TAP}
                   transition={TILE_TRANSITION}
-                  aria-label={`Visit ${profile.name} profile (opens in a new tab)`}
+                  aria-label={t(language, "footer.socialOpen", {
+                     name: profile.name,
+                  })}
                >
                   <IconComponent size={16} />
                </motion.a>

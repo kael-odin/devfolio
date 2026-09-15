@@ -2,7 +2,9 @@ import { lazy, Suspense, useRef } from "react";
 import { motion } from "motion/react";
 import { ChevronDown } from "lucide-react";
 import ErrorBoundary from "@components/common/ErrorBoundary";
+import useLanguage from "@hooks/useLanguage";
 import useSectionNavigation from "@hooks/useSectionNavigation";
+import { t } from "@/i18n/ui";
 import HeroContent from "./HeroContent";
 
 const HeroStackField = lazy(() => import("./HeroStackField"));
@@ -15,6 +17,7 @@ const OMIT_FIELD = <></>;
 const Hero = () => {
    const sectionRef = useRef<HTMLElement>(null);
    const { navigateToSection } = useSectionNavigation();
+   const { language } = useLanguage();
 
    return (
       <section
@@ -48,10 +51,10 @@ const Hero = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 2 }}
-            aria-label="Scroll to About section"
+            aria-label={t(language, "hero.scrollAbout")}
          >
             <span className="text-xs font-mono tracking-widest uppercase">
-               Scroll
+               {t(language, "hero.scroll")}
             </span>
             <ChevronDown className="w-5 h-5 animate-scroll-hint" />
          </motion.button>

@@ -3,6 +3,8 @@ import { motion } from "motion/react";
 import { staggerContainer } from "@utils/animations";
 import { MONO_FONT, TEXT_PRIMARY } from "@/constants/theme";
 import FooterContent from "./FooterContent";
+import useLanguage from "@hooks/useLanguage";
+import { t } from "@/i18n/ui";
 
 const KONAMI: string[] = [
    "ArrowUp",
@@ -18,6 +20,7 @@ const KONAMI: string[] = [
 ];
 
 const Footer = () => {
+   const { language } = useLanguage();
    const [easterEgg, setEasterEgg] = useState(false);
    const [konamiIdx, setKonamiIdx] = useState(0);
 
@@ -84,7 +87,7 @@ const Footer = () => {
                      alignSelf: "center",
                   }}
                >
-                  You found the secret! Thanks for exploring.
+                  {t(language, "footer.secret")}
                </motion.div>
             )}
          </motion.div>

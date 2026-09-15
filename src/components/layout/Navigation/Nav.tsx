@@ -4,7 +4,8 @@ import { useLenis } from "lenis/react";
 import useBreakpoint from "@hooks/useBreakpoint";
 import useMotionPreference from "@hooks/useMotionPreference";
 import useSectionNavigation from "@hooks/useSectionNavigation";
-import { NAV_SECTIONS } from "@/constants/sections";
+import { getContentSections } from "@/constants/sections";
+import useLanguage from "@hooks/useLanguage";
 import NavBar from "./NavBar";
 import MobileMenu from "./MobileMenu";
 
@@ -18,6 +19,12 @@ const Nav = () => {
    const { isTablet: isMobile } = useBreakpoint();
    const { reducedMotion } = useMotionPreference();
    const { navigateToSection } = useSectionNavigation();
+   const { language } = useLanguage();
+   const sections = getContentSections(language).map(({ id, label }) => ({
+      id,
+      label,
+   }));
+   const sectionIds = sections.map((section) => section.id).join("|");
    const [activeSection, setActiveSection] = useState("hero");
    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
    const [scrolled, setScrolled] = useState(false);
@@ -56,12 +63,12 @@ const Nav = () => {
             rootMargin: "-35% 0px -60% 0px",
          },
       );
-      for (const id of ["hero", ...NAV_SECTIONS.map((section) => section.id)]) {
+      for (const id of ["hero", ...sectionIds.split("|")]) {
          const element = document.getElementById(id);
          if (element) observer.observe(element);
       }
       return () => observer.disconnect();
-   }, []);
+   }, [sectionIds]);
 
    const scrollToSection = useCallback(
       (id: string) => {
@@ -84,7 +91,7 @@ const Nav = () => {
             hidden={hidden && !mobileMenuOpen && !reducedMotion && !navFocused}
             onFocusChange={setNavFocused}
             isMobile={isMobile}
-            sections={NAV_SECTIONS}
+            sections={sections}
             activeSection={activeSection}
             mobileMenuOpen={mobileMenuOpen}
             onNavigate={scrollToSection}
@@ -94,7 +101,7 @@ const Nav = () => {
          {/* Mobile overlay menu */}
          <MobileMenu
             open={mobileMenuOpen}
-            sections={NAV_SECTIONS}
+            sections={sections}
             activeSection={activeSection}
             onNavigate={scrollToSection}
             onClose={closeMenu}

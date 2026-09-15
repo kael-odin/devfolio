@@ -10,6 +10,8 @@ import { DURATION, EASING } from "@/constants/theme";
 import { VIEWPORT_MARGIN } from "@utils/animations";
 import { hasProjectUrl } from "@utils/projectMetadata";
 import useMotionPreference from "@hooks/useMotionPreference";
+import useLanguage from "@hooks/useLanguage";
+import { st } from "@/i18n/sections";
 import {
    getCategoryColors,
    type ProjectWithCategory,
@@ -70,6 +72,7 @@ const ProjectCard = ({
    onOpen,
    ref,
 }: ProjectCardProps) => {
+   const { language } = useLanguage();
    const { reducedMotion } = useMotionPreference();
    const hasGithub = hasProjectUrl(data.github);
    const hasLive = hasProjectUrl(data.live);
@@ -158,9 +161,11 @@ const ProjectCard = ({
                         type="button"
                         onClick={onOpen}
                         className="project-action project-action--primary"
-                        aria-label={`View details for ${data.title}`}
+                        aria-label={st(language, "proj.detailsFor", {
+                           title: data.title,
+                        })}
                      >
-                        Details
+                        {st(language, "proj.details")}
                         <ArrowRight
                            size={16}
                            className="action-arrow"
@@ -171,8 +176,10 @@ const ProjectCard = ({
                   {hasGithub && (
                      <ProjectLink
                         href={data.github}
-                        label="Source"
-                        ariaLabel={`View ${data.title} on GitHub`}
+                        label={st(language, "proj.source")}
+                        ariaLabel={st(language, "proj.sourceOn", {
+                           title: data.title,
+                        })}
                         icon={FaGithub}
                         accentColor={colors.accent}
                      />
@@ -180,8 +187,10 @@ const ProjectCard = ({
                   {hasLive && (
                      <ProjectLink
                         href={data.live}
-                        label="Live Demo"
-                        ariaLabel={`View ${data.title} live demo`}
+                        label={st(language, "proj.demo")}
+                        ariaLabel={st(language, "proj.demoOn", {
+                           title: data.title,
+                        })}
                         icon={ExternalLink}
                         accentColor={colors.accent}
                      />

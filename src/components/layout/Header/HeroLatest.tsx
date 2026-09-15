@@ -10,6 +10,8 @@ import {
 import { parseProjectDate, hasProjectUrl } from "@utils/projectMetadata";
 import { MONO_FONT, TEXT_MUTED } from "@/constants/theme";
 import useBreakpoint from "@hooks/useBreakpoint";
+import useLanguage from "@hooks/useLanguage";
+import { t } from "@/i18n/ui";
 import { heroLatest } from "./heroMotion";
 
 /* One derived line under the hero intro: the most recently merged upstream PR
@@ -18,6 +20,7 @@ import { heroLatest } from "./heroMotion";
 
 const HeroLatest = () => {
    const { isMobile } = useBreakpoint();
+   const { language } = useLanguage();
 
    const latest = useMemo(() => {
       const latestPr = getOpenSourceContributions()
@@ -26,14 +29,17 @@ const HeroLatest = () => {
             (b.merged_at ?? "").localeCompare(a.merged_at ?? ""),
          )[0];
       const prText = latestPr
-         ? `${latestPr.repo.split("/")[1]} #${latestPr.url.split("/").pop()} merged`
+         ? t(language, "hero.latestMerged", {
+              repo: latestPr.repo.split("/")[1],
+              n: latestPr.url.split("/").pop() ?? "",
+           })
          : null;
 
       const newestProject = [
-         ...getFeaturedProjects(),
-         ...getCollaborativeProjects(),
-         ...getOtherProjects(),
-         ...getCommunityProjects(),
+         ...getFeaturedProjects(language),
+         ...getCollaborativeProjects(language),
+         ...getOtherProjects(language),
+         ...getCommunityProjects(language),
       ]
          .filter((p) => hasProjectUrl(p.live))
          .sort(
@@ -42,7 +48,7 @@ const HeroLatest = () => {
                parseProjectDate(a.date).getTime(),
          )[0];
       const projectText = newestProject
-         ? `${newestProject.title} shipped`
+         ? t(language, "hero.latestShipped", { title: newestProject.title })
          : null;
 
       const links: { text: string; href: string }[] = [];
@@ -53,7 +59,7 @@ const HeroLatest = () => {
          links.push({ text: projectText, href: newestProject.live });
       }
       return links;
-   }, []);
+   }, [language]);
 
    if (!latest.length) return null;
 
@@ -79,7 +85,7 @@ const HeroLatest = () => {
                flexShrink: 0,
             }}
          >
-            Latest
+            {t(language, "hero.latest")}
          </span>
          <div
             style={{
@@ -99,7 +105,7 @@ const HeroLatest = () => {
                   className="hero-latest-link"
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label={`${text} (opens in a new tab)`}
+                  aria-label={t(language, "hero.opensNewTab", { text })}
                >
                   {text}
                </a>

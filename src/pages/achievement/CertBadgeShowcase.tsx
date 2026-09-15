@@ -4,6 +4,8 @@ import { fadeInUp } from "@utils/animations";
 import type { Certification } from "@/types";
 import { CYAN } from "@/constants/theme";
 import useBreakpoint from "@hooks/useBreakpoint";
+import useLanguage from "@hooks/useLanguage";
+import { st } from "@/i18n/sections";
 import CertBadge from "./CertBadge";
 
 interface CertBadgeShowcaseProps {
@@ -11,6 +13,7 @@ interface CertBadgeShowcaseProps {
 }
 
 const CertBadgeShowcase = ({ certifications }: CertBadgeShowcaseProps) => {
+   const { language } = useLanguage();
    const { isMobile } = useBreakpoint();
    const badgeSize = isMobile ? 90 : 120;
 
@@ -24,7 +27,7 @@ const CertBadgeShowcase = ({ certifications }: CertBadgeShowcaseProps) => {
             variants={fadeInUp}
          >
             <ShieldCheck size={22} style={{ color: CYAN }} aria-hidden="true" />
-            <h3>Industry Certifications</h3>
+            <h3>{st(language, "ach.industry")}</h3>
             <span className="subsection-count">{certifications.length}</span>
          </motion.div>
 

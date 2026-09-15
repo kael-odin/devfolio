@@ -6,6 +6,8 @@ import { splitDateRange, isPresent } from "@utils/dateRange";
 import { MONO_FONT, GREEN, TEXT_MUTED } from "@/constants/theme";
 import TimelineCardContent from "./TimelineCardContent";
 import PresentIndicator from "./PresentIndicator";
+import useLanguage from "@hooks/useLanguage";
+import { st } from "@/i18n/sections";
 
 interface TimelineCardMobileProps {
    item: ProfessionalExperience | PositionOfResponsibility;
@@ -20,6 +22,7 @@ const TimelineCardMobile = ({
    accentColor,
    onClick,
 }: TimelineCardMobileProps) => {
+   const { language } = useLanguage();
    const { start, end } = splitDateRange(item.date);
    const active = isPresent(item.date);
 
@@ -75,7 +78,7 @@ const TimelineCardMobile = ({
                               gap: 4,
                               color: GREEN,
                            }}
-                           aria-label="Currently active role"
+                           aria-label={st(language, "exp.activeRole")}
                         >
                            <PresentIndicator />
                         </span>

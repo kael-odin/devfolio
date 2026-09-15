@@ -49,19 +49,17 @@ vi.mock("lenis/react", () => ({
 describe("navigation and persistent UI state", () => {
    it("preserves a real contact draft and focus through both motion modes", async () => {
       render(<App />);
-      fireEvent.click(
-         screen.getByRole("button", { name: "Navigate to Contact" }),
-      );
+      fireEvent.click(screen.getByRole("button", { name: "前往联系" }));
       const name = await screen.findByRole<HTMLInputElement>(
          "textbox",
-         { name: "Name" },
+         { name: "姓名" },
          { timeout: 5000 },
       );
       const email = screen.getByRole<HTMLInputElement>("textbox", {
-         name: "Email",
+         name: "邮箱",
       });
       const message = screen.getByRole<HTMLTextAreaElement>("textbox", {
-         name: "Message",
+         name: "留言",
       });
       fireEvent.change(name, { target: { value: "Draft sender" } });
       fireEvent.change(email, { target: { value: "draft@example.com" } });
@@ -70,7 +68,7 @@ describe("navigation and persistent UI state", () => {
       });
 
       for (const mode of ["reduced", "full"]) {
-         const toggle = screen.getByRole("button", { name: /^Motion mode:/ });
+         const toggle = screen.getByRole("button", { name: /^动效模式：/ });
          toggle.focus();
          fireEvent.click(toggle);
          await waitFor(() =>
@@ -86,16 +84,14 @@ describe("navigation and persistent UI state", () => {
 
    it("preserves the real project filter when motion changes", async () => {
       render(<App />);
-      fireEvent.click(
-         screen.getByRole("button", { name: "Navigate to Projects" }),
-      );
+      fireEvent.click(screen.getByRole("button", { name: "前往项目" }));
       const all = await screen.findByRole(
          "button",
-         { name: /^All \(\d+ projects\)$/ },
+         { name: /^全部（\d+ 个项目）$/ },
          { timeout: 5000 },
       );
       fireEvent.click(all);
-      fireEvent.click(screen.getByRole("button", { name: /^Motion mode:/ }));
+      fireEvent.click(screen.getByRole("button", { name: /^动效模式：/ }));
       await waitFor(() =>
          expect(document.documentElement.dataset.motion).toBe("reduced"),
       );
@@ -105,13 +101,9 @@ describe("navigation and persistent UI state", () => {
    });
 
    it("loads and focuses a direct contact link after preceding sections mount", async () => {
-      globalThis.history.replaceState(null, "", "/portfolio-react/#contact");
+      globalThis.history.replaceState(null, "", "/devfolio/#contact");
       render(<App />);
-      await screen.findByRole(
-         "textbox",
-         { name: "Message" },
-         { timeout: 5000 },
-      );
+      await screen.findByRole("textbox", { name: "留言" }, { timeout: 5000 });
       await waitFor(() =>
          expect(document.activeElement).toBe(
             document.getElementById("contact"),
@@ -130,7 +122,7 @@ describe("navigation and persistent UI state", () => {
       fireEvent.popState(window);
       const message = await screen.findByRole(
          "textbox",
-         { name: "Message" },
+         { name: "留言" },
          { timeout: 5000 },
       );
       fireEvent.change(message, {

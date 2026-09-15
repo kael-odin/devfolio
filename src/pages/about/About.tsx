@@ -5,6 +5,8 @@ import { staggerContainer, fadeInLeft, fadeInRight } from "@utils/animations";
 import { GREEN, MONO_FONT, TEXT_PRIMARY, MAX_WIDTH } from "@/constants/theme";
 import DevAvatar from "@components/ui/DevAvatar";
 import useBreakpoint from "@hooks/useBreakpoint";
+import useLanguage from "@hooks/useLanguage";
+import { st } from "@/i18n/sections";
 import PageSection from "@components/layout/PageSection";
 import CharacterReveal from "@components/ui/CharacterReveal";
 import HighlightCard from "./HighlightCard";
@@ -26,8 +28,9 @@ const highlightsContainer: Variants = {
 };
 
 const About = () => {
-   const aboutInfo = getAbout();
-   const availability = getAvailability();
+   const { language } = useLanguage();
+   const aboutInfo = getAbout(language);
+   const availability = getAvailability(language);
    const { isMobile } = useBreakpoint();
 
    const highlights = useMemo(
@@ -41,7 +44,11 @@ const About = () => {
    );
 
    return (
-      <PageSection id="about" title="About Me" subtitle="Get to know me">
+      <PageSection
+         id="about"
+         title={st(language, "about.title")}
+         subtitle={st(language, "about.sub")}
+      >
          <div style={{ maxWidth: MAX_WIDTH, margin: "0 auto" }}>
             <motion.div
                style={{

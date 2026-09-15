@@ -7,6 +7,8 @@ import ErrorBoundary from "@components/common/ErrorBoundary";
 import CvViewerModal from "@components/ui/CvViewerModal/CvViewerModal";
 import useBreakpoint from "@hooks/useBreakpoint";
 import useSectionNavigation from "@hooks/useSectionNavigation";
+import useLanguage from "@hooks/useLanguage";
+import { t } from "@/i18n/ui";
 import HeroSocial from "./HeroSocial";
 import {
    HEADLINE_MASK_STYLE,
@@ -56,8 +58,9 @@ const HeroLatestPlaceholder = () => {
 
 const HeroContent = () => {
    const [cvOpen, setCvOpen] = useState(false);
+   const { language } = useLanguage();
 
-   const name = useMemo(() => getName(), []);
+   const name = useMemo(() => getName(language), [language]);
    const initials = useMemo(
       () =>
          name
@@ -68,9 +71,9 @@ const HeroContent = () => {
             .toUpperCase(),
       [name],
    );
-   const intro = useMemo(() => getIntro(), []);
-   const roleLabel = useMemo(() => getRoleLabel(), []);
-   const headline = useMemo(() => getHeadline(), []);
+   const intro = useMemo(() => getIntro(language), [language]);
+   const roleLabel = useMemo(() => getRoleLabel(language), [language]);
+   const headline = useMemo(() => getHeadline(language), [language]);
 
    const { navigateToSection } = useSectionNavigation();
 
@@ -134,7 +137,9 @@ const HeroContent = () => {
                   className="block text-balance"
                   variants={heroHeadlineLine}
                >
-                  Hi, I&apos;m <span style={{ color: CYAN }}>{name}</span>.
+                  {t(language, "hero.hiIm")}{" "}
+                  <span style={{ color: CYAN }}>{name}</span>
+                  {language === "zh" ? "。" : "."}
                </motion.span>
             </span>
             <span style={HEADLINE_MASK_STYLE}>
@@ -178,7 +183,7 @@ const HeroContent = () => {
                whileTap={CTA_TAP}
                transformTemplate={passThroughTransform}
             >
-               Explore Projects
+               {t(language, "hero.explore")}
                <ArrowDownRight size={16} aria-hidden="true" />
             </motion.button>
             <motion.button
@@ -190,7 +195,7 @@ const HeroContent = () => {
                aria-haspopup="dialog"
             >
                <FileText size={15} aria-hidden="true" />
-               View CV
+               {t(language, "hero.viewCv")}
             </motion.button>
             <motion.a
                href={RESUME_URL}
@@ -200,7 +205,7 @@ const HeroContent = () => {
                transformTemplate={passThroughTransform}
             >
                <Download size={15} aria-hidden="true" />
-               Download CV
+               {t(language, "hero.downloadCv")}
             </motion.a>
          </motion.div>
 

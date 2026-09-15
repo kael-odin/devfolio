@@ -3,6 +3,8 @@ import { motion, AnimatePresence } from "motion/react";
 import { ArrowRight, X } from "lucide-react";
 import { TEXT_SECONDARY, GLASS_BORDER } from "@/constants/theme";
 import useFocusTrap from "@hooks/useFocusTrap";
+import useLanguage from "@hooks/useLanguage";
+import { t } from "@/i18n/ui";
 
 interface NavSection {
    id: string;
@@ -25,6 +27,7 @@ const MobileMenu = ({
    onClose,
 }: MobileMenuProps) => {
    const panelRef = useFocusTrap<HTMLDivElement>(open);
+   const { language } = useLanguage();
 
    const onEsc = useCallback(
       (e: KeyboardEvent) => {
@@ -72,7 +75,7 @@ const MobileMenu = ({
                   id="mobile-menu"
                   role="dialog"
                   aria-modal="true"
-                  aria-label="Navigation menu"
+                  aria-label={t(language, "nav.menu")}
                   tabIndex={-1}
                   data-lenis-prevent
                   style={{
@@ -107,7 +110,7 @@ const MobileMenu = ({
                      <button
                         type="button"
                         onClick={onClose}
-                        aria-label="Close navigation menu"
+                        aria-label={t(language, "nav.closeNavMenu")}
                         style={{
                            width: 44,
                            height: 44,
@@ -135,7 +138,7 @@ const MobileMenu = ({
                         <span className="mobile-nav-number" aria-hidden="true">
                            00
                         </span>
-                        Home
+                        {t(language, "nav.home")}
                         <ArrowRight
                            size={16}
                            className="action-arrow"
@@ -154,7 +157,9 @@ const MobileMenu = ({
                               animate={{ opacity: 1, x: 0 }}
                               transition={{ delay: index * 0.03 }}
                               aria-current={isActive ? "location" : undefined}
-                              aria-label={`Navigate to ${section.label}`}
+                              aria-label={t(language, "nav.navigateTo", {
+                                 label: section.label,
+                              })}
                            >
                               <span
                                  className="mobile-nav-number"

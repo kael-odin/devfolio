@@ -2,6 +2,8 @@ import { motion } from "motion/react";
 import { Trophy } from "lucide-react";
 import type { Achievement } from "@/types";
 import { fadeInUp } from "@utils/animations";
+import useLanguage from "@hooks/useLanguage";
+import { st } from "@/i18n/sections";
 import { AMBER } from "@/constants/theme";
 import CompetitionResult from "./CompetitionResult";
 import "./achievements.css";
@@ -11,6 +13,7 @@ interface CompetitionsSectionProps {
 }
 
 const CompetitionsSection = ({ achievements }: CompetitionsSectionProps) => {
+   const { language } = useLanguage();
    if (achievements.length === 0) return null;
 
    const podiumFinishes = achievements.filter((item) =>
@@ -19,8 +22,8 @@ const CompetitionsSection = ({ achievements }: CompetitionsSectionProps) => {
    const podiumIds = new Set(podiumFinishes.map((item) => item.id));
    const otherResults = achievements.filter((item) => !podiumIds.has(item.id));
    const groups = [
-      { title: "Podium finishes", items: podiumFinishes },
-      { title: "Other results", items: otherResults },
+      { title: st(language, "ach.podium"), items: podiumFinishes },
+      { title: st(language, "ach.other"), items: otherResults },
    ].filter((group) => group.items.length > 0);
 
    return (
@@ -33,7 +36,7 @@ const CompetitionsSection = ({ achievements }: CompetitionsSectionProps) => {
             variants={fadeInUp}
          >
             <Trophy size={22} style={{ color: AMBER }} aria-hidden="true" />
-            <h3>Competitions & Awards</h3>
+            <h3>{st(language, "ach.comps")}</h3>
             <span className="subsection-count">{achievements.length}</span>
          </motion.div>
 

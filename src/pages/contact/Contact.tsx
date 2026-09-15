@@ -4,6 +4,8 @@ import { getContactOptions } from "@data/contact";
 import { rotateInUp, staggerContainer } from "@utils/animations";
 import { MAX_WIDTH_FORM } from "@/constants/theme";
 import useBreakpoint from "@hooks/useBreakpoint";
+import useLanguage from "@hooks/useLanguage";
+import { st } from "@/i18n/sections";
 import PageSection from "@components/layout/PageSection";
 import ContactCard from "./ContactCard";
 import ContactForm from "./ContactForm";
@@ -11,6 +13,7 @@ import SendConfirmation from "./SendConfirmation";
 import useContactForm from "./useContactForm";
 
 const Contact = () => {
+   const { language } = useLanguage();
    const { isMobile } = useBreakpoint();
    const contactOptions = getContactOptions();
 
@@ -31,8 +34,8 @@ const Contact = () => {
    return (
       <PageSection
          id="contact"
-         title="Get In Touch"
-         subtitle="Let's work together"
+         title={st(language, "contact.title")}
+         subtitle={st(language, "contact.sub")}
          maxWidth={MAX_WIDTH_FORM}
       >
          <motion.div

@@ -4,6 +4,8 @@ import { ChevronUp } from "lucide-react";
 import useBreakpoint from "@hooks/useBreakpoint";
 import useMotionPreference from "@hooks/useMotionPreference";
 import useSectionNavigation from "@hooks/useSectionNavigation";
+import useLanguage from "@hooks/useLanguage";
+import { t } from "@/i18n/ui";
 import { CYAN, DURATION, EASING, GLASS_BORDER } from "@/constants/theme";
 
 const SCROLL_THRESHOLD_PX = 500;
@@ -16,6 +18,7 @@ const BackToTop = () => {
    const [visible, setVisible] = useState(false);
    const { navigateToSection } = useSectionNavigation();
    const { reducedMotion } = useMotionPreference();
+   const { language } = useLanguage();
    const lift = reducedMotion ? undefined : HOVER_LIFT;
 
    const handleScroll = useCallback(() => {
@@ -56,7 +59,7 @@ const BackToTop = () => {
                   justifyContent: "center",
                   boxShadow: "0 4px 20px rgba(0,0,0,0.4)",
                }}
-               aria-label="Back to top"
+               aria-label={t(language, "ctrl.backTop")}
             >
                <ChevronUp size={20} />
             </motion.button>

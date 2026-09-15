@@ -13,10 +13,11 @@ export const splitDateRange = (
 };
 
 /**
- * True when a date range ends in "Present" (case-insensitive, trimmed).
+ * True when a date range ends in "Present" (or Chinese "至今").
  * Used by timeline cards to surface a live "active" indicator on current roles.
  */
 export const isPresent = (range: string): boolean => {
    const { end } = splitDateRange(range);
-   return end?.trim().toLowerCase() === "present";
+   const tail = end?.trim().toLowerCase() ?? "";
+   return tail === "present" || tail === "至今";
 };

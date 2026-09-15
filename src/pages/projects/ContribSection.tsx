@@ -2,6 +2,8 @@ import type { ComponentType } from "react";
 import { motion } from "motion/react";
 import type { OpenSourceContribution } from "@/types";
 import { MONO_FONT } from "@/constants/theme";
+import useLanguage from "@hooks/useLanguage";
+import { st } from "@/i18n/sections";
 import { staggerContainer, staggerItem } from "@utils/animations";
 import ContribCard from "./ContribCard";
 
@@ -19,43 +21,46 @@ const ContribSection = ({
    count,
    color,
    items,
-}: ContribSectionProps) => (
-   <>
-      <div
-         style={{
-            display: "flex",
-            alignItems: "center",
-            gap: 8,
-            marginBottom: 12,
-         }}
-      >
-         <Icon size={14} style={{ color }} />
-         <span
+}: ContribSectionProps) => {
+   const { language } = useLanguage();
+   return (
+      <>
+         <div
             style={{
-               fontSize: 12,
-               fontWeight: 700,
-               color,
-               fontFamily: MONO_FONT,
-               letterSpacing: "0.03em",
+               display: "flex",
+               alignItems: "center",
+               gap: 8,
+               marginBottom: 12,
             }}
          >
-            {label} ({count})
-         </span>
-      </div>
-      <motion.div
-         className="contribution-grid"
-         variants={staggerContainer}
-         initial="hidden"
-         whileInView="visible"
-         viewport={{ once: true, margin: "0px 0px -60px 0px" }}
-      >
-         {items.map((contrib) => (
-            <motion.div key={contrib.url} variants={staggerItem}>
-               <ContribCard contrib={contrib} />
-            </motion.div>
-         ))}
-      </motion.div>
-   </>
-);
+            <Icon size={14} style={{ color }} />
+            <span
+               style={{
+                  fontSize: 12,
+                  fontWeight: 700,
+                  color,
+                  fontFamily: MONO_FONT,
+                  letterSpacing: "0.03em",
+               }}
+            >
+               {st(language, "proj.contribCount", { label, count })}
+            </span>
+         </div>
+         <motion.div
+            className="contribution-grid"
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "0px 0px -60px 0px" }}
+         >
+            {items.map((contrib) => (
+               <motion.div key={contrib.url} variants={staggerItem}>
+                  <ContribCard contrib={contrib} />
+               </motion.div>
+            ))}
+         </motion.div>
+      </>
+   );
+};
 
 export default ContribSection;

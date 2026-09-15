@@ -9,6 +9,8 @@ import {
    TEXT_SECONDARY,
 } from "@/constants/theme";
 import DesktopNav from "./DesktopNav";
+import useLanguage from "@hooks/useLanguage";
+import { t } from "@/i18n/ui";
 
 interface NavSection {
    id: string;
@@ -63,6 +65,7 @@ const NavBar = ({
    onNavigate,
    onToggleMenu,
 }: NavBarProps) => {
+   const { language } = useLanguage();
    const initials = useMemo(
       () =>
          getName()
@@ -104,7 +107,7 @@ const NavBar = ({
          animate={{ y: hidden ? HIDDEN_Y : 0, opacity: 1 }}
          transition={entered ? SLIDE_TRANSITION : ENTRANCE_TRANSITION}
          onAnimationComplete={() => setEntered(true)}
-         aria-label="Primary"
+         aria-label={t(language, "nav.primary")}
       >
          <div
             style={{
@@ -137,7 +140,7 @@ const NavBar = ({
                   border: "1px solid rgba(255, 255, 255, 0.08)",
                   borderRadius: 10,
                }}
-               aria-label="Scroll to top"
+               aria-label={t(language, "nav.scrollTop")}
             >
                {initials}
             </button>
@@ -155,9 +158,9 @@ const NavBar = ({
                      onClick={() => onNavigate("contact")}
                      className="btn-pill"
                      style={{ fontSize: 13, minHeight: 44 }}
-                     aria-label="Navigate to Contact"
+                     aria-label={t(language, "nav.navigateContact")}
                   >
-                     Contact Me
+                     {t(language, "nav.contactMe")}
                   </button>
                </div>
             )}
@@ -180,7 +183,11 @@ const NavBar = ({
                   whileHover={ICON_HOVER}
                   whileFocus={ICON_HOVER}
                   transition={COLOR_TRANSITION}
-                  aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+                  aria-label={
+                     mobileMenuOpen
+                        ? t(language, "nav.closeMenu")
+                        : t(language, "nav.openMenu")
+                  }
                   aria-expanded={mobileMenuOpen}
                   aria-controls="mobile-menu"
                >

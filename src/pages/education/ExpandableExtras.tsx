@@ -2,6 +2,8 @@ import { Trophy } from "lucide-react";
 import { AMBER, MONO_FONT, PURPLE, TEXT_SECONDARY } from "@/constants/theme";
 import type { Education } from "@/types";
 import Disclosure from "@components/ui/Disclosure";
+import useLanguage from "@hooks/useLanguage";
+import { st } from "@/i18n/sections";
 
 interface ExpandableExtrasProps {
    item: Education;
@@ -9,6 +11,7 @@ interface ExpandableExtrasProps {
 }
 
 const ExpandableExtras = ({ item, marginLeft }: ExpandableExtrasProps) => {
+   const { language } = useLanguage();
    const achievementCount = item.achievements?.length ?? 0;
    const hasSkills = (item.skills?.length ?? 0) > 0;
 
@@ -56,8 +59,8 @@ const ExpandableExtras = ({ item, marginLeft }: ExpandableExtrasProps) => {
                         <Trophy size={14} aria-hidden="true" />
                         {achievementCount}{" "}
                         {achievementCount === 1
-                           ? "achievement"
-                           : "achievements"}
+                           ? st(language, "edu.achievement")
+                           : st(language, "edu.achievements")}
                      </>
                   }
                >

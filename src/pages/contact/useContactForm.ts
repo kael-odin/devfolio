@@ -1,9 +1,12 @@
 import { useRef, useState, useCallback } from "react";
 import emailjs from "@emailjs/browser";
 import { getEmailConfig } from "@data/contact";
+import useLanguage from "@hooks/useLanguage";
+import { t } from "@/i18n/ui";
 import type { FormData, Status } from "./contactConstants";
 
 const useContactForm = () => {
+   const { language } = useLanguage();
    const formElementRef = useRef<HTMLFormElement>(null);
    // Armed by resetConfirmation, consumed the next time the form mounts. The
    // form only remounts after the confirmation's exit animation (AnimatePresence
@@ -69,7 +72,7 @@ const useContactForm = () => {
          if (emailConfig.validation_pattern) {
             const pattern = new RegExp(emailConfig.validation_pattern);
             if (!pattern.test(formData.email)) {
-               showError("Please enter a valid email address.", "email");
+               showError(t(language, "contact.badEmail"), "email");
                return;
             }
          }
@@ -85,9 +88,7 @@ const useContactForm = () => {
             emailConfig.template_id.startsWith("YOUR_") ||
             emailConfig.public_key.startsWith("YOUR_")
          ) {
-            showError(
-               "The contact form is not configured yet. Add your EmailJS keys to data/contact.json (email_config).",
-            );
+            showError(t(language, "contact.notConfigured"));
             setIsLoading(false);
             return;
          }
@@ -108,15 +109,15 @@ const useContactForm = () => {
             } else {
                // EmailJS resolved with a non-200 status -- surface it instead of
                // silently doing nothing.
-               showError("Failed to send message. Please try again.");
+               showError(t(language, "contact.failed"));
             }
          } catch {
-            showError("Failed to send message. Please try again.");
+            showError(t(language, "contact.failed"));
          } finally {
             setIsLoading(false);
          }
       },
-      [emailConfig, formData.email, formData.name, showError],
+      [emailConfig, formData.email, formData.name, showError, language],
    );
 
    const dismissToast = useCallback(() => {

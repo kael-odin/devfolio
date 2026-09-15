@@ -3,6 +3,8 @@ import { ArrowRight, Code } from "lucide-react";
 import type { Variants } from "motion/react";
 import type { Service } from "@/types";
 import useBreakpoint from "@hooks/useBreakpoint";
+import useLanguage from "@hooks/useLanguage";
+import { st } from "@/i18n/sections";
 import useMotionPreference from "@hooks/useMotionPreference";
 import useSectionNavigation from "@hooks/useSectionNavigation";
 import {
@@ -36,11 +38,12 @@ const HOVER_LIFT = {
 };
 
 const ServiceCard = ({ service, index }: ServiceCardProps) => {
+   const { language } = useLanguage();
    const { isMobile } = useBreakpoint();
    const { reducedMotion } = useMotionPreference();
    const { navigateToSection } = useSectionNavigation();
    const colors = ACCENT_COLORS[index % ACCENT_COLORS.length];
-   const IconComponent = iconMap[service.title] || Code;
+   const IconComponent = iconMap[service.id] || Code;
    const lift = reducedMotion ? undefined : HOVER_LIFT;
 
    return (
@@ -92,7 +95,7 @@ const ServiceCard = ({ service, index }: ServiceCardProps) => {
                   }}
                />
                <ServiceAnimation
-                  title={service.title}
+                  serviceId={service.id}
                   color={colors.icon}
                   compact={isMobile}
                />
@@ -170,9 +173,11 @@ const ServiceCard = ({ service, index }: ServiceCardProps) => {
                   className="text-action"
                   style={{ marginTop: 12, alignSelf: "flex-start" }}
                   onClick={() => navigateToSection("contact")}
-                  aria-label={`Discuss ${service.title}`}
+                  aria-label={st(language, "svc.talkAbout", {
+                     title: service.title,
+                  })}
                >
-                  Let's talk
+                  {st(language, "svc.talk")}
                   <ArrowRight
                      size={16}
                      className="action-arrow"

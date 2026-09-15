@@ -1,0 +1,33 @@
+[
+   {
+      "id": 1,
+      "date": "2021 - Present",
+      "title": "Self-taught · Full-Stack & AI Apps (ongoing)",
+      "institution": "Open-source community & hands-on practice",
+      "department": "TypeScript / Python / Go / LLM apps",
+      "location": "China · Remote",
+      "cgpa": "",
+      "achievements": [
+         "17 public repos, 4 original templates & tools",
+         "Long-term maintainer of daily auto-updating projects (rankings / proxy lists / prompt libraries)"
+      ],
+      "skills": [
+         "TypeScript",
+         "Python",
+         "Vue",
+         "Astro",
+         "LLM apps",
+         "Automation pipelines"
+      ]
+   },
+   {
+      "id": 2,
+      "date": "2026 - Present",
+      "title": "Chinese tech writing (ongoing)",
+      "institution": "kael-odin-blog digital garden",
+      "department": "Retrospectives / tool reviews / essays",
+      "location": "China · Remote",
+      "cgpa": "",
+      "skills": ["Tech writing", "Next.js", "Markdown"]
+   }
+]

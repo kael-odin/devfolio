@@ -5,6 +5,8 @@ import { waveCascadeContainer, waveCascadeItem } from "@utils/animations";
 import type { ProfessionalExperience } from "@/types";
 import ModalProjectCard from "./ModalProjectCard";
 import ModalContributions from "./ModalContributions";
+import useLanguage from "@hooks/useLanguage";
+import { st } from "@/i18n/sections";
 
 interface ModalContentProps {
    experience: ProfessionalExperience;
@@ -12,6 +14,7 @@ interface ModalContentProps {
 }
 
 const ModalContent = ({ experience, isMobile }: ModalContentProps) => {
+   const { language } = useLanguage();
    const projects = experience.projects ?? [];
    const contributions = experience.internal_contributions ?? [];
    const achievements = experience.internal_achievements ?? [];
@@ -39,7 +42,7 @@ const ModalContent = ({ experience, isMobile }: ModalContentProps) => {
 
          {/* Internal Contributions */}
          <ModalContributions
-            title="Internal Contributions"
+            title={st(language, "exp.internalContrib")}
             items={contributions}
             baseDelay={contribDelay}
             variant="contributions"
@@ -47,7 +50,7 @@ const ModalContent = ({ experience, isMobile }: ModalContentProps) => {
 
          {/* Internal Achievements */}
          <ModalContributions
-            title="Internal Achievements"
+            title={st(language, "exp.internalAchieve")}
             items={achievements}
             baseDelay={achieveDelay}
             variant="achievements"

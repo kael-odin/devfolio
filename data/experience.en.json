@@ -1,0 +1,90 @@
+{
+   "professional_experience": [
+      {
+         "id": 1,
+         "date": "Mar 2026 - Present",
+         "title": "Independent Full-Stack Developer",
+         "position": "Full-time",
+         "company": "Independent",
+         "location": "China · Remote",
+         "summary": "Building AI apps and open-source tools: research rankings, prompt mirrors, BYOK tooling, and local-first agent workbenches — several auto-updated daily by GitHub Actions.",
+         "projects": [
+            {
+               "name": "awesome-academic-research-skills · daily research-skill ranking (85★)",
+               "date": "Jun 2026 - Present",
+               "description": {
+                  "1": "A daily ranking of research Agent Skills for Chinese-speaking users: auto-discovers, filters, and ranks Claude Code / Codex / OpenCode research skills on GitHub.",
+                  "2": "Built end to end — topic selection, ranking pipeline, Chinese presentation — now one of the most cited skill rankings in the Chinese AI research community."
+               },
+               "skills": [
+                  "JavaScript",
+                  "GitHub Actions",
+                  "Agent Skills",
+                  "Automation"
+               ],
+               "link": "https://github.com/kael-odin/awesome-academic-research-skills",
+               "linkLabel": "Repository"
+            },
+            {
+               "name": "prompts-chat-zh · Chinese prompt mirror (2,205 entries)",
+               "date": "Sep 2026 - Present",
+               "description": {
+                  "1": "Unofficial Simplified-Chinese mirror of prompts.chat: all 2,205 public prompts translated, bilingual side-by-side, full-text search, one-click copy.",
+                  "2": "Astro static site plus an incremental translation pipeline on GitHub Pages with trackable progress."
+               },
+               "skills": ["Astro", "JavaScript", "i18n", "GitHub Pages"],
+               "link": "https://github.com/kael-odin/prompts-chat-zh",
+               "linkLabel": "Repository"
+            },
+            {
+               "name": "Amadeus-Agent · single-file AI agent workbench",
+               "date": "Aug 2026 - Present",
+               "description": {
+                  "1": "A single-file AI agent workbench: desktop plus icons plus windows, each icon an independent chat agent; Vue 3.5 with AI SDK v7, zero build, double-click to run.",
+                  "2": "Ships with free-model presets, web search, vision tools, memory self-governance, and task guardrails — all data stays in the browser."
+               },
+               "skills": ["Vue", "AI SDK", "Local-first", "Agent"],
+               "link": "https://github.com/kael-odin/Amadeus-Agent",
+               "linkLabel": "Repository"
+            }
+         ]
+      },
+      {
+         "id": 2,
+         "date": "Mar 2026 - Present",
+         "title": "Personal Blog & Digital Garden Owner",
+         "position": "Ongoing",
+         "company": "kael-odin-blog",
+         "location": "China · Remote",
+         "summary": "A Next.js personal blog for tech notes, project write-ups, and essays, editable visually in the browser via a GitHub App.",
+         "projects": [
+            {
+               "name": "kael-odin-blog · visually editable blog",
+               "date": "Mar 2026 - Present",
+               "description": {
+                  "1": "Built on the Next.js App Router; posts, site config, and images are all editable in a visual web UI backed by a GitHub App pipeline.",
+                  "2": "Also a lab for Chinese tech writing: project retrospectives, tool reviews, and essays land here first."
+               },
+               "skills": ["Next.js", "TypeScript", "Markdown", "Vercel"],
+               "link": "https://kael-odin-blog.vercel.app",
+               "linkLabel": "Visit live"
+            }
+         ]
+      }
+   ],
+   "positions_of_responsibility": [
+      {
+         "id": 1,
+         "date": "Jun 2026 - Present",
+         "title": "Open Ranking Maintainer",
+         "position": "Maintainer",
+         "company": "awesome-academic-research-skills",
+         "location": "China · Remote",
+         "summary": "Own the inclusion criteria and daily update pipeline of a Chinese research-skill ranking.",
+         "description": {
+            "1": "Define skill inclusion and ranking rules, triage community suggestions and corrections, keep the ranking credibly fresh every day."
+         },
+         "skills": ["Open-source governance", "Automation", "Curation"]
+      }
+   ]
+}

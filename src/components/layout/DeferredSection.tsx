@@ -8,6 +8,8 @@ import {
 } from "react";
 import ErrorBoundary from "@components/common/ErrorBoundary";
 import SectionLoader from "@components/ui/SectionLoader";
+import useLanguage from "@hooks/useLanguage";
+import { t } from "@/i18n/ui";
 import { CONTENT_SECTIONS, type ContentSectionId } from "@/constants/sections";
 import useSectionNavigation from "@hooks/useSectionNavigation";
 
@@ -50,6 +52,7 @@ const DeferredSection = ({
    const sectionRef = useRef<HTMLElement>(null);
    const [nearViewport, setNearViewport] = useState(false);
    const { loadThrough } = useSectionNavigation();
+   const { language } = useLanguage();
    const index = CONTENT_SECTIONS.findIndex((section) => section.id === id);
    const shouldRender = nearViewport || index <= loadThrough;
 
@@ -94,14 +97,14 @@ const DeferredSection = ({
                            textAlign: "center",
                         }}
                      >
-                        <h2>{label} is temporarily unavailable</h2>
+                        <h2>{t(language, "ctrl.unavailable", { label })}</h2>
                         <p
                            style={{
                               marginTop: 8,
                               color: "var(--color-text-secondary)",
                            }}
                         >
-                           Refresh the page to try loading this section again.
+                           {t(language, "ctrl.refreshPrompt")}
                         </p>
                         <button
                            type="button"
@@ -109,7 +112,7 @@ const DeferredSection = ({
                            onClick={() => globalThis.location.reload()}
                            style={{ marginTop: 16 }}
                         >
-                           Refresh page
+                           {t(language, "ctrl.refreshPage")}
                         </button>
                      </div>
                   </SectionReady>

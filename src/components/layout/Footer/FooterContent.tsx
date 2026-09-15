@@ -3,7 +3,13 @@ import { motion } from "motion/react";
 import { getName, getSocialProfiles } from "@data/personal";
 import { staggerItem } from "@utils/animations";
 import { EASING } from "@/constants/theme";
-import { CONTENT_SECTIONS, type ContentSectionId } from "@/constants/sections";
+import {
+   getContentSections,
+   type ContentSectionId,
+} from "@/constants/sections";
+import type { Language } from "@hooks/languageContext";
+import { t } from "@/i18n/ui";
+import useLanguage from "@hooks/useLanguage";
 import useBreakpoint from "@hooks/useBreakpoint";
 import useMotionPreference from "@hooks/useMotionPreference";
 import useSectionNavigation from "@hooks/useSectionNavigation";
@@ -21,11 +27,11 @@ const FOOTER_SECTION_IDS = new Set<ContentSectionId>([
    "stats",
    "contact",
 ]);
-const SITE_LINKS: { id: string; label: string }[] = [
-   { id: "hero", label: "Home" },
-   ...CONTENT_SECTIONS.filter(({ id }) => FOOTER_SECTION_IDS.has(id)).map(
-      ({ id, label }) => ({ id, label }),
-   ),
+const getSiteLinks = (language: Language) => [
+   { id: "hero", label: t(language, "footer.home") },
+   ...getContentSections(language)
+      .filter(({ id }) => FOOTER_SECTION_IDS.has(id as ContentSectionId))
+      .map(({ id, label }) => ({ id, label })),
 ];
 
 /* Brand tile: one full turn per hover or keyboard focus. The turn count only
@@ -65,7 +71,8 @@ const columnLink: React.CSSProperties = {
 const FooterContent = () => {
    const { isMobile } = useBreakpoint();
    const { reducedMotion } = useMotionPreference();
-   const name = useMemo(() => getName(), []);
+   const { language } = useLanguage();
+   const name = useMemo(() => getName(language), [language]);
    const initials = useMemo(
       () =>
          name
@@ -76,7 +83,10 @@ const FooterContent = () => {
             .toUpperCase(),
       [name],
    );
-   const socialProfiles = useMemo(() => getSocialProfiles(), []);
+   const socialProfiles = useMemo(
+      () => getSocialProfiles(language),
+      [language],
+   );
 
    const [turns, setTurns] = useState(0);
    const spin = useCallback(() => setTurns((count) => count + 1), []);
@@ -114,7 +124,7 @@ const FooterContent = () => {
                   whileTap={TILE_TAP}
                   animate={spinTarget}
                   transition={TILE_TRANSITION}
-                  aria-label="Home"
+                  aria-label={t(language, "footer.homeLabel")}
                   style={{
                      width: 48,
                      height: 48,
@@ -133,15 +143,15 @@ const FooterContent = () => {
                   {initials}
                </motion.button>
                <p style={{ color: "rgba(244,246,247,0.8)", fontSize: 14 }}>
-                  &copy; {CURRENT_YEAR} {name}. All rights reserved.
+                  &copy; {CURRENT_YEAR} {name}. {t(language, "footer.rights")}
                </p>
                <FooterSocial />
             </div>
 
             {/* SITE column */}
-            <nav aria-label="Footer site links">
-               <h2 style={columnHeading}>Site</h2>
-               {SITE_LINKS.map((link) => (
+            <nav aria-label={t(language, "footer.siteLinks")}>
+               <h2 style={columnHeading}>{t(language, "footer.site")}</h2>
+               {getSiteLinks(language).map((link) => (
                   <button
                      key={link.id}
                      type="button"
@@ -158,20 +168,22 @@ const FooterContent = () => {
                   className="footer-link"
                   style={columnLink}
                >
-                  Download CV
+                  {t(language, "footer.downloadCv")}
                </a>
             </nav>
 
             {/* SOCIAL column */}
-            <nav aria-label="Footer social links">
-               <h2 style={columnHeading}>Social</h2>
+            <nav aria-label={t(language, "footer.socialLinks")}>
+               <h2 style={columnHeading}>{t(language, "footer.social")}</h2>
                {socialProfiles.map((profile) => (
                   <a
                      key={profile.id}
                      href={profile.link}
                      target="_blank"
                      rel="noopener noreferrer"
-                     aria-label={`${profile.name} (opens in a new tab)`}
+                     aria-label={t(language, "footer.socialOpen", {
+                        name: profile.name,
+                     })}
                      className="footer-link"
                      style={columnLink}
                   >

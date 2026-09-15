@@ -1,6 +1,8 @@
 import { useEffect, useRef } from "react";
 import { motion } from "motion/react";
 import { CheckCircle } from "lucide-react";
+import useLanguage from "@hooks/useLanguage";
+import { t } from "@/i18n/ui";
 import { CYAN, TEXT_PRIMARY, TEXT_MUTED } from "@/constants/theme";
 
 interface SendConfirmationProps {
@@ -9,6 +11,7 @@ interface SendConfirmationProps {
 }
 
 const SendConfirmation = ({ onReset, senderName }: SendConfirmationProps) => {
+   const { language } = useLanguage();
    const headingRef = useRef<HTMLHeadingElement>(null);
 
    // The form (and its focused submit button) unmounts on success, which drops
@@ -62,11 +65,11 @@ const SendConfirmation = ({ onReset, senderName }: SendConfirmationProps) => {
                   color: TEXT_PRIMARY,
                }}
             >
-               Message sent!
+               {t(language, "contact.sent")}
             </h3>
             {senderName && (
                <p style={{ fontSize: 14, color: TEXT_MUTED }}>
-                  Thanks, {senderName}! I'll get back to you soon.
+                  {t(language, "contact.sentThanks", { name: senderName })}
                </p>
             )}
             <button
@@ -75,7 +78,7 @@ const SendConfirmation = ({ onReset, senderName }: SendConfirmationProps) => {
                onClick={onReset}
                style={{ marginTop: 8 }}
             >
-               Send another message
+               {t(language, "contact.sendAnother")}
             </button>
          </motion.div>
       </div>

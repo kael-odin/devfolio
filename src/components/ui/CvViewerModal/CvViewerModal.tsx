@@ -2,6 +2,8 @@ import { lazy, Suspense, useCallback, useEffect } from "react";
 import { FileText } from "lucide-react";
 import useBreakpoint from "@hooks/useBreakpoint";
 import useFocusTrap from "@hooks/useFocusTrap";
+import useLanguage from "@hooks/useLanguage";
+import { t } from "@/i18n/ui";
 import ModalShell from "@components/ui/ModalShell";
 import ModalHeaderShell from "@components/ui/ModalHeaderShell";
 import { CYAN, TEXT_PRIMARY } from "@/constants/theme";
@@ -18,6 +20,7 @@ interface CvViewerModalProps {
 const CvViewerModal = ({ isOpen, onClose }: CvViewerModalProps) => {
    const { isMobile } = useBreakpoint();
    const dialogRef = useFocusTrap<HTMLDivElement>(isOpen);
+   const { language } = useLanguage();
 
    const onEsc = useCallback(
       (e: KeyboardEvent) => {
@@ -47,7 +50,7 @@ const CvViewerModal = ({ isOpen, onClose }: CvViewerModalProps) => {
          <ModalHeaderShell
             isMobile={isMobile}
             onClose={onClose}
-            closeLabel="Close CV viewer"
+            closeLabel={t(language, "cv.close")}
          >
             <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                <FileText
@@ -62,7 +65,7 @@ const CvViewerModal = ({ isOpen, onClose }: CvViewerModalProps) => {
                      color: TEXT_PRIMARY,
                   }}
                >
-                  Curriculum Vitae
+                  {t(language, "cv.title")}
                </h2>
             </div>
          </ModalHeaderShell>

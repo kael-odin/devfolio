@@ -1,5 +1,7 @@
 import { motion, type TransformProperties, type Variants } from "motion/react";
 import { Send } from "lucide-react";
+import useLanguage from "@hooks/useLanguage";
+import { t } from "@/i18n/ui";
 import useMotionPreference from "@hooks/useMotionPreference";
 import { DURATION, EASING, TEXT_SECONDARY, RED } from "@/constants/theme";
 import type { FormData, Status } from "./contactConstants";
@@ -54,6 +56,7 @@ const ContactForm = ({
    onChange,
    onSubmit,
 }: ContactFormProps) => {
+   const { language } = useLanguage();
    const { reducedMotion } = useMotionPreference();
    // The only programmatic validation today is the email-pattern check, so an
    // error status maps to the email field. Surface it inline + to AT.
@@ -86,7 +89,7 @@ const ContactForm = ({
 
          <div>
             <label htmlFor="contact-name" style={labelStyle}>
-               Name
+               {t(language, "contact.name")}
             </label>
             {/* .form-field draws the accent underline while its input has focus */}
             <div className="form-field">
@@ -94,7 +97,7 @@ const ContactForm = ({
                   id="contact-name"
                   type="text"
                   name="name"
-                  placeholder="John Doe"
+                  placeholder={t(language, "contact.namePh")}
                   value={formData.name}
                   onChange={onChange}
                   autoComplete="name"
@@ -107,14 +110,14 @@ const ContactForm = ({
 
          <div>
             <label htmlFor="contact-email" style={labelStyle}>
-               Email
+               {t(language, "contact.email")}
             </label>
             <div className="form-field">
                <input
                   id="contact-email"
                   type="email"
                   name="email"
-                  placeholder="john@example.com"
+                  placeholder={t(language, "contact.emailPh")}
                   value={formData.email}
                   onChange={onChange}
                   autoComplete="email"
@@ -144,14 +147,14 @@ const ContactForm = ({
 
          <div>
             <label htmlFor="contact-message" style={labelStyle}>
-               Message
+               {t(language, "contact.message")}
             </label>
             <div className="form-field">
                <textarea
                   id="contact-message"
                   name="message"
                   rows={isMobile ? 4 : 5}
-                  placeholder="Tell me about your project or idea..."
+                  placeholder={t(language, "contact.messagePh")}
                   value={formData.message}
                   onChange={onChange}
                   minLength={10}
@@ -167,7 +170,11 @@ const ContactForm = ({
             type="submit"
             disabled={isLoading}
             className="btn-primary"
-            aria-label={isLoading ? "Sending message..." : "Send message"}
+            aria-label={
+               isLoading
+                  ? t(language, "contact.sending")
+                  : t(language, "contact.send")
+            }
             aria-busy={isLoading}
             whileHover={hover}
             whileFocus={hover}
@@ -205,7 +212,7 @@ const ContactForm = ({
                   >
                      <Send style={{ width: 16, height: 16 }} />
                   </motion.span>
-                  Send Message
+                  {t(language, "contact.send")}
                </>
             )}
          </motion.button>

@@ -19,6 +19,8 @@ import { staggerContainer, staggerItem } from "@utils/animations";
 import { MONO_FONT, TEXT_MUTED, TEXT_SECONDARY } from "@/constants/theme";
 import AnimatedCounter from "@components/ui/AnimatedCounter";
 import useBreakpoint from "@hooks/useBreakpoint";
+import useLanguage from "@hooks/useLanguage";
+import { st } from "@/i18n/sections";
 
 /* The site's only numeric summary -- the hero deliberately carries no figures.
    Coding-platform numbers are NOT here: they live with the platform cards below
@@ -107,16 +109,17 @@ const StatGroup = ({
 );
 
 const StatsBand = () => {
+   const { language } = useLanguage();
    const { isMobile } = useBreakpoint();
 
    const { impact, delivery, openSource } = useMemo(() => {
-      const certs = getCertifications();
-      const badges = getLearningBadges();
-      const impactData = getImpact();
+      const certs = getCertifications(language);
+      const badges = getLearningBadges(language);
+      const impactData = getImpact(language);
 
       // Talks and published patterns are tagged by `type` on the experience
       // entries, so this count tracks the timeline instead of restating it.
-      const internal = getExperience().flatMap(
+      const internal = getExperience(language).flatMap(
          (job) => job.internal_contributions ?? [],
       );
       const speakingCount = internal.filter(
@@ -124,14 +127,14 @@ const StatsBand = () => {
       ).length;
 
       const projectCount =
-         getFeaturedProjects().length +
-         getCollaborativeProjects().length +
-         getOtherProjects().length +
-         getCommunityProjects().length;
-      const featuredCount = getFeaturedProjects().length;
+         getFeaturedProjects(language).length +
+         getCollaborativeProjects(language).length +
+         getOtherProjects(language).length +
+         getCommunityProjects(language).length;
+      const featuredCount = getFeaturedProjects(language).length;
 
       // Podium = 1st/2nd/3rd place entries in the Awards data.
-      const podium = getAchievements().filter((a) =>
+      const podium = getAchievements(language).filter((a) =>
          /^(1st|2nd|3rd) Place/.test(a.title),
       );
       const place = (n: string) =>
@@ -139,15 +142,17 @@ const StatsBand = () => {
 
       // Open source: "merged" entries can be PRs or a credited commit, so the
       // PR count is the strict figure and co-authored fixes are noted separately.
-      const oss = getOpenSourceContributions();
+      const oss = getOpenSourceContributions(language);
       const merged = oss.filter((c) => c.status === "merged");
       const mergedPrs = merged.filter((c) => c.url.includes("/pull/")).length;
       const mergedRepos = new Set(merged.map((c) => c.repo));
       const coAuthored = merged.length - mergedPrs;
-      let mergedNote = `Across ${mergedRepos.size} projects`;
-      if (coAuthored === 1) mergedNote = "Plus 1 co-authored fix";
+      let mergedNote = st(language, "stats.mergedAcross", {
+         n: mergedRepos.size,
+      });
+      if (coAuthored === 1) mergedNote = st(language, "stats.mergedPlus1");
       else if (coAuthored > 1)
-         mergedNote = `Plus ${coAuthored} co-authored fixes`;
+         mergedNote = st(language, "stats.mergedPlusN", { n: coAuthored });
       const repoStars = new Map<string, number>();
       for (const contribution of oss) {
          if (!repoStars.has(contribution.repo)) {
@@ -161,7 +166,7 @@ const StatsBand = () => {
       const bigRepos = [...repoStars.values()].filter(
          (s) => s >= BIG_REPO_STARS,
       ).length;
-      const discussions = getCommunityDiscussions();
+      const discussions = getCommunityDiscussions(language);
       const accepted = discussions.filter(
          (d) => d.status === "accepted",
       ).length;
@@ -170,71 +175,85 @@ const StatsBand = () => {
          impact: [
             {
                value: impactData.clients_served,
-               label: "Clients served",
+               label: st(language, "stats.clients"),
                note: impactData.clients_note,
             },
             {
                value: impactData.workloads_migrated,
-               label: "Workloads migrated",
-               note: `Across ${impactData.aws_accounts} accounts`,
+               label: st(language, "stats.workloads"),
+               note: impactData.workloads_note ?? impactData.aws_accounts,
+            },
+            {
+               value: impactData.aws_accounts,
+               label: st(language, "stats.templates"),
+               note: impactData.aws_note ?? "",
             },
             {
                value: impactData.security_controls,
-               label: "Security controls",
-               note: impactData.security_note ?? "Audited & hardened",
+               label: st(language, "stats.controls"),
+               note:
+                  impactData.security_note ??
+                  st(language, "stats.controlsFallback"),
             },
             {
                value: String(speakingCount),
-               label: "Talks & patterns",
-               note: "Shared with the wider team",
+               label: st(language, "stats.talks"),
+               note: st(language, "stats.talksNote"),
             },
          ] satisfies Stat[],
          delivery: [
             {
                value: String(projectCount),
-               label: "Projects shipped",
-               note: `${featuredCount} featured`,
+               label: st(language, "stats.shipped"),
+               note: st(language, "stats.featuredNote", { n: featuredCount }),
             },
             {
                value: String(certs.length),
-               label: "Certifications",
-               note: "Industry recognized",
+               label: st(language, "stats.certs"),
+               note: st(language, "stats.certsNote"),
             },
             {
                value: String(badges.length),
-               label: "AWS badges",
-               note: "Continuous learning",
+               label: st(language, "stats.badges"),
+               note: st(language, "stats.badgesNote"),
             },
             {
                value: String(podium.length),
-               label: "Podium finishes",
-               note: `${place("1st")} first, ${place("2nd")} second, ${place("3rd")} third`,
+               label: st(language, "stats.podium"),
+               note: st(language, "stats.podiumNote", {
+                  a: place("1st"),
+                  b: place("2nd"),
+                  c: place("3rd"),
+               }),
             },
          ] satisfies Stat[],
          openSource: [
             {
                value: String(mergedPrs),
-               label: "PRs merged upstream",
+               label: st(language, "stats.merged"),
                note: mergedNote,
             },
             {
                value: formatStars(starsReached),
-               label: "Stars reached",
-               note: "Combined, projects merged into",
+               label: st(language, "stats.stars"),
+               note: st(language, "stats.starsNote"),
             },
             {
                value: String(repoStars.size),
-               label: "Projects contributed to",
-               note: `${bigRepos} with 10k+ stars`,
+               label: st(language, "stats.repos"),
+               note: st(language, "stats.reposNote", { n: bigRepos }),
             },
             {
                value: String(discussions.length),
-               label: "Community answers",
-               note: `${accepted} accepted, ${discussions.length - accepted} marked helpful`,
+               label: st(language, "stats.answers"),
+               note: st(language, "stats.answersNote", {
+                  a: accepted,
+                  h: discussions.length - accepted,
+               }),
             },
          ] satisfies Stat[],
       };
-   }, []);
+   }, [language]);
 
    return (
       <div
@@ -247,14 +266,18 @@ const StatsBand = () => {
       >
          {/* Consulting impact leads: it is the work clients and recruiters
              are actually assessing. */}
-         <StatGroup heading="Impact" stats={impact} isMobile={isMobile} />
          <StatGroup
-            heading="Delivery & credentials"
+            heading={st(language, "stats.impact")}
+            stats={impact}
+            isMobile={isMobile}
+         />
+         <StatGroup
+            heading={st(language, "stats.delivery")}
             stats={delivery}
             isMobile={isMobile}
          />
          <StatGroup
-            heading="Open source"
+            heading={st(language, "stats.oss")}
             stats={openSource}
             isMobile={isMobile}
          />

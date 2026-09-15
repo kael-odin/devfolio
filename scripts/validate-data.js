@@ -118,13 +118,42 @@ const validateEntityArray = (items, path, requiredFields) => {
 };
 
 const personal = loadJson("data/personal.json");
+const personalZh = loadJson("data/personal.zh.json");
+const personalEn = loadJson("data/personal.en.json");
 const education = loadJson("data/education.json");
 const experience = loadJson("data/experience.json");
 const skills = loadJson("data/skills.json");
 const services = loadJson("data/services.json");
 const projects = loadJson("data/projects.json");
 const achievements = loadJson("data/achievements.json");
+const experienceEn = loadJson("data/experience.en.json");
+const educationEn = loadJson("data/education.en.json");
+const servicesEn = loadJson("data/services.en.json");
+const projectsEn = loadJson("data/projects.en.json");
+const achievementsEn = loadJson("data/achievements.en.json");
 const contact = loadJson("data/contact.json");
+
+for (const [tag, doc] of [
+   ["zh", personalZh],
+   ["en", personalEn],
+]) {
+   if (doc && requireRecord(doc, `data/personal.${tag}.json`)) {
+      requireString(doc.name, `personal.${tag}.name`);
+      if (requireRecord(doc.contact, `personal.${tag}.contact`)) {
+         requireString(doc.contact.github, `personal.${tag}.contact.github`);
+      }
+   }
+}
+if (personalZh && personalEn) {
+   if (personalZh.contact?.github !== personalEn.contact?.github)
+      fail("personal i18n", "contact.github must match across zh/en");
+   if (
+      personalZh.social_profiles?.length !== personalEn.social_profiles?.length
+   )
+      fail("personal i18n", "social_profiles length must match across zh/en");
+   if (personalZh.languages?.length !== personalEn.languages?.length)
+      fail("personal i18n", "languages length must match across zh/en");
+}
 
 if (requireRecord(personal, "data/personal.json")) {
    for (const field of [
@@ -177,6 +206,10 @@ if (requireRecord(personal, "data/personal.json")) {
          "aws_accounts",
          "security_controls",
       ]) {
+         for (const opt of ["security_note", "workloads_note", "aws_note"]) {
+            if (personal.impact[opt] !== undefined)
+               requireString(personal.impact[opt], `personal.impact.${opt}`);
+         }
          if (personal.impact.security_note !== undefined)
             requireString(
                personal.impact.security_note,
@@ -568,6 +601,57 @@ try {
    }
 } catch (error) {
    fail("project covers", error.message);
+}
+
+// ---- bilingual parity: zh/en id sets must match ----
+const idsOf = (arr) => (Array.isArray(arr) ? arr.map((x) => x?.id) : []);
+const checkIds = (zhArr, enArr, tag) => {
+   const z = JSON.stringify(idsOf(zhArr));
+   const e = JSON.stringify(idsOf(enArr));
+   if (z !== e) fail(tag, `id set mismatch zh ${z} vs en ${e}`);
+};
+if (experience && experienceEn) {
+   checkIds(
+      experience.professional_experience,
+      experienceEn.professional_experience,
+      "experience.professional",
+   );
+   checkIds(
+      experience.positions_of_responsibility,
+      experienceEn.positions_of_responsibility,
+      "experience.por",
+   );
+}
+if (education && educationEn) checkIds(education, educationEn, "education");
+if (services && servicesEn) checkIds(services, servicesEn, "services");
+if (projects && projectsEn) {
+   for (const k of [
+      "featured_projects",
+      "collaborative_projects",
+      "other_projects",
+      "community_projects",
+   ]) {
+      checkIds(projects[k], projectsEn[k], `projects.${k}`);
+   }
+   if (projects.spotlight_project_id !== projectsEn.spotlight_project_id)
+      fail("projects i18n", "spotlight_project_id must match across zh/en");
+}
+if (achievements && achievementsEn) {
+   checkIds(
+      achievements.certifications,
+      achievementsEn.certifications,
+      "achievements.certifications",
+   );
+   checkIds(
+      achievements.learning_badges,
+      achievementsEn.learning_badges,
+      "achievements.learning_badges",
+   );
+   checkIds(
+      achievements.achievements,
+      achievementsEn.achievements,
+      "achievements.items",
+   );
 }
 
 if (errors.length > 0) {

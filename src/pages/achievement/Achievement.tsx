@@ -4,6 +4,8 @@ import {
    getLearningBadges,
    getAchievements,
 } from "@data/achievements";
+import useLanguage from "@hooks/useLanguage";
+import { st } from "@/i18n/sections";
 import PageSection from "@components/layout/PageSection";
 import { MAX_WIDTH } from "@/constants/theme";
 import { LEVEL_ORDER } from "./achievementConstants";
@@ -12,9 +14,16 @@ import BadgesSection from "./BadgesSection";
 import CompetitionsSection from "./CompetitionsSection";
 
 const Achievement = () => {
-   const rawCertifications = useMemo(() => getCertifications(), []);
-   const learningBadges = useMemo(() => getLearningBadges(), []);
-   const achievements = useMemo(() => getAchievements(), []);
+   const { language } = useLanguage();
+   const rawCertifications = useMemo(
+      () => getCertifications(language),
+      [language],
+   );
+   const learningBadges = useMemo(
+      () => getLearningBadges(language),
+      [language],
+   );
+   const achievements = useMemo(() => getAchievements(language), [language]);
 
    const certifications = useMemo(
       () =>
@@ -29,8 +38,8 @@ const Achievement = () => {
    return (
       <PageSection
          id="achievements"
-         title="Achievements"
-         subtitle="Milestones & certifications"
+         title={st(language, "ach.title")}
+         subtitle={st(language, "ach.sub")}
       >
          <div
             style={{

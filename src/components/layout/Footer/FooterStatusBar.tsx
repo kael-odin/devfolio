@@ -9,6 +9,8 @@ import {
 import { staggerItem } from "@utils/animations";
 import { MONO_FONT } from "@/constants/theme";
 import useBreakpoint from "@hooks/useBreakpoint";
+import useLanguage from "@hooks/useLanguage";
+import { t } from "@/i18n/ui";
 
 /* The footer's last row is a status bar: local time where he works, the
    availability line from personal.json, the stack the site is built with and
@@ -92,11 +94,12 @@ const LocalClock = ({ timeZone }: { timeZone: string }) => {
 
 const FooterStatusBar = () => {
    const { isMobile } = useBreakpoint();
+   const { language } = useLanguage();
    const techStack = getSiteConfig().tech_stack || [];
-   const availability = getAvailability();
+   const availability = getAvailability(language);
    const timeZone = getTimezone();
    // "Your City, Your Country" -> "Your City"
-   const city = getLocation().split(",")[0].trim();
+   const city = getLocation(language).split(",")[0].trim();
 
    return (
       <motion.div
@@ -161,7 +164,7 @@ const FooterStatusBar = () => {
                justifyContent: "center",
             }}
          >
-            <span style={labelStyle}>Built with</span>
+            <span style={labelStyle}>{t(language, "footer.builtWith")}</span>
             {techStack.map((tech) => (
                <span key={tech} style={chipStyle}>
                   {tech}
@@ -178,7 +181,7 @@ const FooterStatusBar = () => {
                justifyContent: isMobile ? "center" : "flex-end",
             }}
          >
-            <span style={labelStyle}>Build</span>
+            <span style={labelStyle}>{t(language, "footer.build")}</span>
             <span style={chipStyle}>v{import.meta.env.APP_VERSION}</span>
             <span style={chipStyle}>{import.meta.env.BUILD_DATE}</span>
          </div>

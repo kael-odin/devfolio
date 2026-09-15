@@ -10,6 +10,8 @@ import {
 } from "@components/ui/TimelineSpine";
 import TimelineCardContent from "./TimelineCardContent";
 import PresentIndicator from "./PresentIndicator";
+import useLanguage from "@hooks/useLanguage";
+import { st } from "@/i18n/sections";
 
 interface TimelineCardDesktopProps {
    item: ProfessionalExperience | PositionOfResponsibility;
@@ -34,6 +36,7 @@ const TimelineCardDesktop = ({
    accentColor,
    onClick,
 }: TimelineCardDesktopProps) => {
+   const { language } = useLanguage();
    const { start, end } = splitDateRange(item.date);
    const active = isPresent(item.date);
 
@@ -83,7 +86,7 @@ const TimelineCardDesktop = ({
                      color: GREEN,
                      letterSpacing: "0.02em",
                   }}
-                  aria-label="Currently active role"
+                  aria-label={st(language, "exp.activeRole")}
                >
                   <PresentIndicator />
                </span>

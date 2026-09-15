@@ -14,51 +14,60 @@ import {
    EASING,
 } from "@/constants/theme";
 import useBreakpoint from "@hooks/useBreakpoint";
+import useLanguage from "@hooks/useLanguage";
+import type { Language } from "@hooks/languageContext";
+import { st } from "@/i18n/sections";
 import useMotionPreference from "@hooks/useMotionPreference";
 
-const PLATFORM_CONFIG: Record<
-   string,
-   {
-      label: string;
-      color: string;
-      icon: typeof Trophy;
-      highlight: (stats: CodingPlatformStat) => string;
-      subtitle: (stats: CodingPlatformStat) => string;
-   }
-> = {
+interface PlatformConfig {
+   label: string;
+   color: string;
+   icon: typeof Trophy;
+   highlight: (stats: CodingPlatformStat) => string;
+   subtitle: (stats: CodingPlatformStat) => string;
+}
+
+const getPlatformConfig = (
+   language: Language,
+): Record<string, PlatformConfig> => ({
    leetcode: {
       label: "LeetCode",
       color: AMBER,
       icon: Trophy,
       highlight: (s) => `${s.best_rating ?? ""} ${s.badge ?? ""}`.trim(),
       subtitle: (s) =>
-         `${s.problems_solved ?? "?"} solved | ${s.contests ?? "?"} contests`,
+         st(language, "stats.solvedContests", {
+            solved: s.problems_solved ?? "?",
+            contests: s.contests ?? "?",
+         }),
    },
    geeksforgeeks: {
       label: "GeeksforGeeks",
       color: "#2f8d46",
       icon: Code,
       highlight: (s) => s.problems_solved ?? "",
-      subtitle: () => "Problems Solved",
+      subtitle: () => st(language, "stats.problemsSolved"),
    },
    hackerrank: {
       label: "HackerRank",
       color: PURPLE,
       icon: Star,
       highlight: (s) => s.problem_solving ?? "",
-      subtitle: (s) => `Problem Solving | ${s.cpp ?? "?"} C++`,
+      subtitle: (s) => st(language, "stats.psCpp", { cpp: s.cpp ?? "?" }),
    },
-};
+});
 
 interface CodingProfilesProps {
    githubUsername: string;
 }
 
 const CodingProfiles = ({ githubUsername }: CodingProfilesProps) => {
+   const { language } = useLanguage();
    const { isMobile } = useBreakpoint();
    const { reducedMotion } = useMotionPreference();
    const lift = reducedMotion ? undefined : { y: -4 };
-   const stats = getCodingPlatformStats();
+   const stats = getCodingPlatformStats(language);
+   const PLATFORM_CONFIG = getPlatformConfig(language);
    const entries = Object.entries(stats).filter(
       ([key]) => key in PLATFORM_CONFIG,
    );
@@ -95,7 +104,7 @@ const CodingProfiles = ({ githubUsername }: CodingProfilesProps) => {
       <div style={{ marginTop: 48 }}>
          <motion.div className="subsection-heading" variants={fadeInUp}>
             <Code size={22} style={{ color: PURPLE }} aria-hidden="true" />
-            <h3>Coding Platform Profiles</h3>
+            <h3>{st(language, "stats.platforms")}</h3>
          </motion.div>
 
          <motion.div
@@ -130,11 +139,11 @@ const CodingProfiles = ({ githubUsername }: CodingProfilesProps) => {
                      letterSpacing: "0.04em",
                   }}
                >
-                  GitHub
+                  {st(language, "stats.github")}
                </span>
                <span style={highlightStyle}>{githubUsername}</span>
                <span style={{ fontSize: 11, color: TEXT_MUTED }}>
-                  Open Source Contributions
+                  {st(language, "stats.ossContrib")}
                </span>
                <span
                   style={{
@@ -146,7 +155,7 @@ const CodingProfiles = ({ githubUsername }: CodingProfilesProps) => {
                      marginTop: 4,
                   }}
                >
-                  View Profile
+                  {st(language, "stats.viewProfile")}
                   <ArrowUpRight
                      size={14}
                      className="action-arrow action-arrow--external"
@@ -202,7 +211,7 @@ const CodingProfiles = ({ githubUsername }: CodingProfilesProps) => {
                            marginTop: 4,
                         }}
                      >
-                        View
+                        {st(language, "stats.view")}
                         <ArrowUpRight
                            size={14}
                            className="action-arrow action-arrow--external"

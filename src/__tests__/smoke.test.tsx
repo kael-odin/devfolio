@@ -62,9 +62,7 @@ describe("application shell", () => {
       const { container } = render(<App />);
       expect(container.querySelector("main")).toBeTruthy();
       expect(screen.queryByText("Contact section")).toBeNull();
-      fireEvent.click(
-         screen.getByRole("button", { name: "Navigate to Contact" }),
-      );
+      fireEvent.click(screen.getByRole("button", { name: "前往联系" }));
       await screen.findByText("Contact section");
 
       for (const section of CONTENT_SECTIONS) {
@@ -116,7 +114,7 @@ describe("application shell", () => {
             [
                {
                   isIntersecting: true,
-                  target: screen.getByRole("region", { name: "Skills" }),
+                  target: screen.getByRole("region", { name: "技能" }),
                   boundingClientRect: new DOMRect(),
                   intersectionRect: new DOMRect(),
                   intersectionRatio: 1,

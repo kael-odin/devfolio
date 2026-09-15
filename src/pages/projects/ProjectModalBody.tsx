@@ -4,6 +4,9 @@ import { ExternalLink, Sparkles, Check } from "lucide-react";
 import { FaGithub } from "react-icons/fa6";
 import TechTag from "@components/ui/TechTag";
 import { hasProjectUrl } from "@utils/projectMetadata";
+import useLanguage from "@hooks/useLanguage";
+import { st } from "@/i18n/sections";
+import { t } from "@/i18n/ui";
 import {
    TEXT_SECONDARY,
    TEXT_MUTED,
@@ -49,26 +52,29 @@ const ModalLink = ({
    icon: Icon,
    label,
    kind,
-}: ModalLinkProps) => (
-   <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      className={kind === "primary" ? "btn-primary" : "btn-outline"}
-      style={{
-         display: "inline-flex",
-         alignItems: "center",
-         gap: 8,
-         padding: "10px 18px",
-         fontSize: 13,
-         textDecoration: "none",
-      }}
-      aria-label={`${ariaLabel} (opens in a new tab)`}
-   >
-      <Icon size={15} />
-      {label}
-   </a>
-);
+}: ModalLinkProps) => {
+   const { language } = useLanguage();
+   return (
+      <a
+         href={href}
+         target="_blank"
+         rel="noopener noreferrer"
+         className={kind === "primary" ? "btn-primary" : "btn-outline"}
+         style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 8,
+            padding: "10px 18px",
+            fontSize: 13,
+            textDecoration: "none",
+         }}
+         aria-label={t(language, "hero.opensNewTab", { text: ariaLabel })}
+      >
+         <Icon size={15} />
+         {label}
+      </a>
+   );
+};
 
 interface SectionProps {
    delay: number;
@@ -88,6 +94,7 @@ const ProjectModalBody = ({
    colors,
    isMobile,
 }: ProjectModalBodyProps) => {
+   const { language } = useLanguage();
    const features = project.features ?? [];
    const contributors = project.contributors ?? [];
    const hasGithub = hasProjectUrl(project.github);
@@ -116,12 +123,12 @@ const ProjectModalBody = ({
 
          {/* Tech stack */}
          {project.tools_tech.length > 0 && (
-            <Section delay={0.24} label="Tech Stack">
+            <Section delay={0.24} label={st(language, "proj.tech")}>
                <div style={{ display: "flex", flexWrap: "wrap", gap: 4 }}>
-                  {project.tools_tech.map((t) => (
+                  {project.tools_tech.map((tech) => (
                      <TechTag
-                        key={t}
-                        label={t}
+                        key={tech}
+                        label={tech}
                         accent={colors.accent}
                         size={11}
                      />
@@ -143,7 +150,7 @@ const ProjectModalBody = ({
                      }}
                   >
                      <Sparkles size={12} style={{ color: colors.accent }} />
-                     Key Features
+                     {st(language, "proj.features")}
                   </span>
                }
             >
@@ -184,7 +191,7 @@ const ProjectModalBody = ({
 
          {/* Contributors (collab projects) */}
          {contributors.length > 0 && (
-            <Section delay={0.36} label="Contributors">
+            <Section delay={0.36} label={st(language, "proj.contributors")}>
                <div style={{ display: "flex", flexWrap: "wrap", gap: 4 }}>
                   {contributors.map((c) => (
                      <span
@@ -222,18 +229,22 @@ const ProjectModalBody = ({
                {hasLive && (
                   <ModalLink
                      href={project.live}
-                     ariaLabel={`View ${project.title} live demo`}
+                     ariaLabel={st(language, "proj.demoOn", {
+                        title: project.title,
+                     })}
                      icon={ExternalLink}
-                     label="Live Demo"
+                     label={st(language, "proj.demo")}
                      kind="primary"
                   />
                )}
                {hasGithub && (
                   <ModalLink
                      href={project.github}
-                     ariaLabel={`View ${project.title} on GitHub`}
+                     ariaLabel={st(language, "proj.sourceOn", {
+                        title: project.title,
+                     })}
                      icon={FaGithub}
-                     label="View Source"
+                     label={st(language, "proj.viewSource")}
                      kind="outline"
                   />
                )}

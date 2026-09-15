@@ -1,5 +1,9 @@
 # Devfolio — Developer Portfolio Template
 
+> **中文**：深色开发者作品集模板（React + Vite + Tailwind），默认中文、右下角可切英文。内容在 `data/*.zh.json`（中文）/ `data/*.en.json`（英文），界面文案在 `src/i18n/`。在线演示：<https://kael-odin.github.io/devfolio/>（本站点本身就是用 Kael Odin 真实信息打磨的活示例）。
+>
+> **English**: A dark developer portfolio template (React + Vite + Tailwind), Chinese by default with an EN toggle at the bottom-right. Content lives in `data/*.zh.json` (Chinese) / `data/*.en.json` (English); UI copy in `src/i18n/`. Live demo: <https://kael-odin.github.io/devfolio/> (this site itself, filled with Kael Odin's real info).
+
 ![GitHub stars](https://img.shields.io/github/stars/your-github-username/devfolio?style=flat-square&cacheSeconds=86400)
 ![GitHub forks](https://img.shields.io/github/forks/your-github-username/devfolio?style=flat-square&cacheSeconds=86400)
 ![License](https://img.shields.io/badge/License-GPL--3.0-blue?style=flat-square)
@@ -22,11 +26,11 @@
 
 > Template note: this is a de-personalized, placeholder-filled adaptation of [Sagargupta16/portfolio-react](https://github.com/Sagargupta16/portfolio-react) (GPL-3.0). All names, photos, resumes, badges, and project content were replaced with placeholders — edit `data/*.json` to make it yours. See [LICENSE](LICENSE).
 
-| Hero                                | Projects                                  |
-| ----------------------------------- | ----------------------------------------- |
-| ![Hero](docs/screenshot-hero.png)   | ![Projects](docs/screenshot-projects.png) |
-| Stats                               | Contact                                   |
-| ![Stats](docs/screenshot-stats.png) | ![Contact](docs/screenshot-contact.png)   |
+| Hero （中文）                       | Projects (English)                              |
+| ----------------------------------- | ----------------------------------------------- |
+| ![Hero](docs/screenshot-hero.png)   | ![Projects EN](docs/screenshot-projects-en.png) |
+| 关于                                | Stats                                           |
+| ![About](docs/screenshot-about.png) | ![Stats](docs/screenshot-stats.png)             |
 
 A minimal dark personal portfolio: near-black canvas, one blue accent family, flat bordered cards, and an ambient aurora-and-beams background. Project cards carry live screenshots of deployed sites and animated SVG cover scenes for everything else. Built as a single-page scroll application with strict TypeScript, sections loaded near the viewport, data validation, and a persisted Full/Reduced motion preference.
 
@@ -194,7 +198,7 @@ Domain modules under `src/data/` expose typed getters without forcing every JSON
 
 Certifications can be synced from Credly via the `sync-credly.yml` workflow (manual trigger by default; set `CREDLY_USERNAME` and re-enable the schedule to automate). The template ships placeholder badges on the Credly image hosts so validation passes out of the box — replace `badgeId`/`badgeUrl`/`imageUrl` with your real badges.
 
-**What to replace first (checklist):** `data/personal.json` (name, role, socials, GitHub username) → `data/contact.json` (email links + EmailJS keys) → `data/experience.json` → `data/projects.json` (+ covers in `src/pages/projects/covers/coverRegistry.ts`) → `data/achievements.json` (badges + coding stats) → `index.html` (title/meta/site URL) → set `RESUME_URL` env for the CV viewer and `CREDLY_USERNAME` for badge sync.
+**What to replace first (checklist):** bilingual content lives in `data/*.zh.json` (Chinese, default) + `data/*.en.json` (English) — keep the `id` sets in sync (`pnpm validate:data` checks this). Order: `data/personal.*.json` (name, role, socials, GitHub username) → `data/contact.json` (links + EmailJS keys; option titles come from `src/i18n/ui.ts`) → `data/experience.*.json` → `data/projects.*.json` (+ covers in `src/pages/projects/covers/coverRegistry.ts`) → `data/achievements.*.json` (badges + coding stats) → `data/services.*.json` → UI copy in `src/i18n/` → `index.html` (title/meta/site URL) → set `RESUME_URL` env for the CV viewer and `CREDLY_USERNAME` for badge sync. The legacy `data/*.json` files are zh mirrors for backward compat; the app reads the `.zh/.en` files.
 
 ---
 

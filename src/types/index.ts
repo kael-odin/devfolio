@@ -139,7 +139,11 @@ export interface ImpactStats {
    clients_served: string;
    clients_note: string;
    workloads_migrated: string;
+   /** Optional unit note under the workloads stat. */
+   workloads_note?: string;
    aws_accounts: string;
+   /** Optional unit note under the accounts/templates stat. */
+   aws_note?: string;
    security_controls: string;
    /** Optional note under the security-controls stat (e.g. "SOC 2 aligned"). */
    security_note?: string;
@@ -223,3 +227,6 @@ export interface Service {
 
 // ===== Icon Map =====
 export type IconMap = Record<string, ComponentType<{ size?: number | string }>>;
+
+// ===== i18n =====
+export type Language = "zh" | "en";

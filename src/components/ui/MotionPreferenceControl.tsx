@@ -4,6 +4,8 @@ import { Accessibility, Sparkles } from "lucide-react";
 import { GLASS_BORDER, MONO_FONT, TEXT_PRIMARY } from "@/constants/theme";
 import useBreakpoint from "@hooks/useBreakpoint";
 import useMotionPreference from "@hooks/useMotionPreference";
+import useLanguage from "@hooks/useLanguage";
+import { t } from "@/i18n/ui";
 import type { MotionPreference } from "@hooks/motionPreferenceContext";
 
 // On phones the control would sit on the hero CTAs at the fold, so it waits
@@ -11,10 +13,8 @@ import type { MotionPreference } from "@hooks/motionPreferenceContext";
 const PHONE_REVEAL_PX = 120;
 
 const ORDER: MotionPreference[] = ["full", "reduced"];
-const LABELS: Record<MotionPreference, string> = {
-   full: "Full",
-   reduced: "Reduced",
-};
+const labelFor = (language: "zh" | "en", p: MotionPreference) =>
+   t(language, p === "full" ? "ctrl.motionFull" : "ctrl.motionReduced");
 
 const PreferenceIcon = ({ preference }: { preference: MotionPreference }) => {
    if (preference === "reduced") return <Accessibility size={16} />;
@@ -24,6 +24,11 @@ const PreferenceIcon = ({ preference }: { preference: MotionPreference }) => {
 const MotionPreferenceControl = () => {
    const { isMobile } = useBreakpoint();
    const { preference, setPreference } = useMotionPreference();
+   const { language } = useLanguage();
+   const LABELS: Record<MotionPreference, string> = {
+      full: labelFor(language, "full"),
+      reduced: labelFor(language, "reduced"),
+   };
    const [pastFold, setPastFold] = useState(
       () => globalThis.window != null && window.scrollY > PHONE_REVEAL_PX,
    );
@@ -49,8 +54,14 @@ const MotionPreferenceControl = () => {
          tabIndex={shown ? 0 : -1}
          whileHover={{ y: -2, scale: 1.02 }}
          whileTap={{ scale: 0.96 }}
-         aria-label={`Motion mode: ${LABELS[preference]}. Switch to ${LABELS[nextPreference]}`}
-         title={`Motion: ${LABELS[preference]} (click for ${LABELS[nextPreference]})`}
+         aria-label={t(language, "ctrl.motionMode", {
+            cur: LABELS[preference],
+            next: LABELS[nextPreference],
+         })}
+         title={t(language, "ctrl.motionTitle", {
+            cur: LABELS[preference],
+            next: LABELS[nextPreference],
+         })}
          style={{
             position: "fixed",
             pointerEvents: shown ? "auto" : "none",
@@ -78,7 +89,11 @@ const MotionPreferenceControl = () => {
          }}
       >
          <PreferenceIcon preference={preference} />
-         {!isMobile && <span>{LABELS[preference]} motion</span>}
+         {!isMobile && (
+            <span>
+               {LABELS[preference]} {t(language, "ctrl.motionSuffix")}
+            </span>
+         )}
       </motion.button>
    );
 };

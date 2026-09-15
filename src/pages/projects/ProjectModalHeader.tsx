@@ -1,6 +1,8 @@
 import { Calendar, Users, Star, FolderGit2 } from "lucide-react";
 import ModalHeaderShell from "@components/ui/ModalHeaderShell";
 import { TEXT_PRIMARY, TEXT_MUTED, MONO_FONT } from "@/constants/theme";
+import useLanguage from "@hooks/useLanguage";
+import { st } from "@/i18n/sections";
 import type { CategoryColors, ProjectWithCategory } from "./projectConstants";
 
 interface ProjectModalHeaderProps {
@@ -16,6 +18,7 @@ const ProjectModalHeader = ({
    isMobile,
    onClose,
 }: ProjectModalHeaderProps) => {
+   const { language } = useLanguage();
    const isFeatured = project.category === "Featured";
    const IconComponent = isFeatured ? Star : FolderGit2;
 
@@ -23,7 +26,7 @@ const ProjectModalHeader = ({
       <ModalHeaderShell
          isMobile={isMobile}
          onClose={onClose}
-         closeLabel="Close project details"
+         closeLabel={st(language, "proj.close")}
       >
          <div
             style={{

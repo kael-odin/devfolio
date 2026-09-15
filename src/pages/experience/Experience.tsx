@@ -3,6 +3,8 @@ import { motion, LayoutGroup } from "motion/react";
 import { getExperience, getPositionsOfResponsibility } from "@data/experience";
 import { staggerContainer, fadeInUp } from "@utils/animations";
 import useBreakpoint from "@hooks/useBreakpoint";
+import useLanguage from "@hooks/useLanguage";
+import { st } from "@/i18n/sections";
 import PageSection from "@components/layout/PageSection";
 import TimelineSpine from "@components/ui/TimelineSpine";
 import { CYAN, PURPLE, MAX_WIDTH_NARROW } from "@/constants/theme";
@@ -11,8 +13,12 @@ import TimelineCard from "./TimelineCard";
 import ExperienceModal from "./ExperienceModal";
 
 const Experience = () => {
-   const experienceArray = getExperience();
-   const positionsArray = getPositionsOfResponsibility();
+   const { language } = useLanguage();
+   const experienceArray = useMemo(() => getExperience(language), [language]);
+   const positionsArray = useMemo(
+      () => getPositionsOfResponsibility(language),
+      [language],
+   );
    const { isMobile } = useBreakpoint();
    const [selectedExp, setSelectedExp] =
       useState<ProfessionalExperience | null>(null);
@@ -53,7 +59,7 @@ const Experience = () => {
                   variants={fadeInUp}
                   style={{ marginTop: 48, marginBottom: 32 }}
                >
-                  Positions of Responsibility
+                  {st(language, "exp.por")}
                </motion.h3>
 
                <LayoutGroup>

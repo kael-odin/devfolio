@@ -2,6 +2,7 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { BreakpointProvider } from "@hooks/BreakpointProvider";
 import { MotionPreferenceProvider } from "@hooks/MotionPreferenceProvider";
+import { LanguageProvider } from "@hooks/LanguageProvider";
 import useMotionPreference from "@hooks/useMotionPreference";
 import MotionPreferenceControl from "@components/ui/MotionPreferenceControl";
 import QuickFacts from "@pages/about/QuickFacts";
@@ -12,12 +13,15 @@ import type { Education, ProfessionalExperience, Project } from "@/types";
 
 // MotionPreferenceControl reads useBreakpoint, which throws outside its
 // provider, so the harness supplies both application-root providers.
-const renderWithMotion = (ui: React.ReactNode) =>
+const renderWithProviders = (ui: React.ReactNode) =>
    render(
       <BreakpointProvider>
-         <MotionPreferenceProvider>{ui}</MotionPreferenceProvider>
+         <LanguageProvider>
+            <MotionPreferenceProvider>{ui}</MotionPreferenceProvider>
+         </LanguageProvider>
       </BreakpointProvider>,
    );
+const renderWithMotion = renderWithProviders;
 
 const project: Project & { category: string } = {
    id: 3,
@@ -61,10 +65,10 @@ const experience: ProfessionalExperience = {
 
 describe("accessible interactions", () => {
    it("renders the concise role without a duplicate employer suffix", () => {
-      render(<QuickFacts isMobile={false} />);
-      // Mirrors data/personal.json placeholders ("Your Role" @ "Your Company").
+      renderWithProviders(<QuickFacts isMobile={false} />);
+      // Mirrors data/personal.zh.json (default language is zh).
       // If you change role/employer, update these expectations to match.
-      expect(screen.getByText("Your Role @ Your Company")).toBeTruthy();
+      expect(screen.getByText("全栈开发者 @ 独立开发者")).toBeTruthy();
    });
 
    it("uses an explicit project Details button without nesting links in a pseudo-button", () => {
@@ -73,10 +77,10 @@ describe("accessible interactions", () => {
          <ProjectCard data={project} onOpen={onOpen} />,
       );
       const details = screen.getByRole("button", {
-         name: "View details for Portfolio React",
+         name: "查看Portfolio React的详情",
       });
       const source = screen.getByRole("link", {
-         name: /View Portfolio React on GitHub/,
+         name: /在 GitHub 查看Portfolio React/,
       });
 
       expect(container.querySelector('[role="button"]')).toBeNull();
@@ -87,10 +91,10 @@ describe("accessible interactions", () => {
    });
 
    it("opens and closes education achievements with a native disclosure", () => {
-      render(<ExpandableExtras item={education} marginLeft={0} />);
+      renderWithProviders(<ExpandableExtras item={education} marginLeft={0} />);
       const disclosure = screen.getByRole("group") as HTMLDetailsElement;
       const trigger = disclosure.querySelector("summary")!;
-      expect(trigger.textContent).toBe("1 achievement");
+      expect(trigger.textContent).toBe("1 项成就");
       expect(disclosure.open).toBe(false);
 
       fireEvent.click(trigger);
@@ -105,7 +109,7 @@ describe("accessible interactions", () => {
 
    it("keeps timeline headings outside the explicit Details control", () => {
       const onClick = vi.fn();
-      const { container } = render(
+      const { container } = renderWithProviders(
          <TimelineCardContent
             item={experience}
             accentColor="#60a5fa"
@@ -114,7 +118,7 @@ describe("accessible interactions", () => {
          />,
       );
       const button = screen.getByRole("button", {
-         name: "View details for Example Company",
+         name: "查看Example Company的详情",
       });
       expect(button.querySelector("h3")).toBeNull();
       expect(container.querySelector("h3")?.textContent).toBe(
@@ -171,20 +175,20 @@ describe("accessible interactions", () => {
       expect(screen.getByText("full")).toBeTruthy();
       expect(
          screen.getByRole("button", {
-            name: "Motion mode: Full. Switch to Reduced",
+            name: "动效模式：完整，切换为简约",
          }),
       ).toBeTruthy();
 
       // The control is a single button that toggles Full <-> Reduced.
       const toggle = () =>
-         fireEvent.click(screen.getByRole("button", { name: /^Motion mode:/ }));
+         fireEvent.click(screen.getByRole("button", { name: /^动效模式：/ }));
 
       toggle(); // -> Reduced (explicit; the OS preference is never consulted)
       await waitFor(() => expect(screen.getByText("reduced")).toBeTruthy());
       expect(document.documentElement.dataset.motion).toBe("reduced");
       expect(
          screen.getByRole("button", {
-            name: "Motion mode: Reduced. Switch to Full",
+            name: "动效模式：简约，切换为完整",
          }),
       ).toBeTruthy();
       expect(

@@ -8,6 +8,8 @@ import {
    MessageCircle,
 } from "lucide-react";
 import { MONO_FONT, CYAN, GREEN, PURPLE } from "@/constants/theme";
+import useLanguage from "@hooks/useLanguage";
+import { st } from "@/i18n/sections";
 import { staggerContainer, staggerItem } from "@utils/animations";
 import {
    OPEN_SOURCE_CONTRIBUTIONS,
@@ -17,6 +19,7 @@ import ContribSection from "./ContribSection";
 import DiscussionCard from "./DiscussionCard";
 
 const OpenSourceBanner = () => {
+   const { language } = useLanguage();
    const merged = OPEN_SOURCE_CONTRIBUTIONS.filter(
       (c) => c.status === "merged",
    );
@@ -45,7 +48,7 @@ const OpenSourceBanner = () => {
                style={{ color: GREEN }}
                aria-hidden="true"
             />
-            <h3>Open Source Contributions</h3>
+            <h3>{st(language, "proj.oss")}</h3>
             <span className="subsection-count">
                {OPEN_SOURCE_CONTRIBUTIONS.length + COMMUNITY_DISCUSSIONS.length}
             </span>
@@ -81,7 +84,7 @@ const OpenSourceBanner = () => {
                <div style={{ marginBottom: open.length > 0 ? 20 : 0 }}>
                   <ContribSection
                      icon={GitMerge}
-                     label="Merged"
+                     label={st(language, "proj.merged")}
                      count={merged.length}
                      color={PURPLE}
                      items={merged}
@@ -103,7 +106,7 @@ const OpenSourceBanner = () => {
                   )}
                   <ContribSection
                      icon={CircleDot}
-                     label="Under Review"
+                     label={st(language, "proj.underReview")}
                      count={open.length}
                      color={GREEN}
                      items={open}
@@ -124,7 +127,7 @@ const OpenSourceBanner = () => {
                   />
                   <ContribSection
                      icon={GitPullRequestClosed}
-                     label="Community Impact"
+                     label={st(language, "proj.impact")}
                      count={closed.length}
                      color="#f97316"
                      items={closed}
@@ -161,8 +164,9 @@ const OpenSourceBanner = () => {
                            letterSpacing: "0.03em",
                         }}
                      >
-                        Accepted Discussion Answers (
-                        {acceptedDiscussions.length})
+                        {st(language, "proj.acceptedAnswers", {
+                           n: acceptedDiscussions.length,
+                        })}
                      </span>
                   </div>
                   <motion.div
@@ -210,7 +214,9 @@ const OpenSourceBanner = () => {
                            letterSpacing: "0.03em",
                         }}
                      >
-                        Discussion Contributions ({helpfulDiscussions.length})
+                        {st(language, "proj.discussions", {
+                           n: helpfulDiscussions.length,
+                        })}
                      </span>
                   </div>
                   <motion.div

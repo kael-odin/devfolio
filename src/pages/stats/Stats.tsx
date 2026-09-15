@@ -3,6 +3,8 @@ import { GitHubCalendar } from "react-github-calendar";
 import type { Activity } from "react-github-calendar";
 import { getGitHubUsername } from "@data/personal";
 import useBreakpoint from "@hooks/useBreakpoint";
+import useLanguage from "@hooks/useLanguage";
+import { st } from "@/i18n/sections";
 import { TEXT_MUTED, CYAN, MAX_WIDTH_WIDE } from "@/constants/theme";
 import CodingProfiles from "./CodingProfiles";
 import StatsBand from "./StatsBand";
@@ -29,76 +31,86 @@ const SKELETON_MONTHS = Array.from(
    (_, i) => `month-${i}`,
 );
 
-const CalendarSkeleton = () => (
-   <div
-      style={{
-         display: "flex",
-         flexDirection: "column",
-         gap: 12,
-         alignItems: "center",
-      }}
-      aria-busy="true"
-      aria-label="Loading GitHub contribution calendar"
-   >
-      {SKELETON_ROWS.map((rowKey, row) => (
-         <div key={rowKey} style={{ display: "flex", gap: 4 }}>
-            {SKELETON_COLS.map((colKey, col) => (
+const CalendarSkeleton = () => {
+   const { language } = useLanguage();
+   return (
+      <div
+         style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: 12,
+            alignItems: "center",
+         }}
+         aria-busy="true"
+         aria-label={st(language, "stats.calendarLoading")}
+      >
+         {SKELETON_ROWS.map((rowKey, row) => (
+            <div key={rowKey} style={{ display: "flex", gap: 4 }}>
+               {SKELETON_COLS.map((colKey, col) => (
+                  <div
+                     key={colKey}
+                     className="skeleton"
+                     style={{
+                        width: 11,
+                        height: 11,
+                        borderRadius: 4,
+                        opacity:
+                           0.3 +
+                           ((row * WEEKS_IN_YEAR + col) % DAYS_IN_WEEK) * 0.06,
+                        animationDelay: `${(row * WEEKS_IN_YEAR + col) * 2}ms`,
+                     }}
+                  />
+               ))}
+            </div>
+         ))}
+         <div style={{ display: "flex", gap: 24, marginTop: 8 }}>
+            {SKELETON_MONTHS.map((key) => (
                <div
-                  key={colKey}
+                  key={key}
                   className="skeleton"
                   style={{
-                     width: 11,
-                     height: 11,
+                     width: 24,
+                     height: 10,
                      borderRadius: 4,
-                     opacity:
-                        0.3 +
-                        ((row * WEEKS_IN_YEAR + col) % DAYS_IN_WEEK) * 0.06,
-                     animationDelay: `${(row * WEEKS_IN_YEAR + col) * 2}ms`,
+                     opacity: 0.3,
                   }}
                />
             ))}
          </div>
-      ))}
-      <div style={{ display: "flex", gap: 24, marginTop: 8 }}>
-         {SKELETON_MONTHS.map((key) => (
-            <div
-               key={key}
-               className="skeleton"
-               style={{ width: 24, height: 10, borderRadius: 4, opacity: 0.3 }}
-            />
-         ))}
       </div>
-   </div>
-);
+   );
+};
 
 // -- Timeout fallback --
-const CalendarTimeout = ({ username }: { username: string }) => (
-   <div
-      role="status"
-      style={{
-         display: "flex",
-         flexDirection: "column",
-         alignItems: "center",
-         gap: 12,
-         padding: "32px 16px",
-         textAlign: "center",
-      }}
-   >
-      <p style={{ fontSize: 14, color: TEXT_MUTED, maxWidth: 360 }}>
-         Set your GitHub username in data/personal.json (contact.github) to show
-         your live contribution graph here.
-      </p>
-      <a
-         href={`https://github.com/${username}`}
-         target="_blank"
-         rel="noopener noreferrer"
-         className="btn-outline"
-         style={{ fontSize: 14, color: CYAN }}
+const CalendarTimeout = ({ username }: { username: string }) => {
+   const { language } = useLanguage();
+   return (
+      <div
+         role="status"
+         style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: 12,
+            padding: "32px 16px",
+            textAlign: "center",
+         }}
       >
-         Open GitHub profile
-      </a>
-   </div>
-);
+         <p style={{ fontSize: 14, color: TEXT_MUTED, maxWidth: 360 }}>
+            {st(language, "stats.calendarHint")}
+         </p>
+         <a
+            href={`https://github.com/${username}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-outline"
+            style={{ fontSize: 14, color: CYAN }}
+         >
+            {st(language, "stats.openGithub")}
+         </a>
+      </div>
+   );
+};
 
 /** Stamp --col CSS variable on calendar rects for wave animation */
 const stampColumnIndices = (container: HTMLElement) => {
@@ -127,6 +139,7 @@ const calendarReducer = (
 
 // -- Main component --
 const Stats = () => {
+   const { language } = useLanguage();
    const { isMobile } = useBreakpoint();
    const githubUsername = getGitHubUsername();
    // Template placeholder guard: "your-github-username" has no public
@@ -166,8 +179,8 @@ const Stats = () => {
    return (
       <PageSection
          id="stats"
-         title="By the Numbers"
-         subtitle="Stats"
+         title={st(language, "stats.title")}
+         subtitle={st(language, "stats.sub")}
          maxWidth={MAX_WIDTH_WIDE}
       >
          <div style={{ maxWidth: MAX_WIDTH_WIDE, margin: "0 auto" }}>

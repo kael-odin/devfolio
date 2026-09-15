@@ -8,6 +8,8 @@ import {
    getEmployer,
    getLanguages,
 } from "@data/personal";
+import useLanguage from "@hooks/useLanguage";
+import { st } from "@/i18n/sections";
 import { getEducation } from "@data/education";
 import {
    CYAN,
@@ -47,8 +49,9 @@ const factItem: Variants = {
  * Replaces the old stat-counter grid, which duplicated the hero stats verbatim.
  */
 const QuickFacts = ({ isMobile }: { isMobile: boolean }) => {
+   const { language } = useLanguage();
    const facts = useMemo<Fact[]>(() => {
-      const degree = getEducation()[0];
+      const degree = getEducation(language)[0];
       // "Master of Computer Applications (MCA)" -> "MCA" without regex
       // (Sonar S8786 flags the capture-group pattern for backtracking).
       const title = degree?.title ?? "";
@@ -57,26 +60,30 @@ const QuickFacts = ({ isMobile }: { isMobile: boolean }) => {
       const degreeShort =
          open !== -1 && close !== -1 ? title.slice(open + 1, close) : title;
       return [
-         { Icon: MapPin, label: "Based in", value: getLocation() },
+         {
+            Icon: MapPin,
+            label: st(language, "about.basedIn"),
+            value: getLocation(language),
+         },
          {
             Icon: Briefcase,
-            label: "Role",
-            value: `${getRole()} @ ${getEmployer()}`,
+            label: st(language, "about.role"),
+            value: `${getRole(language)} @ ${getEmployer(language)}`,
          },
          {
             Icon: GraduationCap,
-            label: "Education",
-            value: degreeShort || degree?.institution || getLocation(),
+            label: st(language, "about.education"),
+            value: degreeShort || degree?.institution || getLocation(language),
          },
          {
             Icon: Languages,
-            label: "Languages",
-            value: getLanguages()
+            label: st(language, "about.languages"),
+            value: getLanguages(language)
                .map((l) => l.name)
                .join(", "),
          },
       ];
-   }, []);
+   }, [language]);
 
    return (
       <motion.div

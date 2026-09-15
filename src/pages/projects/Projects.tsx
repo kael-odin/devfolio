@@ -24,6 +24,8 @@ import {
 } from "@/constants/theme";
 import PageSection from "@components/layout/PageSection";
 import useMotionPreference from "@hooks/useMotionPreference";
+import useLanguage from "@hooks/useLanguage";
+import { st } from "@/i18n/sections";
 import { parseProjectDate } from "@utils/projectMetadata";
 import { FILTERS } from "./projectConstants";
 import type { ProjectWithCategory } from "./projectConstants";
@@ -81,7 +83,17 @@ const PILL_STYLE: CSSProperties = {
 const PILL_SPRING = { type: "spring", stiffness: 500, damping: 40 } as const;
 const TAP = { scale: 0.97 };
 
+// FILTERS entries are category keys; this maps each key to its UI label key.
+const FILTER_LABEL_KEYS: Record<string, string> = {
+   All: "proj.all",
+   Featured: "proj.featured",
+   Community: "proj.community",
+   Collab: "proj.collab",
+   Others: "proj.others",
+};
+
 const Projects = () => {
+   const { language } = useLanguage();
    const { reducedMotion } = useMotionPreference();
    const [activeFilter, setActiveFilter] = useState<string>("Featured");
    const [query, setQuery] = useState("");
@@ -97,13 +109,22 @@ const Projects = () => {
       setHasFiltered(true);
    }, []);
 
-   const featuredProjects = useMemo(() => getFeaturedProjects(), []);
-   const communityProjects = useMemo(() => getCommunityProjects(), []);
-   const collaborativeProjects = useMemo(() => getCollaborativeProjects(), []);
-   const otherProjects = useMemo(() => getOtherProjects(), []);
+   const featuredProjects = useMemo(
+      () => getFeaturedProjects(language),
+      [language],
+   );
+   const communityProjects = useMemo(
+      () => getCommunityProjects(language),
+      [language],
+   );
+   const collaborativeProjects = useMemo(
+      () => getCollaborativeProjects(language),
+      [language],
+   );
+   const otherProjects = useMemo(() => getOtherProjects(language), [language]);
    const spotlightProjectId =
       activeFilter === "Featured" && !query.trim()
-         ? getSpotlightProjectId()
+         ? getSpotlightProjectId(language)
          : null;
 
    // Counts per filter -- drives both the badge text and the "hide empty" rule.
@@ -203,7 +224,11 @@ const Projects = () => {
    );
 
    return (
-      <PageSection id="projects" title="Projects" subtitle="Things I've built">
+      <PageSection
+         id="projects"
+         title={st(language, "proj.title")}
+         subtitle={st(language, "proj.sub")}
+      >
          <div style={{ maxWidth: MAX_WIDTH, margin: "0 auto" }}>
             <motion.div
                className="project-toolbar"
@@ -212,11 +237,15 @@ const Projects = () => {
                <div
                   className="project-filters"
                   role="group"
-                  aria-label="Filter projects"
+                  aria-label={st(language, "proj.filter")}
                >
                   {visibleFilters.map((filter) => {
                      const isActive = activeFilter === filter;
                      const count = counts[filter] ?? 0;
+                     const filterLabel = st(
+                        language,
+                        FILTER_LABEL_KEYS[filter] ?? filter,
+                     );
                      return (
                         <motion.button
                            key={filter}
@@ -230,7 +259,11 @@ const Projects = () => {
                            whileTap={TAP}
                            aria-pressed={isActive}
                            aria-controls="project-results"
-                           aria-label={`${filter} (${count} project${count === 1 ? "" : "s"})`}
+                           aria-label={st(language, "proj.filterCount", {
+                              filter: filterLabel,
+                              count,
+                              s: count === 1 ? "" : "s",
+                           })}
                         >
                            {isActive && (
                               <motion.span
@@ -241,7 +274,7 @@ const Projects = () => {
                               />
                            )}
                            <span style={{ position: "relative" }}>
-                              {filter}
+                              {filterLabel}
                            </span>
                            <span
                               aria-hidden="true"
@@ -282,8 +315,8 @@ const Projects = () => {
                      onKeyDown={(event) => {
                         if (event.key === "Escape") clearSearch();
                      }}
-                     placeholder="Search title or technology"
-                     aria-label="Search projects"
+                     placeholder={st(language, "proj.searchPh")}
+                     aria-label={st(language, "proj.search")}
                      aria-describedby="project-result-count"
                      aria-controls="project-results"
                      autoComplete="off"
@@ -293,7 +326,7 @@ const Projects = () => {
                      <button
                         type="button"
                         className="project-action"
-                        aria-label="Clear search"
+                        aria-label={st(language, "proj.clearSearch")}
                         onClick={clearSearch}
                      >
                         <X size={16} aria-hidden="true" />
@@ -304,10 +337,15 @@ const Projects = () => {
 
             <div className="project-results-summary">
                <span id="project-result-count" role="status" aria-live="polite">
-                  {filteredProjects.length} of {counts[activeFilter]} projects
+                  {st(language, "proj.count", {
+                     n: filteredProjects.length,
+                     m: counts[activeFilter] ?? 0,
+                  })}
                </span>
                <span>
-                  {hasSpotlight ? "Spotlight, then newest" : "Newest first"}
+                  {hasSpotlight
+                     ? st(language, "proj.spotlightFirst")
+                     : st(language, "proj.newestFirst")}
                </span>
             </div>
 
@@ -327,10 +365,11 @@ const Projects = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.18, ease: EASING.cinematic }}
                >
-                  <h3>No matching projects</h3>
+                  <h3>{st(language, "proj.empty")}</h3>
                   <p>
-                     Try another name or technology, or reset the filters to
-                     explore all {counts.All} projects.
+                     {st(language, "proj.emptyHint", {
+                        n: counts.All ?? 0,
+                     })}
                   </p>
                   <button
                      type="button"
@@ -340,7 +379,7 @@ const Projects = () => {
                         clearSearch();
                      }}
                   >
-                     Reset filters
+                     {st(language, "proj.reset")}
                   </button>
                </motion.div>
             )}

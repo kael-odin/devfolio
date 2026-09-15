@@ -2,6 +2,8 @@ import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "motion/react";
 import { CheckCircle, XCircle, X } from "lucide-react";
 import { GREEN, RED, TEXT_PRIMARY, TEXT_MUTED } from "@/constants/theme";
+import useLanguage from "@hooks/useLanguage";
+import { t } from "@/i18n/ui";
 
 interface ToastProps {
    message: string;
@@ -24,6 +26,7 @@ const TOAST_COLORS = {
 };
 
 const Toast = ({ message, type = "success", visible, onClose }: ToastProps) => {
+   const { language } = useLanguage();
    const config = TOAST_COLORS[type] || TOAST_COLORS.success;
    const Icon = config.icon;
 
@@ -97,7 +100,7 @@ const Toast = ({ message, type = "success", visible, onClose }: ToastProps) => {
                      onMouseLeave={(e: React.MouseEvent<HTMLButtonElement>) => {
                         e.currentTarget.style.color = TEXT_MUTED;
                      }}
-                     aria-label="Dismiss"
+                     aria-label={t(language, "ctrl.dismiss")}
                   >
                      <X size={14} />
                   </button>

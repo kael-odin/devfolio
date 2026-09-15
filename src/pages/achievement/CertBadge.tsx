@@ -12,6 +12,9 @@ import {
    MONO_FONT,
 } from "@/constants/theme";
 import { credlyThumb } from "@utils/credlyThumb";
+import useLanguage from "@hooks/useLanguage";
+import { st } from "@/i18n/sections";
+import type { Language } from "@hooks/languageContext";
 import useMotionPreference from "@hooks/useMotionPreference";
 
 interface CertBadgeProps {
@@ -54,7 +57,10 @@ interface ExpiryMeta {
 }
 
 /** Expiry chip text and colour: red once past, amber inside the warning window. */
-const getExpiryMeta = (expiryDate?: string): ExpiryMeta | null => {
+const getExpiryMeta = (
+   expiryDate: string | undefined,
+   language: Language,
+): ExpiryMeta | null => {
    if (!expiryDate) return null;
    const expiry = new Date(`${expiryDate}T00:00:00Z`);
    const daysUntilExpiry = Math.ceil(
@@ -62,16 +68,20 @@ const getExpiryMeta = (expiryDate?: string): ExpiryMeta | null => {
    );
    // Format in UTC: the date is UTC midnight, so a local-zone format would
    // roll 1st-of-month expiries back a month for viewers west of UTC.
-   const when = expiry.toLocaleDateString("en-US", {
-      month: "short",
-      year: "numeric",
-      timeZone: "UTC",
-   });
-   if (daysUntilExpiry < 0) return { label: `Expired ${when}`, color: RED };
+   const when = expiry.toLocaleDateString(
+      language === "zh" ? "zh-CN" : "en-US",
+      {
+         month: "short",
+         year: "numeric",
+         timeZone: "UTC",
+      },
+   );
+   if (daysUntilExpiry < 0)
+      return { label: st(language, "ach.expired", { when }), color: RED };
    if (daysUntilExpiry <= EXPIRY_WARNING_DAYS) {
-      return { label: `Expires ${when}`, color: AMBER };
+      return { label: st(language, "ach.expires", { when }), color: AMBER };
    }
-   return { label: `Expires ${when}`, color: TEXT_MUTED };
+   return { label: st(language, "ach.expires", { when }), color: TEXT_MUTED };
 };
 
 const CertBadge = ({
@@ -84,12 +94,13 @@ const CertBadge = ({
    floatDelay,
    entranceDelay,
 }: CertBadgeProps) => {
+   const { language } = useLanguage();
    const { preference, reducedMotion } = useMotionPreference();
    // If the CDN's resized variant fails (transient 5xx / cold cache on newly
    // synced badges), fall back to the original full-size URL once.
    const [useOriginal, setUseOriginal] = useState(false);
    const accent = LEVEL_COLOR[level ?? ""] ?? CYAN;
-   const expiryMeta = getExpiryMeta(expiryDate);
+   const expiryMeta = getExpiryMeta(expiryDate, language);
    // aria-label replaces the anchor's content for assistive tech, so the level
    // chip and expiry state rendered inside it must be folded in here.
    const ariaLabel = [

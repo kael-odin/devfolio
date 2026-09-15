@@ -7,22 +7,35 @@ import {
 } from "lucide-react";
 import type { OpenSourceContribution } from "@/types";
 import { PURPLE, GREEN, ORANGE } from "@/constants/theme";
+import useLanguage from "@hooks/useLanguage";
+import { st } from "@/i18n/sections";
 
 interface ContribCardProps {
    contrib: OpenSourceContribution;
 }
 
+const STATUS_KEYS = {
+   merged: "proj.merged",
+   open: "proj.open",
+   closed: "proj.closed",
+} as const;
+
 const STATUS_CONFIG = {
-   merged: { color: PURPLE, Icon: GitMerge, label: "Merged" },
-   open: { color: GREEN, Icon: CircleDot, label: "Open" },
-   closed: { color: ORANGE, Icon: GitPullRequestClosed, label: "Closed" },
+   merged: { color: PURPLE, Icon: GitMerge },
+   open: { color: GREEN, Icon: CircleDot },
+   closed: { color: ORANGE, Icon: GitPullRequestClosed },
 } as const;
 
 const ContribCard = ({ contrib }: ContribCardProps) => {
+   const { language } = useLanguage();
    const config =
       STATUS_CONFIG[contrib.status as keyof typeof STATUS_CONFIG] ??
       STATUS_CONFIG.open;
-   const { color: statusColor, Icon: StatusIcon, label: statusLabel } = config;
+   const { color: statusColor, Icon: StatusIcon } = config;
+   const statusKey =
+      STATUS_KEYS[contrib.status as keyof typeof STATUS_KEYS] ??
+      STATUS_KEYS.open;
+   const statusLabel = st(language, statusKey);
 
    return (
       <a

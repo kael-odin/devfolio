@@ -1,0 +1,46 @@
+[
+   {
+      "id": 1,
+      "title": "Full-Stack Development",
+      "list": [
+         "Multi-language engineering in TypeScript / Python / Go",
+         "Frontends and static sites with Vue / React / Astro",
+         "Next.js full-stack with Markdown content systems",
+         "GitHub Actions automation pipelines",
+         "GitHub Pages / Vercel deploys"
+      ]
+   },
+   {
+      "id": 2,
+      "title": "AI Apps",
+      "list": [
+         "LLM apps and prompt engineering",
+         "Agent skill design and ranking curation",
+         "BYOK tooling and local model access",
+         "RAG and knowledge-base Q&A",
+         "AI agent workbenches"
+      ]
+   },
+   {
+      "id": 3,
+      "title": "Open Source & Localization",
+      "list": [
+         "Open-source maintenance and community governance",
+         "Full Chinese localization of English tools",
+         "Chinese docs and tutorial writing",
+         "Inclusion criteria for ranking projects",
+         "Auto-update pipelines"
+      ]
+   },
+   {
+      "id": 4,
+      "title": "Automation Systems",
+      "list": [
+         "Daily ranking and data pipelines",
+         "Incremental translation and sync pipelines",
+         "Proxy pools with availability checks",
+         "Zero-server-cost architectures",
+         "Scheduled jobs and observability"
+      ]
+   }
+]

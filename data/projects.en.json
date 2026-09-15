@@ -1,0 +1,140 @@
+{
+   "spotlight_project_id": 1,
+   "featured_projects": [
+      {
+         "id": 1,
+         "title": "awesome-academic-research-skills · daily research-skill ranking",
+         "description": "A daily ranking of research Agent Skills for Chinese-speaking users: auto-discovers, filters, and ranks Claude Code / Codex / OpenCode research-skill repos on GitHub, refreshed daily, 85 stars.",
+         "date": "Jun 2026",
+         "tools_tech": [
+            "JavaScript",
+            "GitHub Actions",
+            "Agent Skills",
+            "Automation"
+         ],
+         "features": [
+            "Auto-discovers and ranks research skills daily, presented in Chinese",
+            "Covers the Claude Code / Codex / OpenCode ecosystems",
+            "Open inclusion criteria and ranking rules, community suggestions welcome",
+            "Pure static site plus Actions, zero server cost",
+            "Chinese guides included, beginner-friendly for researchers",
+            "Maintained long-term, data stays fresh"
+         ],
+         "github": "https://github.com/kael-odin/awesome-academic-research-skills",
+         "live": "https://kael-odin.github.io/awesome-academic-research-skills/"
+      },
+      {
+         "id": 2,
+         "title": "prompts-chat-zh · Chinese prompt mirror",
+         "description": "Unofficial Simplified-Chinese mirror of prompts.chat: all 2,205 public prompts translated, bilingual side-by-side, full-text search, one-click copy. Astro static site on GitHub Pages.",
+         "date": "Sep 2026",
+         "tools_tech": ["Astro", "JavaScript", "i18n", "Pagefind"],
+         "features": [
+            "All 2,205 prompts in EN–ZH对照 side-by-side Chinese",
+            "Full-text search plus one-click copy",
+            "Incremental translation pipeline with trackable progress",
+            "Astro static site, instant to open",
+            "CC0 sources, open access",
+            "Keeps syncing upstream updates"
+         ],
+         "github": "https://github.com/kael-odin/prompts-chat-zh",
+         "live": "https://kael-odin.github.io/prompts-chat-zh/"
+      }
+   ],
+   "collaborative_projects": [
+      {
+         "id": 3,
+         "title": "openworker · Chinese localization (27★)",
+         "description": "A Chinese-localized fork of OpenWorker: tracks upstream, fully translated, ships with model keys, local-first — a localized release that gets daily AI tasks actually done.",
+         "date": "Jul 2026",
+         "tools_tech": ["Python", "LLM", "Local-first", "Localization"],
+         "features": [
+            "Tracks upstream releases with a fully Chinese UI",
+            "Ships with model keys, works out of the box",
+            "Local-first, data never leaves the machine",
+            "Task flows tuned for Chinese-speaking users"
+         ],
+         "github": "https://github.com/kael-odin/openworker",
+         "live": "#"
+      }
+   ],
+   "other_projects": [
+      {
+         "id": 4,
+         "title": "Amadeus-Agent · single-file AI workbench",
+         "description": "A single-file AI agent workbench: desktop plus icons plus windows, each icon an independent chat agent. Vue 3.5 with AI SDK v7, zero build, double-click to run, all data local to the browser.",
+         "date": "Aug 2026",
+         "tools_tech": ["Vue", "TypeScript", "AI SDK", "Local-first"],
+         "features": [
+            "One HTML file, zero build, double-click to run",
+            "Parallel multi-agent chats with window management",
+            "Built-in free-model presets and web search",
+            "Memory self-governance and task guardrails"
+         ],
+         "github": "https://github.com/kael-odin/Amadeus-Agent",
+         "live": "#"
+      },
+      {
+         "id": 5,
+         "title": "Manus-byok · desktop BYOK",
+         "description": "BYOK for the Manus desktop app: reverse-engineered socket.io protocol with a local emulated server driving the official UI to render your own models, keeping the real account marketplace and per-model cost stats.",
+         "date": "Aug 2026",
+         "tools_tech": [
+            "JavaScript",
+            "socket.io",
+            "Reverse engineering",
+            "BYOK"
+         ],
+         "features": [
+            "Local emulated server driving the official UI",
+            "Bring your own models with per-model cost stats",
+            "Keeps the real-account marketplace working"
+         ],
+         "github": "https://github.com/kael-odin/Manus-byok",
+         "live": "#"
+      }
+   ],
+   "community_projects": [
+      {
+         "id": 6,
+         "title": "my-os-homepage · OS-style homepage template",
+         "description": "An interactive OS-inspired personal homepage template: terminal boot into your digital desktop. Edit one config file to make it yours. React plus Vite plus GitHub Pages.",
+         "date": "Sep 2026",
+         "tools_tech": ["React", "Vite", "CSS animation", "GitHub Pages"],
+         "features": [
+            "Typewriter terminal boot animation",
+            "Draggable icons and a window manager",
+            "Single-file config, works out of the box",
+            "Bilingual README with screenshots"
+         ],
+         "github": "https://github.com/kael-odin/my-os-homepage",
+         "live": "https://kael-odin.github.io/my-os-homepage/"
+      }
+   ],
+   "open_source_contributions": [
+      {
+         "repo": "kael-odin/awesome-academic-research-skills",
+         "stars": 85,
+         "title": "Research-skill ranking: ranking pipeline and Chinese presentation",
+         "url": "https://github.com/kael-odin/awesome-academic-research-skills/pull/1",
+         "merged_at": "2026-09-14",
+         "status": "merged"
+      },
+      {
+         "repo": "kael-odin/prompts-chat-zh",
+         "stars": 1,
+         "title": "Prompt mirror: incremental translation pipeline",
+         "url": "https://github.com/kael-odin/prompts-chat-zh/pull/1",
+         "merged_at": "2026-09-11",
+         "status": "merged"
+      }
+   ],
+   "community_discussions": [
+      {
+         "repo": "kael-odin/awesome-academic-research-skills",
+         "title": "Skill inclusion criteria and ranking rules",
+         "url": "https://github.com/kael-odin/awesome-academic-research-skills/discussions/1",
+         "status": "accepted"
+      }
+   ]
+}

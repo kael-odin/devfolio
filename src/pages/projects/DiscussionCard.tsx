@@ -2,21 +2,33 @@ import type { CSSProperties } from "react";
 import { ArrowUpRight, BadgeCheck, MessageCircle } from "lucide-react";
 import type { CommunityDiscussion } from "@/types";
 import { CYAN, PURPLE } from "@/constants/theme";
+import useLanguage from "@hooks/useLanguage";
+import { st } from "@/i18n/sections";
 
 interface DiscussionCardProps {
    discussion: CommunityDiscussion;
 }
 
+const STATUS_KEYS = {
+   accepted: "proj.accepted",
+   helpful: "proj.helpful",
+} as const;
+
 const STATUS_CONFIG = {
-   accepted: { color: CYAN, Icon: BadgeCheck, label: "Accepted" },
-   helpful: { color: PURPLE, Icon: MessageCircle, label: "Helpful" },
+   accepted: { color: CYAN, Icon: BadgeCheck },
+   helpful: { color: PURPLE, Icon: MessageCircle },
 } as const;
 
 const DiscussionCard = ({ discussion }: DiscussionCardProps) => {
+   const { language } = useLanguage();
    const config =
       STATUS_CONFIG[discussion.status as keyof typeof STATUS_CONFIG] ??
       STATUS_CONFIG.helpful;
-   const { color, Icon, label } = config;
+   const { color, Icon } = config;
+   const statusKey =
+      STATUS_KEYS[discussion.status as keyof typeof STATUS_KEYS] ??
+      STATUS_KEYS.helpful;
+   const label = st(language, statusKey);
 
    return (
       <a

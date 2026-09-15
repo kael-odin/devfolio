@@ -1,5 +1,7 @@
 /// <reference types="vite/client" />
 import React, { type ReactNode, type ErrorInfo } from "react";
+import { t } from "@/i18n/ui";
+import type { Language } from "@hooks/languageContext";
 import { CYAN, TEXT_PRIMARY, TEXT_SECONDARY } from "@/constants/theme";
 
 interface ErrorBoundaryProps {
@@ -63,7 +65,17 @@ class ErrorBoundary extends React.Component<
 
    handleReload = () => globalThis.location.reload();
 
+   private lang(): Language {
+      try {
+         const v = globalThis.localStorage?.getItem("devfolio-language");
+         return v === "en" ? "en" : "zh";
+      } catch {
+         return "zh";
+      }
+   }
+
    render() {
+      const language = this.lang();
       if (this.state.hasError) {
          if (this.props.fallback) {
             return this.props.fallback;
@@ -71,14 +83,11 @@ class ErrorBoundary extends React.Component<
 
          return (
             <div style={CONTAINER_STYLE} role="alert">
-               <h2>Something went wrong</h2>
-               <p>
-                  Sorry for the inconvenience. Try refreshing the page to
-                  continue.
-               </p>
+               <h2>{t(language, "err.title")}</h2>
+               <p>{t(language, "err.body")}</p>
                {import.meta.env.DEV && (
                   <details style={DETAILS_STYLE}>
-                     <summary>Error Details (Development Only)</summary>
+                     <summary>{t(language, "err.details")}</summary>
                      {this.state.error?.toString()}
                      <br />
                      {this.state.errorInfo?.componentStack}
@@ -86,10 +95,10 @@ class ErrorBoundary extends React.Component<
                )}
                <button
                   onClick={this.handleReload}
-                  aria-label="Refresh the page"
+                  aria-label={t(language, "err.refreshLabel")}
                   style={BUTTON_STYLE}
                >
-                  Refresh Page
+                  {t(language, "err.refresh")}
                </button>
             </div>
          );

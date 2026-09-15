@@ -4,19 +4,26 @@ import type {
    Project,
    ProjectsFile,
 } from "@/types";
-import projectsData from "../../data/projects.json";
+import type { Language } from "@hooks/languageContext";
+import projectsDataZh from "../../data/projects.zh.json";
+import projectsDataEn from "../../data/projects.en.json";
 
-const projects = projectsData as ProjectsFile;
+const pickProj = (lang: Language) =>
+   (lang === "en" ? projectsDataEn : projectsDataZh) as ProjectsFile;
 
-export const getSpotlightProjectId = (): number | null =>
-   projects.spotlight_project_id ?? null;
-export const getFeaturedProjects = (): Project[] => projects.featured_projects;
-export const getCollaborativeProjects = (): Project[] =>
-   projects.collaborative_projects;
-export const getOtherProjects = (): Project[] => projects.other_projects;
-export const getCommunityProjects = (): Project[] =>
-   projects.community_projects ?? [];
-export const getOpenSourceContributions = (): OpenSourceContribution[] =>
-   projects.open_source_contributions ?? [];
-export const getCommunityDiscussions = (): CommunityDiscussion[] =>
-   projects.community_discussions ?? [];
+export const getSpotlightProjectId = (lang: Language = "zh"): number | null =>
+   pickProj(lang).spotlight_project_id ?? null;
+export const getFeaturedProjects = (lang: Language = "zh"): Project[] =>
+   pickProj(lang).featured_projects;
+export const getCollaborativeProjects = (lang: Language = "zh"): Project[] =>
+   pickProj(lang).collaborative_projects;
+export const getOtherProjects = (lang: Language = "zh"): Project[] =>
+   pickProj(lang).other_projects;
+export const getCommunityProjects = (lang: Language = "zh"): Project[] =>
+   pickProj(lang).community_projects ?? [];
+export const getOpenSourceContributions = (
+   _lang: Language = "zh",
+): OpenSourceContribution[] => pickProj("zh").open_source_contributions ?? [];
+export const getCommunityDiscussions = (
+   _lang: Language = "zh",
+): CommunityDiscussion[] => pickProj("zh").community_discussions ?? [];

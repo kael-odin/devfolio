@@ -1,7 +1,9 @@
 import { GREEN } from "@/constants/theme";
+import useLanguage from "@hooks/useLanguage";
+import { st } from "@/i18n/sections";
 
 interface PresentIndicatorProps {
-   /** Show just the pulsing dot (true) or the dot + "Present" label (false). */
+   /** Show just the pulsing dot (true) or the dot + {st(language, "exp.present")} label (false). */
    dotOnly?: boolean;
 }
 
@@ -11,6 +13,7 @@ interface PresentIndicatorProps {
  * suitable for use inside a flex row (the parent controls the gap).
  */
 const PresentIndicator = ({ dotOnly = false }: PresentIndicatorProps) => {
+   const { language } = useLanguage();
    const dot = (
       <span
          className="animate-glow-pulse"
@@ -31,7 +34,7 @@ const PresentIndicator = ({ dotOnly = false }: PresentIndicatorProps) => {
    return (
       <>
          {dot}
-         <span>Present</span>
+         <span>{st(language, "exp.present")}</span>
       </>
    );
 };

@@ -3,14 +3,11 @@ import useFreezeAnimations from "@hooks/useFreezeAnimations";
 import useMotionPreference from "@hooks/useMotionPreference";
 import StackAnim from "./animations/StackAnim";
 import PipelineAnim from "./animations/PipelineAnim";
-import NeuralNetAnim from "./animations/NeuralNetAnim";
 import AgentChatAnim from "./animations/AgentChatAnim";
 import ArchitectureAnim from "./animations/ArchitectureAnim";
-import SortAnim from "./animations/SortAnim";
-import AiDlcAnim from "./animations/AiDlcAnim";
 
 interface ServiceAnimationProps {
-   title: string;
+   serviceId: number;
    color: string;
    /** Phone strip is 100 px tall; the desktop column is 150 px. */
    compact?: boolean;
@@ -21,22 +18,20 @@ interface ServiceAnimationProps {
 const SCALE_DESKTOP = 1.8;
 const SCALE_COMPACT = 1.2;
 
-const ANIM_MAP: Record<string, React.FC<{ color: string }>> = {
-   "Full-Stack Development": StackAnim,
-   "Cloud & DevOps": PipelineAnim,
-   "AI/ML & MLOps": NeuralNetAnim,
-   "AI Agents & Tooling": AgentChatAnim,
-   "AI-Driven Development (AI-DLC)": AiDlcAnim,
-   "Cloud Consulting": ArchitectureAnim,
-   "Competitive Programming": SortAnim,
+/* Keyed by service `id`, not title: data titles are localized. */
+const ANIM_MAP: Record<number, React.FC<{ color: string }>> = {
+   1: StackAnim,
+   2: AgentChatAnim,
+   3: ArchitectureAnim,
+   4: PipelineAnim,
 };
 
 const ServiceAnimation = ({
-   title,
+   serviceId,
    color,
    compact = false,
 }: ServiceAnimationProps) => {
-   const AnimComponent = ANIM_MAP[title];
+   const AnimComponent = ANIM_MAP[serviceId];
    const frameRef = useRef<HTMLDivElement>(null);
    const { preference } = useMotionPreference();
    useFreezeAnimations(frameRef);

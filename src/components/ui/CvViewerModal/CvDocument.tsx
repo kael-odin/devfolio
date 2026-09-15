@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { ExternalLink, Download, ZoomIn, ZoomOut } from "lucide-react";
 import { MONO_FONT, TEXT_MUTED, TEXT_SECONDARY } from "@/constants/theme";
+import useLanguage from "@hooks/useLanguage";
+import { t } from "@/i18n/ui";
 
 // Pages are pre-rendered to high-res WebP at deploy time by
 // scripts/prepare-resume.js -- no client-side PDF machinery, no blur.
@@ -22,6 +24,7 @@ interface CvDocumentProps {
 }
 
 const CvDocument = ({ isMobile }: CvDocumentProps) => {
+   const { language } = useLanguage();
    const [manifest, setManifest] = useState<Manifest | null>(null);
    const [zoomIdx, setZoomIdx] = useState(1);
    const [failed, setFailed] = useState(false);
@@ -56,7 +59,7 @@ const CvDocument = ({ isMobile }: CvDocumentProps) => {
                gap: 16,
             }}
          >
-            <p>The inline viewer could not load the CV.</p>
+            <p>{t(language, "cv.failed")}</p>
             <a
                href={RESUME_DOWNLOAD_URL}
                className="btn-primary"
@@ -69,16 +72,18 @@ const CvDocument = ({ isMobile }: CvDocumentProps) => {
                }}
             >
                <Download size={15} />
-               Download CV instead
+               {t(language, "cv.downloadInstead")}
             </a>
          </div>
       );
    }
 
-   let pageCountLabel = "Loading...";
+   let pageCountLabel = t(language, "cv.loading");
    if (manifest) {
       pageCountLabel =
-         manifest.pages === 1 ? "1 page" : `${manifest.pages} pages`;
+         manifest.pages === 1
+            ? t(language, "cv.onePage")
+            : t(language, "cv.nPages", { n: manifest.pages });
    }
 
    return (
@@ -107,7 +112,7 @@ const CvDocument = ({ isMobile }: CvDocumentProps) => {
                <button
                   onClick={() => setZoomIdx((i) => Math.max(0, i - 1))}
                   disabled={zoomIdx === 0}
-                  aria-label="Zoom out"
+                  aria-label={t(language, "cv.zoomOut")}
                   className="btn-outline"
                   style={{
                      padding: "6px 10px",
@@ -132,7 +137,7 @@ const CvDocument = ({ isMobile }: CvDocumentProps) => {
                      setZoomIdx((i) => Math.min(ZOOM_STEPS.length - 1, i + 1))
                   }
                   disabled={zoomIdx === ZOOM_STEPS.length - 1}
-                  aria-label="Zoom in"
+                  aria-label={t(language, "cv.zoomIn")}
                   className="btn-outline"
                   style={{
                      padding: "6px 10px",
@@ -145,7 +150,7 @@ const CvDocument = ({ isMobile }: CvDocumentProps) => {
                   href={RESUME_PDF}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label="Open CV in a new tab"
+                  aria-label={t(language, "cv.openTab")}
                   className="btn-outline"
                   style={{
                      display: "inline-flex",
@@ -157,7 +162,7 @@ const CvDocument = ({ isMobile }: CvDocumentProps) => {
                </a>
                <a
                   href={RESUME_DOWNLOAD_URL}
-                  aria-label="Download CV"
+                  aria-label={t(language, "cv.download")}
                   className="btn-primary"
                   style={{
                      display: "inline-flex",
@@ -169,7 +174,7 @@ const CvDocument = ({ isMobile }: CvDocumentProps) => {
                   }}
                >
                   <Download size={14} />
-                  {!isMobile && "Download"}
+                  {!isMobile && t(language, "cv.downloadSuffix")}
                </a>
             </div>
          </div>
@@ -191,7 +196,10 @@ const CvDocument = ({ isMobile }: CvDocumentProps) => {
                     <img
                        key={`page-${i + 1}`}
                        src={`${BASE}resume-pages/page-${i + 1}.webp`}
-                       alt={`CV page ${i + 1} of ${manifest.pages}`}
+                       alt={t(language, "cv.pageAlt", {
+                          i: i + 1,
+                          n: manifest.pages,
+                       })}
                        width={manifest.width}
                        height={manifest.height}
                        loading={i === 0 ? "eager" : "lazy"}

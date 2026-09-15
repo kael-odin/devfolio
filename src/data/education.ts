@@ -1,4 +1,10 @@
 import type { Education } from "@/types";
-import educationData from "../../data/education.json";
+import type { Language } from "@hooks/languageContext";
+import educationDataZh from "../../data/education.zh.json";
+import educationDataEn from "../../data/education.en.json";
 
-export const getEducation = (): Education[] => educationData as Education[];
+const pickEdu = (lang: Language) =>
+   lang === "en" ? educationDataEn : educationDataZh;
+
+export const getEducation = (lang: Language = "zh"): Education[] =>
+   pickEdu(lang) as Education[];

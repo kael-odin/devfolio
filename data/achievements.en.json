@@ -1,0 +1,64 @@
+{
+   "certifications": [
+      {
+         "id": 1,
+         "name": "Research-skill ranking · 85 stars",
+         "type": "Open-source milestone",
+         "issuer": "GitHub community",
+         "issueDate": "2026-09-14",
+         "badgeId": "00000000-0000-4000-8000-000000000001",
+         "badgeUrl": "https://www.credly.com/badges/00000000-0000-4000-8000-000000000001",
+         "level": "Intermediate",
+         "imageUrl": "https://images.credly.com/images/00000000-0000-4000-8000-000000000001/image.png"
+      },
+      {
+         "id": 2,
+         "name": "Prompt mirror · 2,205 entries",
+         "type": "Open-source milestone",
+         "issuer": "GitHub community",
+         "issueDate": "2026-09-11",
+         "badgeId": "00000000-0000-4000-8000-000000000002",
+         "badgeUrl": "https://www.credly.com/badges/00000000-0000-4000-8000-000000000002",
+         "level": "Foundational",
+         "imageUrl": "https://images.credly.com/images/00000000-0000-4000-8000-000000000002/image.png"
+      }
+   ],
+   "learning_badges": [
+      {
+         "id": 3,
+         "name": "Local-first AI workbench",
+         "type": "Learning Badge",
+         "issuer": "Independent practice",
+         "issueDate": "2026-08-13",
+         "badgeId": "00000000-0000-4000-8000-000000000003",
+         "badgeUrl": "https://www.credly.com/badges/00000000-0000-4000-8000-000000000003",
+         "imageUrl": "https://images.credly.com/images/00000000-0000-4000-8000-000000000003/image.png"
+      }
+   ],
+   "achievements": [
+      {
+         "id": 1,
+         "title": "85 stars · daily research-skill ranking",
+         "organizer": "GitHub",
+         "date": "Sep 2026",
+         "type": "Milestone"
+      },
+      {
+         "id": 2,
+         "title": "1st Place · most popular original ranking project",
+         "organizer": "Personal work",
+         "date": "Sep 2026",
+         "type": "Competition"
+      }
+   ],
+   "coding_platform_stats": {
+      "github_profile": {
+         "username": "kael-odin",
+         "url": "https://github.com/kael-odin"
+      },
+      "blog": {
+         "username": "kael-odin-blog",
+         "url": "https://kael-odin-blog.vercel.app/"
+      }
+   }
+}

@@ -1,0 +1,59 @@
+{
+   "name": "Kael Odin",
+   "title": "Full-Stack Developer · AI Apps & Open-Source Tools",
+   "role": "Full-Stack Developer",
+   "employer": "Independent",
+   "location": "China · Remote",
+   "timezone": "Asia/Shanghai",
+   "intro": "Independent full-stack developer focused on AI apps, open-source tools, and automation. Turning ideas into repositories: research-skill rankings, prompt mirrors, BYOK tooling, and local-first agent workbenches.",
+   "role_label": "Full-Stack Developer @ Independent",
+   "headline": "Turning ideas into repositories.",
+   "availability": "Open to collaboration: AI apps, open-source tools, automation",
+   "contact": {
+      "github": "kael-odin"
+   },
+   "about": {
+      "greeting": "👋 Hi, I'm Kael Odin.",
+      "current_role": "💼 Independent full-stack developer building AI apps and open-source tools: rankings, mirror sites, BYOK tooling, local-first agent workbenches.",
+      "specialization": "🚀 Known for awesome-academic-research-skills (85★ daily research-skill ranking), prompts-chat-zh (2,205 prompts mirrored in Chinese), and the openworker Chinese localization (27★).",
+      "education": "🎓 Self-taught engineer working across TypeScript / Python / Go / Vue / Astro, deep into LLM apps and automation pipelines.",
+      "competitive_programming": "🏆 17 public repos on GitHub, maintaining several auto-updating projects (rankings, proxy lists, prompt libraries)."
+   },
+   "impact": {
+      "clients_served": "17",
+      "clients_note": "public repos",
+      "workloads_migrated": "2,205",
+      "aws_accounts": "4",
+      "security_controls": "85",
+      "security_note": "top repo stars",
+      "workloads_note": "mirrored prompts",
+      "aws_note": "original templates & tools"
+   },
+   "languages": [
+      {
+         "name": "Chinese",
+         "level": "Native"
+      },
+      {
+         "name": "English",
+         "level": "Working"
+      }
+   ],
+   "social_profiles": [
+      {
+         "id": 1,
+         "name": "GitHub",
+         "link": "https://github.com/kael-odin",
+         "icon": "FaGithub"
+      },
+      {
+         "id": 2,
+         "name": "Blog",
+         "link": "https://kael-odin-blog.vercel.app/",
+         "icon": "FiBook"
+      }
+   ],
+   "site": {
+      "tech_stack": ["React 19", "Vite 8", "Tailwind v4", "Motion", "Lenis"]
+   }
+}

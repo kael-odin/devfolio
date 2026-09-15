@@ -1,22 +1,14 @@
-import {
-   Cloud,
-   Code,
-   Trophy,
-   Brain,
-   Bot,
-   Shield,
-   Sparkles,
-} from "lucide-react";
+import { Code, Brain, Bot, Sparkles } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
-export const iconMap: Record<string, LucideIcon> = {
-   "Full-Stack Development": Code,
-   "Cloud & DevOps": Cloud,
-   "AI/ML & MLOps": Brain,
-   "AI Agents & Tooling": Bot,
-   "AI-Driven Development (AI-DLC)": Sparkles,
-   "Cloud Consulting": Shield,
-   "Competitive Programming": Trophy,
+/* Keyed by service `id` (1..4), NOT by title: data titles are localized
+   (zh titles differ from en), so a title-keyed lookup resolves to the
+   fallback icon for every non-English locale. */
+export const iconMap: Record<number, LucideIcon> = {
+   1: Code,
+   2: Brain,
+   3: Sparkles,
+   4: Bot,
 };
 
 export interface AccentColor {

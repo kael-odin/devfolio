@@ -13,6 +13,8 @@ import {
 } from "@/constants/theme";
 import ICON_MAP from "@utils/iconMap";
 import useMotionPreference from "@hooks/useMotionPreference";
+import useLanguage from "@hooks/useLanguage";
+import { t } from "@/i18n/ui";
 import { heroRow } from "./heroMotion";
 
 const TILE_STYLE: CSSProperties = {
@@ -46,7 +48,11 @@ const TILE_TRANSITION: Transition = {
 };
 
 const HeroSocial = () => {
-   const socialProfiles = useMemo(() => getSocialProfiles(), []);
+   const { language } = useLanguage();
+   const socialProfiles = useMemo(
+      () => getSocialProfiles(language),
+      [language],
+   );
    const { reducedMotion } = useMotionPreference();
    // Reduced keeps the tiles at their resting design; the press stays.
    const hover = reducedMotion ? undefined : TILE_HOVER;
@@ -70,7 +76,9 @@ const HeroSocial = () => {
                   whileFocus={hover}
                   whileTap={TILE_TAP}
                   transition={TILE_TRANSITION}
-                  aria-label={`Visit ${profile.name} profile (opens in a new tab)`}
+                  aria-label={t(language, "hero.visitProfile", {
+                     name: profile.name,
+                  })}
                >
                   <IconComponent size={18} />
                </motion.a>

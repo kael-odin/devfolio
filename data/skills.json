@@ -1,84 +1,58 @@
 {
    "languages": [
-      "Python",
-      "JavaScript",
       "TypeScript",
-      "Java",
+      "JavaScript",
+      "Python",
+      "Go",
       "SQL",
       "Bash",
       "HTML/CSS"
    ],
-   "frontend": ["React", "Next.js", "Vite", "Tailwind CSS", "Motion", "Redux"],
+   "frontend": ["Vue", "React", "Next.js", "Astro", "Vite", "Tailwind CSS"],
    "backend": [
       "Node.js",
-      "Express.js",
       "FastAPI",
       "REST API",
-      "GraphQL",
       "PostgreSQL",
-      "MongoDB",
+      "SQLite",
       "Redis"
    ],
    "cloud_devops": [
-      "AWS (EC2, S3, Lambda)",
-      "Terraform",
-      "Docker",
       "GitHub Actions",
+      "Docker",
       "CI/CD Pipelines",
+      "GitHub Pages",
+      "Vercel",
       "Linux"
    ],
    "ai_ml": [
-      "OpenAI API",
-      "PyTorch",
-      "Scikit-learn",
-      "Pandas / NumPy",
+      "LLM APIs",
+      "Prompt Engineering",
       "RAG Pipelines",
-      "MLOps"
+      "Agent Skills",
+      "MCP",
+      "BYOK Tooling"
    ],
    "tools_platforms": [
       "Git",
       "VS Code",
-      "Postman",
-      "Figma",
-      "Notion",
-      "Linux Terminal"
-   ],
-   "cs_fundamentals": [
-      "Data Structures & Algorithms",
-      "Object-Oriented Programming",
-      "Computer Networks",
-      "Operating Systems",
-      "Software Engineering",
-      "Database Management Systems"
-   ],
-   "soft_skills": [
-      "Leadership",
-      "Problem Solving",
-      "Communication",
-      "Teamwork",
-      "Critical Thinking",
-      "Adaptability"
-   ],
-   "areas_of_interest": [
-      "Full-Stack Development",
-      "AI/ML Engineering",
-      "DevOps & Cloud",
-      "Open Source",
-      "AI Agents & MCP",
-      "Game Development"
+      "Cursor",
+      "Claude Code",
+      "pnpm",
+      "Markdown"
    ],
    "hero_stack": [
       "TypeScript",
+      "Vue",
       "React",
-      "Node.js",
       "Python",
-      "PostgreSQL",
-      "Docker",
-      "GitHub Actions",
-      "Terraform",
-      "Tailwind CSS",
+      "Node.js",
       "FastAPI",
-      "Redis",
-      "Vite"
+      "GitHub Actions",
+      "Docker",
+      "Astro",
+      "Tailwind CSS",
+      "LLM APIs",
+      "PostgreSQL"
    ]
 }
