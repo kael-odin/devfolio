@@ -13,6 +13,9 @@ node_modules/
 .env.local
 .env.*.local
 
+# AI assistant owner facts (private; see server/owner-facts.example.txt)
+server/owner-facts.txt
+
 # editor directories and files
 .vscode/
 .idea

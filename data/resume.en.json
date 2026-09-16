@@ -1,0 +1,89 @@
+{
+   "profile": {
+      "name": "Kael Odin",
+      "title": "Full-Stack Developer · AI Apps & Open-Source Tools",
+      "location": "China · Remote",
+      "email": "kael-odin@outlook.com",
+      "github": "https://github.com/kael-odin",
+      "blog": "https://kael-odin-blog.vercel.app/"
+   },
+   "resume": {
+      "pdf_url": "",
+      "online_url": "https://www.kdocs.cn/l/your-resume-id",
+      "note": "No online resume document configured yet. Replace resume.online_url in data/resume.en.json with your WPS Docs (kdocs.cn) share link to embed the preview here."
+   },
+   "summary": "Independent full-stack developer focused on AI apps, open-source tools, and automation. Turning ideas into repositories: research-skill rankings, prompt mirrors, BYOK tooling, and local-first agent workbenches.",
+   "highlights": [
+      "awesome-academic-research-skills: daily research-skill ranking for Chinese users, 85 stars, auto-updated daily",
+      "prompts-chat-zh: 2,205 prompts mirrored in Chinese, Astro static site + incremental pipeline",
+      "openworker Chinese localization: tracks upstream, fully translated, local-first, 27 stars",
+      "Amadeus-Agent: single-file AI agent workbench, zero build, double-click to run",
+      "17 public repos, long-term maintainer of auto-updating projects"
+   ],
+   "experience": [
+      {
+         "role": "Independent Full-Stack Developer",
+         "org": "Independent",
+         "date": "Mar 2026 — Present",
+         "bullets": [
+            "Building AI apps and open-source tools: rankings, prompt mirrors, BYOK tooling, local-first agent workbenches",
+            "Several projects auto-update daily via GitHub Actions at zero server cost"
+         ]
+      },
+      {
+         "role": "Personal Blog & Digital Garden Owner",
+         "org": "kael-odin-blog",
+         "date": "Mar 2026 — Present",
+         "bullets": [
+            "Next.js tech blog: retrospectives, tool reviews, essays, visually editable on the web"
+         ]
+      }
+   ],
+   "projects": [
+      {
+         "name": "awesome-academic-research-skills",
+         "desc": "Daily research-skill ranking · 85 stars",
+         "url": "https://github.com/kael-odin/awesome-academic-research-skills"
+      },
+      {
+         "name": "prompts-chat-zh",
+         "desc": "2,205 prompts mirrored in Chinese",
+         "url": "https://github.com/kael-odin/prompts-chat-zh"
+      },
+      {
+         "name": "openworker (Chinese)",
+         "desc": "Tracks upstream · fully translated · 27 stars",
+         "url": "https://github.com/kael-odin/openworker"
+      },
+      {
+         "name": "Amadeus-Agent",
+         "desc": "Single-file AI agent workbench",
+         "url": "https://github.com/kael-odin/Amadeus-Agent"
+      }
+   ],
+   "skills": [
+      "TypeScript",
+      "JavaScript",
+      "Python",
+      "Go",
+      "Vue",
+      "React",
+      "Next.js",
+      "Astro",
+      "Node.js",
+      "FastAPI",
+      "LLM Apps",
+      "Prompt Engineering",
+      "Agent Skills",
+      "GitHub Actions",
+      "Docker",
+      "CI/CD"
+   ],
+   "education": [
+      {
+         "school": "Open-source community & hands-on practice",
+         "major": "Full-stack & AI apps (self-taught · ongoing)",
+         "date": "2021 — Present"
+      }
+   ]
+}

@@ -225,6 +225,47 @@ export interface Service {
    list: string[];
 }
 
+// ===== Resume (online resume section) =====
+export interface ResumeProfile {
+   name: string;
+   title: string;
+   location: string;
+   email: string;
+   github: string;
+   blog: string;
+}
+export interface ResumeLinks {
+   pdf_url: string;
+   online_url: string;
+   note: string;
+}
+export interface ResumeExperience {
+   role: string;
+   org: string;
+   date: string;
+   bullets: string[];
+}
+export interface ResumeProject {
+   name: string;
+   desc: string;
+   url: string;
+}
+export interface ResumeEducation {
+   school: string;
+   major: string;
+   date: string;
+}
+export interface ResumeFile {
+   profile: ResumeProfile;
+   resume: ResumeLinks;
+   summary: string;
+   highlights: string[];
+   experience: ResumeExperience[];
+   projects: ResumeProject[];
+   skills: string[];
+   education: ResumeEducation[];
+}
+
 // ===== Icon Map =====
 export type IconMap = Record<string, ComponentType<{ size?: number | string }>>;
 

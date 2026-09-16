@@ -6,6 +6,7 @@ const zh: Record<string, string> = {
    "sec.projects": "项目",
    "sec.achievements": "荣誉",
    "sec.services": "服务",
+   "sec.resume": "简历",
    "sec.stats": "数据",
    "sec.contact": "联系",
    "about.title": "关于我",
@@ -92,6 +93,15 @@ const zh: Record<string, string> = {
    "svc.sub": "我能帮你做什么",
    "svc.talk": "聊聊看",
    "svc.talkAbout": "聊聊{title}",
+   // 简历区
+   "resume.title": "在线简历",
+   "resume.sub": "在线简历预览",
+   "resume.embedTitle": "简历预览",
+   "resume.embedTip":
+      "若当前浏览器限制了文档内嵌，请点击右侧按钮在新页面查看。",
+   "resume.openBtn": "打开完整简历 ↗",
+   "resume.openPdf": "下载完整简历",
+   "resume.openOnline": "查看在线简历",
    "stats.title": "数字说话",
    "stats.sub": "数据一览",
    "stats.calendarHint":

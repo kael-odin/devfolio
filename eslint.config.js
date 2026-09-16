@@ -81,4 +81,16 @@ export default [
          "react-refresh/only-export-components": "off",
       },
    },
+   {
+      // Chat backend (local proxy + serverless functions): Node runtime.
+      files: ["server/**/*.mjs", "api/**/*.js"],
+      languageOptions: {
+         globals: {
+            ...globals.node,
+         },
+      },
+      rules: {
+         "react-refresh/only-export-components": "off",
+      },
+   },
 ];

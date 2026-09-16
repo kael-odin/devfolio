@@ -10,6 +10,7 @@ import ScrollProgress from "@components/ui/ScrollProgress";
 import BackToTop from "@components/ui/BackToTop";
 import MotionPreferenceControl from "@components/ui/MotionPreferenceControl";
 import LanguageSwitch from "@components/ui/LanguageSwitch";
+import AiAssistant from "@components/ui/AiAssistant";
 import { BreakpointProvider } from "@hooks/BreakpointProvider";
 import { LanguageProvider } from "@hooks/LanguageProvider";
 import { MotionPreferenceProvider } from "@hooks/MotionPreferenceProvider";
@@ -52,6 +53,7 @@ const Projects = lazy(() => import("@pages/projects/Projects"));
 const Achievement = lazy(() => import("@pages/achievement/Achievement"));
 const Contact = lazy(() => import("@pages/contact/Contact"));
 const Stats = lazy(() => import("@pages/stats/Stats"));
+const Resume = lazy(() => import("@pages/resume/Resume"));
 
 const SECTION_COMPONENTS = {
    about: About,
@@ -62,6 +64,7 @@ const SECTION_COMPONENTS = {
    achievements: Achievement,
    services: Services,
    stats: Stats,
+   resume: Resume,
    contact: Contact,
 };
 
@@ -121,6 +124,7 @@ const AppContent = () => {
                   <BackToTop />
                   <MotionPreferenceControl />
                   <LanguageSwitch />
+                  <AiAssistant />
                </div>
             </ErrorBoundary>
          </SectionNavigationProvider>

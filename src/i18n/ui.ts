@@ -101,6 +101,21 @@ const en: Dict = {
    "contact.optGithubMsg": "Follow",
    "contact.optCall": "Book a Call",
    "contact.optCallMsg": "Schedule",
+   // AI assistant (floating support chat)
+   "chat.title": "AI Assistant",
+   "chat.open": "Open AI assistant",
+   "chat.close": "Close AI assistant",
+   "chat.welcome":
+      "Hi! I'm Kael's AI assistant. Ask me about AI apps, open-source tools, full-stack development, or automation.",
+   "chat.tokenHint":
+      "Please keep it light to save tokens — for in-depth chats, reach the owner via the Contact section.",
+   "chat.placeholder": "Type a message...",
+   "chat.inputLabel": "Message to AI assistant",
+   "chat.send": "Send",
+   "chat.thinking": "Thinking…",
+   "chat.errNetwork":
+      "Cannot reach the chat service. Start it locally with `pnpm chat-proxy` (see docs/AI助手接入说明.md), or deploy it and set VITE_CHAT_API_URL.",
+   "chat.errApi": "The chat service returned an error. Please try again later.",
    // language switcher
    "lang.label": "语言",
    "lang.toEn": "Switch to English",
@@ -202,6 +217,21 @@ const zh: Dict = {
    "contact.optGithubMsg": "关注",
    "contact.optCall": "约个电话",
    "contact.optCallMsg": "预约时间",
+   // AI 分身（悬浮在线客服）
+   "chat.title": "AI 分身",
+   "chat.open": "打开 AI 分身",
+   "chat.close": "关闭 AI 分身",
+   "chat.welcome":
+      "你好！我是 Kael 的 AI 分身。关于 AI 应用、开源工具、全栈开发或自动化，都可以向我咨询。",
+   "chat.tokenHint":
+      "为节省 token 请手下留情～深度聊天欢迎去联系区找主人详聊。",
+   "chat.placeholder": "输入消息...",
+   "chat.inputLabel": "给 AI 分身的消息",
+   "chat.send": "发送",
+   "chat.thinking": "思考中…",
+   "chat.errNetwork":
+      "无法连接对话服务：本地运行 `pnpm chat-proxy` 调试（见 docs/AI助手接入说明.md），或部署后端并配置 VITE_CHAT_API_URL。",
+   "chat.errApi": "对话服务返回错误，请检查代理日志与上游接口格式。",
    // language switcher
    "lang.label": "Language",
    "lang.toEn": "Switch to English",

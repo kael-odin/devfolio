@@ -12,6 +12,7 @@ const en: Dict = {
    "sec.projects": "Projects",
    "sec.achievements": "Awards",
    "sec.services": "Services",
+   "sec.resume": "Resume",
    "sec.stats": "Stats",
    "sec.contact": "Contact",
    // page titles + subtitles
@@ -103,6 +104,15 @@ const en: Dict = {
    "svc.sub": "What I offer",
    "svc.talk": "Let's talk",
    "svc.talkAbout": "Discuss {title}",
+   // resume section
+   "resume.title": "Resume",
+   "resume.sub": "Online Resume Preview",
+   "resume.embedTitle": "Resume preview",
+   "resume.embedTip":
+      "If your browser restricts embedded documents, use the button on the right to open it in a new tab.",
+   "resume.openBtn": "Open Full Resume ↗",
+   "resume.openPdf": "Download Full Resume",
+   "resume.openOnline": "View Online Resume",
    // stats
    "stats.title": "By the Numbers",
    "stats.sub": "Stats",

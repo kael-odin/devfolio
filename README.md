@@ -26,15 +26,20 @@
 
 > Template note: this is a de-personalized, placeholder-filled adaptation of [Sagargupta16/portfolio-react](https://github.com/Sagargupta16/portfolio-react) (GPL-3.0). All names, photos, resumes, badges, and project content were replaced with placeholders — edit `data/*.json` to make it yours. See [LICENSE](LICENSE).
 
-| Hero （中文）                       | Projects (English)                              |
-| ----------------------------------- | ----------------------------------------------- |
-| ![Hero](docs/screenshot-hero.png)   | ![Projects EN](docs/screenshot-projects-en.png) |
-| 关于                                | Stats                                           |
-| ![About](docs/screenshot-about.png) | ![Stats](docs/screenshot-stats.png)             |
+| Hero （中文）                         | Projects (English)                                |
+| ------------------------------------- | ------------------------------------------------- |
+| ![Hero](docs/screenshot-hero.png)     | ![Projects EN](docs/screenshot-projects-en.png)   |
+| 在线简历（新）                        | AI 分身（新）                                     |
+| ![Resume](docs/screenshot-resume.png) | ![AI Assistant](docs/screenshot-ai-assistant.png) |
 
 A minimal dark personal portfolio: near-black canvas, one blue accent family, flat bordered cards, and an ambient aurora-and-beams background. Project cards carry live screenshots of deployed sites and animated SVG cover scenes for everything else. Built as a single-page scroll application with strict TypeScript, sections loaded near the viewport, data validation, and a persisted Full/Reduced motion preference.
 
 Section links support reloads and browser history. Navigation loads the content before scrolling to its destination, while motion changes preserve form drafts, project filters, and keyboard focus.
+
+### 🆕 在线简历预览 & AI 分身（借鉴 [vienne-ai-site](https://github.com/vienne53/vienne-ai-site)）
+
+- **在线简历区**：`Resume` 标签页渲染一页纸精简简历（亮点 / 经历 / 代表项目 / 技能栈 / 教育），内容来自 `data/resume.zh.json` + `data/resume.en.json`。在 `data/resume.*.json` 的 `resume.pdf_url` / `resume.online_url` 填上你的简历链接后，会出现「打开完整简历 / 查看在线简历」按钮。
+- **AI 分身（在线客服）**：右下角悬浮聊天窗，接你自己的模型网关（OpenAI 兼容 / 火山方舟 / 只收 `{message}` 的自定义网关均可）。密钥只放在后端：本地用 `pnpm chat-proxy`，公开部署用 `api/chat.js`（Vercel 模板）+ 环境变量。详见 [`docs/AI助手接入说明.md`](docs/AI助手接入说明.md)。未配置后端时窗口会给出明确的配置指引，不会静默失败。
 
 ---
 

@@ -1,0 +1,10 @@
+（复制本文件为 owner-facts.txt，按你网页上的信息改；与 data/personal.*.json 保持一致即可）
+
+本人：Kael Odin（kael odin），独立全栈开发者，坐标中国·远程
+GitHub：https://github.com/kael-odin
+博客：https://kael-odin-blog.vercel.app/
+邮箱：kael-odin@outlook.com
+代表作：awesome-academic-research-skills（学术 Skill 每日榜，85 Star）、prompts-chat-zh（2205 条提示词中英镜像）、openworker 中文汉化（27 Star）、Amadeus-Agent（单文件 AI 工作台）
+技术栈：TypeScript / Python / Go / Vue / React / Astro / LLM 应用 / 自动化
+
+说明：若访客问「怎么联系你」「面试官怎么找到你」「邮箱多少」，只回答以上事实，不要编造其它号码或账号。

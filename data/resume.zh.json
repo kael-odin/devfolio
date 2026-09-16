@@ -1,0 +1,89 @@
+{
+   "profile": {
+      "name": "Kael Odin",
+      "title": "全栈开发者 · AI 应用与开源工具",
+      "location": "中国 · 远程",
+      "email": "kael-odin@outlook.com",
+      "github": "https://github.com/kael-odin",
+      "blog": "https://kael-odin-blog.vercel.app/"
+   },
+   "resume": {
+      "pdf_url": "",
+      "online_url": "https://www.kdocs.cn/l/your-resume-id",
+      "note": "还没有配置在线简历文档。把 data/resume.zh.json 里 resume.online_url 换成你的金山文档（kdocs.cn）/ WPS 分享链接，这里会直接内嵌预览。"
+   },
+   "summary": "独立全栈开发者，专注 AI 应用、开源工具与自动化系统。把想法变成仓库：从学术 Skill 榜单、提示词中文镜像，到 BYOK 工具与本地优先的 AI 工作台。",
+   "highlights": [
+      "awesome-academic-research-skills：面向中文用户的学术 Skill 每日榜，85 Star，每日自动更新",
+      "prompts-chat-zh：2205 条提示词中英对照镜像，Astro 静态站 + 增量翻译流水线",
+      "openworker 中文汉化版：追平上游、全量汉化、本地优先，27 Star",
+      "Amadeus-Agent：单文件 AI 智能体工作台，零构建双击即用",
+      "17 个公开仓库，长期维护自动化更新项目"
+   ],
+   "experience": [
+      {
+         "role": "独立全栈开发者",
+         "org": "独立开发",
+         "date": "2026-03 — 至今",
+         "bullets": [
+            "做 AI 应用与开源工具：学术榜单、提示词镜像、BYOK 工具、本地优先智能体工作台",
+            "多个项目靠 GitHub Actions 每日自动更新，零服务器成本"
+         ]
+      },
+      {
+         "role": "个人博客与数字花园主理人",
+         "org": "kael-odin-blog",
+         "date": "2026-03 — 至今",
+         "bullets": [
+            "Next.js 技术博客：项目复盘、工具评测、随笔，支持网页可视化编辑"
+         ]
+      }
+   ],
+   "projects": [
+      {
+         "name": "awesome-academic-research-skills",
+         "desc": "学术 Skill 每日榜 · 85 Star",
+         "url": "https://github.com/kael-odin/awesome-academic-research-skills"
+      },
+      {
+         "name": "prompts-chat-zh",
+         "desc": "2205 条提示词中英镜像",
+         "url": "https://github.com/kael-odin/prompts-chat-zh"
+      },
+      {
+         "name": "openworker（中文汉化）",
+         "desc": "追平上游 · 全量汉化 · 27 Star",
+         "url": "https://github.com/kael-odin/openworker"
+      },
+      {
+         "name": "Amadeus-Agent",
+         "desc": "单文件 AI 智能体工作台",
+         "url": "https://github.com/kael-odin/Amadeus-Agent"
+      }
+   ],
+   "skills": [
+      "TypeScript",
+      "JavaScript",
+      "Python",
+      "Go",
+      "Vue",
+      "React",
+      "Next.js",
+      "Astro",
+      "Node.js",
+      "FastAPI",
+      "LLM 应用",
+      "Prompt Engineering",
+      "Agent Skills",
+      "GitHub Actions",
+      "Docker",
+      "CI/CD"
+   ],
+   "education": [
+      {
+         "school": "开源社区与一线实践",
+         "major": "全栈与 AI 应用（自学 · 持续）",
+         "date": "2021 — 至今"
+      }
+   ]
+}
