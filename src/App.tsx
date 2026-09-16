@@ -53,7 +53,6 @@ const Projects = lazy(() => import("@pages/projects/Projects"));
 const Achievement = lazy(() => import("@pages/achievement/Achievement"));
 const Contact = lazy(() => import("@pages/contact/Contact"));
 const Stats = lazy(() => import("@pages/stats/Stats"));
-const Resume = lazy(() => import("@pages/resume/Resume"));
 
 const SECTION_COMPONENTS = {
    about: About,
@@ -64,7 +63,6 @@ const SECTION_COMPONENTS = {
    achievements: Achievement,
    services: Services,
    stats: Stats,
-   resume: Resume,
    contact: Contact,
 };
 

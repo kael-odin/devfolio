@@ -1,6 +1,7 @@
 import { useMemo, useCallback, useState } from "react";
 import { motion } from "motion/react";
 import { getName, getSocialProfiles } from "@data/personal";
+import { getResume } from "@data/resume";
 import { staggerItem } from "@utils/animations";
 import { EASING } from "@/constants/theme";
 import {
@@ -17,7 +18,6 @@ import FooterSocial from "./FooterSocial";
 import FooterStatusBar from "./FooterStatusBar";
 
 const CURRENT_YEAR = new Date().getFullYear();
-const RESUME_URL = "https://example.com/your-resume.pdf";
 const LINK_COLOR = "rgba(244, 246, 247, 0.9)";
 
 // The footer lists a subset of the section registry in registry order. Home
@@ -73,6 +73,10 @@ const FooterContent = () => {
    const { reducedMotion } = useMotionPreference();
    const { language } = useLanguage();
    const name = useMemo(() => getName(language), [language]);
+   const resumePdfUrl = useMemo(
+      () => getResume(language).resume.pdf_url.trim(),
+      [language],
+   );
    const initials = useMemo(
       () =>
          name
@@ -162,14 +166,24 @@ const FooterContent = () => {
                      {link.label}
                   </button>
                ))}
-               <a
-                  href={RESUME_URL}
-                  download
+               <button
+                  type="button"
+                  onClick={() => navigateToSection("hero")}
                   className="footer-link"
                   style={columnLink}
                >
-                  {t(language, "footer.downloadCv")}
-               </a>
+                  {t(language, "footer.viewCv")}
+               </button>
+               {resumePdfUrl && (
+                  <a
+                     href={resumePdfUrl}
+                     download
+                     className="footer-link"
+                     style={columnLink}
+                  >
+                     {t(language, "footer.downloadCv")}
+                  </a>
+               )}
             </nav>
 
             {/* SOCIAL column */}

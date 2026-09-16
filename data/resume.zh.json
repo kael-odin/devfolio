@@ -9,7 +9,7 @@
    },
    "resume": {
       "pdf_url": "",
-      "online_url": "https://www.kdocs.cn/l/your-resume-id",
+      "online_url": "https://www.kdocs.cn/l/cdBeR0qXiLGY",
       "note": "还没有配置在线简历文档。把 data/resume.zh.json 里 resume.online_url 换成你的金山文档（kdocs.cn）/ WPS 分享链接，这里会直接内嵌预览。"
    },
    "summary": "独立全栈开发者，专注 AI 应用、开源工具与自动化系统。把想法变成仓库：从学术 Skill 榜单、提示词中文镜像，到 BYOK 工具与本地优先的 AI 工作台。",

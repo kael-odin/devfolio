@@ -35,6 +35,7 @@ const en: Dict = {
    "footer.site": "Site",
    "footer.social": "Social",
    "footer.home": "Home",
+   "footer.viewCv": "View Resume",
    "footer.downloadCv": "Download CV",
    "footer.homeLabel": "Home",
    "footer.siteLinks": "Footer site links",
@@ -63,6 +64,9 @@ const en: Dict = {
    // CV viewer
    "cv.title": "Curriculum Vitae",
    "cv.close": "Close CV viewer",
+   "cv.embedTip":
+      "If your browser restricts embedded documents, use the buttons to open or download it.",
+   "cv.openBtn": "Open Full Document ↗",
    "cv.failed": "The inline viewer could not load the CV.",
    "cv.downloadInstead": "Download CV instead",
    "cv.loading": "Loading...",
@@ -152,6 +156,7 @@ const zh: Dict = {
    "footer.site": "站点",
    "footer.social": "社交",
    "footer.home": "首页",
+   "footer.viewCv": "查看简历",
    "footer.downloadCv": "下载简历",
    "footer.homeLabel": "首页",
    "footer.siteLinks": "页脚站点链接",
@@ -179,6 +184,9 @@ const zh: Dict = {
    // CV viewer
    "cv.title": "个人简历",
    "cv.close": "关闭简历查看器",
+   "cv.embedTip":
+      "若当前浏览器限制了文档内嵌，请用下方按钮在新页面打开或下载。",
+   "cv.openBtn": "打开完整文档 ↗",
    "cv.failed": "内嵌查看器没能加载简历。",
    "cv.downloadInstead": "改为下载简历",
    "cv.loading": "加载中…",

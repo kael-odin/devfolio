@@ -65,7 +65,7 @@ function detectMode(cfg) {
 
 function extractReply(data) {
    if (data == null) return null;
-   return (
+   const reply =
       data.reply ??
       data.text ??
       data.content ??
@@ -76,8 +76,16 @@ function extractReply(data) {
       data.choices?.[0]?.message?.content ??
       data.choices?.[0]?.delta?.content ??
       data.output?.text ??
-      (typeof data === "string" ? data : null)
-   );
+      (typeof data === "string" ? data : null);
+   // Reasoning models (GLM-5.x etc.) may return an empty content with the
+   // chain-of-thought in reasoning_content when max_tokens runs out mid-
+   // thinking. Surface the reasoning instead of an empty reply.
+   if ((reply == null || reply === "") && data.choices?.[0]?.message) {
+      const reasoning = data.choices[0].message.reasoning_content;
+      if (typeof reasoning === "string" && reasoning.trim())
+         return reasoning.trim();
+   }
+   return reply;
 }
 
 function extractResponsesReply(data) {

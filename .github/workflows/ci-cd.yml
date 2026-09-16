@@ -68,6 +68,11 @@ jobs:
            run: pnpm fetch:resume
 
          - name: Build with Vite
+           # VITE_CHAT_API_URL (repo variable, optional): your deployed AI
+           # chat endpoint, e.g. https://your-app.vercel.app/api/chat.
+           # Unset = the widget shows its local-proxy/setup guidance.
+           env:
+              VITE_CHAT_API_URL: ${{ vars.VITE_CHAT_API_URL }}
            run: pnpm build
 
          - name: Setup Pages

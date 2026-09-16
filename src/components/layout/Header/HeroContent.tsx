@@ -2,6 +2,7 @@ import { lazy, Suspense, useState, useMemo } from "react";
 import { motion } from "motion/react";
 import { ArrowDownRight, Download, FileText } from "lucide-react";
 import { getHeadline, getIntro, getName, getRoleLabel } from "@data/personal";
+import { getResume } from "@data/resume";
 import { CYAN, GREEN, MONO_FONT, TEXT_SECONDARY } from "@/constants/theme";
 import ErrorBoundary from "@components/common/ErrorBoundary";
 import CvViewerModal from "@components/ui/CvViewerModal/CvViewerModal";
@@ -23,7 +24,6 @@ import {
 } from "./heroMotion";
 
 const HeroLatest = lazy(() => import("./HeroLatest"));
-const RESUME_URL = "https://example.com/your-resume.pdf";
 const NBSP = "\u00A0";
 const CTA_TAP = { scale: 0.97 };
 
@@ -59,6 +59,10 @@ const HeroLatestPlaceholder = () => {
 const HeroContent = () => {
    const [cvOpen, setCvOpen] = useState(false);
    const { language } = useLanguage();
+   const resumePdfUrl = useMemo(
+      () => getResume(language).resume.pdf_url.trim(),
+      [language],
+   );
 
    const name = useMemo(() => getName(language), [language]);
    const initials = useMemo(
@@ -197,22 +201,24 @@ const HeroContent = () => {
                <FileText size={15} aria-hidden="true" />
                {t(language, "hero.viewCv")}
             </motion.button>
-            <motion.a
-               href={RESUME_URL}
-               download
-               className="inline-flex min-h-11 items-center justify-center gap-2 whitespace-nowrap rounded-lg px-2 text-sm font-medium text-text-secondary transition-colors hover:text-text-primary"
-               whileTap={CTA_TAP}
-               transformTemplate={passThroughTransform}
-            >
-               <Download size={15} aria-hidden="true" />
-               {t(language, "hero.downloadCv")}
-            </motion.a>
+            {resumePdfUrl && (
+               <motion.a
+                  href={resumePdfUrl}
+                  download
+                  className="inline-flex min-h-11 items-center justify-center gap-2 whitespace-nowrap rounded-lg px-2 text-sm font-medium text-text-secondary transition-colors hover:text-text-primary"
+                  whileTap={CTA_TAP}
+                  transformTemplate={passThroughTransform}
+               >
+                  <Download size={15} aria-hidden="true" />
+                  {t(language, "hero.downloadCv")}
+               </motion.a>
+            )}
          </motion.div>
 
          {/* Status widget + Social icons */}
          <HeroSocial />
 
-         {/* In-site CV viewer (lazy: pdf.js loads only when opened) */}
+         {/* In-site CV viewer: WPS Docs (kdocs.cn) iframe embed of the resume */}
          <CvViewerModal isOpen={cvOpen} onClose={() => setCvOpen(false)} />
       </motion.div>
    );

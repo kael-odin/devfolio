@@ -8,8 +8,8 @@ import ModalShell from "@components/ui/ModalShell";
 import ModalHeaderShell from "@components/ui/ModalHeaderShell";
 import { CYAN, TEXT_PRIMARY } from "@/constants/theme";
 
-// Kept lazy so the viewer code stays out of the initial bundle; the page
-// images themselves only load when the modal opens.
+// Kept lazy so the viewer code stays out of the initial bundle; the
+// document iframe only loads when the modal opens.
 const CvDocument = lazy(() => import("./CvDocument"));
 
 interface CvViewerModalProps {
@@ -46,6 +46,7 @@ const CvViewerModal = ({ isOpen, onClose }: CvViewerModalProps) => {
          dialogRef={dialogRef}
          isMobile={isMobile}
          titleId="cv-viewer-title"
+         wide
       >
          <ModalHeaderShell
             isMobile={isMobile}
@@ -83,7 +84,7 @@ const CvViewerModal = ({ isOpen, onClose }: CvViewerModalProps) => {
                   />
                }
             >
-               <CvDocument isMobile={isMobile} />
+               <CvDocument />
             </Suspense>
          )}
       </ModalShell>

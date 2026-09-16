@@ -11,6 +11,8 @@ interface ModalShellProps {
    isMobile: boolean;
    /** ID of the h1/h2/h3 that names this dialog for screen readers. */
    titleId: string;
+   /** Wide layout (960px) for document viewers; default 720px. */
+   wide?: boolean;
    children: ReactNode;
 }
 
@@ -27,6 +29,7 @@ const ModalShell = ({
    dialogRef,
    isMobile,
    titleId,
+   wide = false,
    children,
 }: ModalShellProps) =>
    createPortal(
@@ -79,8 +82,8 @@ const ModalShell = ({
                   style={{
                      position: "relative",
                      width: "100%",
-                     maxWidth: isMobile ? "100%" : 720,
-                     maxHeight: isMobile ? "calc(100dvh - 28px)" : "85dvh",
+                     maxWidth: isMobile ? "100%" : wide ? 960 : 720,
+                     maxHeight: isMobile ? "calc(100dvh - 28px)" : "88dvh",
                      overflowY: "auto",
                      // Sheet floats with side gaps now, so square bottom
                      // corners would read as a rendering bug -- round all four.

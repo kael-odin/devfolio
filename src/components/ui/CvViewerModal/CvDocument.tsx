@@ -1,233 +1,155 @@
-import { useEffect, useState } from "react";
-import { ExternalLink, Download, ZoomIn, ZoomOut } from "lucide-react";
-import { MONO_FONT, TEXT_MUTED, TEXT_SECONDARY } from "@/constants/theme";
+import { useMemo } from "react";
+import { Download, ExternalLink, FileText, Info } from "lucide-react";
+import { getResume } from "@data/resume";
 import useLanguage from "@hooks/useLanguage";
 import { t } from "@/i18n/ui";
+import { CYAN, TEXT_MUTED, TEXT_SECONDARY } from "@/constants/theme";
 
-// Pages are pre-rendered to high-res WebP at deploy time by
-// scripts/prepare-resume.js -- no client-side PDF machinery, no blur.
-const BASE = import.meta.env.BASE_URL;
-const MANIFEST_URL = `${BASE}resume-pages/manifest.json`;
-const RESUME_PDF = `${BASE}resume.pdf`;
-const RESUME_DOWNLOAD_URL = "https://example.com/your-resume.pdf";
-
-const ZOOM_STEPS = [0.75, 1, 1.25, 1.5];
-
-interface Manifest {
-   pages: number;
-   width: number;
-   height: number;
-}
-
-interface CvDocumentProps {
-   isMobile: boolean;
-}
-
-const CvDocument = ({ isMobile }: CvDocumentProps) => {
+/**
+ * CV modal body: an in-page iframe embed of the owner's WPS Docs
+ * (kdocs.cn) / any embeddable online document — the vienne-ai-site
+ * pattern. Falls back to a setup hint when no document URL is
+ * configured in data/resume.*.json.
+ */
+const CvDocument = () => {
    const { language } = useLanguage();
-   const [manifest, setManifest] = useState<Manifest | null>(null);
-   const [zoomIdx, setZoomIdx] = useState(1);
-   const [failed, setFailed] = useState(false);
+   const resume = useMemo(() => getResume(language), [language]);
 
-   useEffect(() => {
-      const controller = new AbortController();
-      fetch(MANIFEST_URL, { signal: controller.signal })
-         .then((r) =>
-            r.ok ? r.json() : Promise.reject(new Error(`${r.status}`)),
-         )
-         .then((m: Manifest) => setManifest(m))
-         .catch((error: Error) => {
-            if (error.name !== "AbortError") setFailed(true);
-         });
-      return () => controller.abort();
-   }, []);
-
-   const zoom = ZOOM_STEPS[zoomIdx];
-   const aspect = manifest ? manifest.width / manifest.height : 0.707;
-
-   if (failed) {
-      return (
-         <div
-            style={{
-               padding: "48px 24px",
-               textAlign: "center",
-               color: TEXT_SECONDARY,
-               fontSize: 14,
-               display: "flex",
-               flexDirection: "column",
-               alignItems: "center",
-               gap: 16,
-            }}
-         >
-            <p>{t(language, "cv.failed")}</p>
-            <a
-               href={RESUME_DOWNLOAD_URL}
-               className="btn-primary"
-               style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: 8,
-                  fontSize: 13,
-                  textDecoration: "none",
-               }}
-            >
-               <Download size={15} />
-               {t(language, "cv.downloadInstead")}
-            </a>
-         </div>
-      );
-   }
-
-   let pageCountLabel = t(language, "cv.loading");
-   if (manifest) {
-      pageCountLabel =
-         manifest.pages === 1
-            ? t(language, "cv.onePage")
-            : t(language, "cv.nPages", { n: manifest.pages });
-   }
+   const embedUrl = resume.resume.online_url || resume.resume.pdf_url || "";
+   const hasEmbed = embedUrl.length > 0;
 
    return (
-      <div style={{ display: "flex", flexDirection: "column", minHeight: 0 }}>
-         {/* Toolbar */}
-         <div
-            style={{
-               display: "flex",
-               alignItems: "center",
-               justifyContent: "space-between",
-               gap: 8,
-               padding: isMobile ? "10px 14px" : "10px 20px",
-               borderBottom: "1px solid rgba(255,255,255,0.06)",
-            }}
-         >
-            <span
+      <div
+         style={{
+            display: "flex",
+            flexDirection: "column",
+            minHeight: 0,
+            flex: 1,
+         }}
+      >
+         {hasEmbed ? (
+            <>
+               <iframe
+                  src={embedUrl}
+                  title={t(language, "cv.title")}
+                  className="resume-embed"
+                  style={{
+                     display: "block",
+                     width: "100%",
+                     height: "72vh",
+                     minHeight: 480,
+                     border: "none",
+                     background: "#fff",
+                  }}
+               />
+               <div
+                  style={{
+                     display: "flex",
+                     flexWrap: "wrap",
+                     alignItems: "center",
+                     justifyContent: "space-between",
+                     gap: 8,
+                     padding: "10px 16px",
+                     borderTop: "1px solid rgba(255,255,255,0.06)",
+                  }}
+               >
+                  <span
+                     style={{
+                        fontSize: 11.5,
+                        color: TEXT_MUTED,
+                     }}
+                  >
+                     {t(language, "cv.embedTip")}
+                  </span>
+                  <div style={{ display: "flex", gap: 8 }}>
+                     {resume.resume.pdf_url.trim() && (
+                        <a
+                           href={resume.resume.pdf_url}
+                           download
+                           className="btn-outline"
+                           style={{
+                              display: "inline-flex",
+                              alignItems: "center",
+                              gap: 6,
+                              fontSize: 12,
+                              textDecoration: "none",
+                           }}
+                        >
+                           <Download size={13} />
+                           {t(language, "cv.download")}
+                        </a>
+                     )}
+                     <a
+                        href={embedUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="btn-primary"
+                        style={{
+                           display: "inline-flex",
+                           alignItems: "center",
+                           gap: 6,
+                           fontSize: 12,
+                           textDecoration: "none",
+                        }}
+                     >
+                        <ExternalLink size={13} />
+                        {t(language, "cv.openBtn")}
+                     </a>
+                  </div>
+               </div>
+            </>
+         ) : (
+            <div
                style={{
-                  fontFamily: MONO_FONT,
-                  fontSize: 11,
-                  color: TEXT_MUTED,
+                  minHeight: 320,
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: 14,
+                  padding: 32,
+                  textAlign: "center",
                }}
             >
-               {pageCountLabel}
-            </span>
-            <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-               <button
-                  onClick={() => setZoomIdx((i) => Math.max(0, i - 1))}
-                  disabled={zoomIdx === 0}
-                  aria-label={t(language, "cv.zoomOut")}
-                  className="btn-outline"
+               <FileText size={32} style={{ color: CYAN }} />
+               <p
                   style={{
-                     padding: "6px 10px",
-                     opacity: zoomIdx === 0 ? 0.4 : 1,
-                  }}
-               >
-                  <ZoomOut size={14} />
-               </button>
-               <span
-                  style={{
-                     fontFamily: MONO_FONT,
-                     fontSize: 11,
+                     margin: 0,
+                     maxWidth: 440,
+                     fontSize: 13.5,
+                     lineHeight: 1.8,
                      color: TEXT_SECONDARY,
-                     minWidth: 38,
-                     textAlign: "center",
                   }}
                >
-                  {Math.round(zoom * 100)}%
-               </span>
-               <button
-                  onClick={() =>
-                     setZoomIdx((i) => Math.min(ZOOM_STEPS.length - 1, i + 1))
-                  }
-                  disabled={zoomIdx === ZOOM_STEPS.length - 1}
-                  aria-label={t(language, "cv.zoomIn")}
-                  className="btn-outline"
-                  style={{
-                     padding: "6px 10px",
-                     opacity: zoomIdx === ZOOM_STEPS.length - 1 ? 0.4 : 1,
-                  }}
-               >
-                  <ZoomIn size={14} />
-               </button>
+                  {resume.resume.note}
+               </p>
                <a
-                  href={RESUME_PDF}
+                  href="https://www.kdocs.cn/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label={t(language, "cv.openTab")}
-                  className="btn-outline"
                   style={{
-                     display: "inline-flex",
-                     padding: "6px 10px",
+                     fontSize: 12,
+                     fontFamily: "var(--font-mono)",
+                     color: TEXT_MUTED,
                      textDecoration: "none",
                   }}
                >
-                  <ExternalLink size={14} />
+                  WPS Docs / kdocs.cn
                </a>
-               <a
-                  href={RESUME_DOWNLOAD_URL}
-                  aria-label={t(language, "cv.download")}
-                  className="btn-primary"
+               <span
                   style={{
                      display: "inline-flex",
                      alignItems: "center",
                      gap: 6,
-                     padding: "6px 12px",
-                     fontSize: 12,
-                     textDecoration: "none",
+                     fontSize: 11,
+                     color: TEXT_MUTED,
                   }}
                >
-                  <Download size={14} />
-                  {!isMobile && t(language, "cv.downloadSuffix")}
-               </a>
+                  <Info size={12} aria-hidden="true" />
+                  data/resume.*.json → resume.online_url
+               </span>
             </div>
-         </div>
-
-         {/* Pages */}
-         <div
-            style={{
-               overflow: "auto",
-               padding: isMobile ? 10 : 16,
-               display: "flex",
-               flexDirection: "column",
-               alignItems: zoom > 1 ? "flex-start" : "center",
-               gap: 12,
-               background: "#0a0f11",
-            }}
-         >
-            {manifest
-               ? Array.from({ length: manifest.pages }, (_, i) => (
-                    <img
-                       key={`page-${i + 1}`}
-                       src={`${BASE}resume-pages/page-${i + 1}.webp`}
-                       alt={t(language, "cv.pageAlt", {
-                          i: i + 1,
-                          n: manifest.pages,
-                       })}
-                       width={manifest.width}
-                       height={manifest.height}
-                       loading={i === 0 ? "eager" : "lazy"}
-                       decoding="async"
-                       onError={() => setFailed(true)}
-                       style={{
-                          width: `${zoom * 100}%`,
-                          maxWidth: zoom === 1 ? 860 : undefined,
-                          height: "auto",
-                          borderRadius: 6,
-                          boxShadow: "0 8px 32px rgba(0,0,0,0.5)",
-                          flexShrink: 0,
-                       }}
-                    />
-                 ))
-               : Array.from({ length: 2 }, (_, i) => (
-                    <div
-                       key={`skeleton-${i}`}
-                       className="skeleton"
-                       style={{
-                          width: "100%",
-                          maxWidth: 860,
-                          aspectRatio: String(aspect),
-                          borderRadius: 6,
-                       }}
-                    />
-                 ))}
-         </div>
+         )}
       </div>
    );
 };

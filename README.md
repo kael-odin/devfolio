@@ -38,8 +38,9 @@ Section links support reloads and browser history. Navigation loads the content 
 
 ### 🆕 在线简历预览 & AI 分身（借鉴 [vienne-ai-site](https://github.com/vienne53/vienne-ai-site)）
 
-- **在线简历区**：`Resume` 标签页渲染一页纸精简简历（亮点 / 经历 / 代表项目 / 技能栈 / 教育），内容来自 `data/resume.zh.json` + `data/resume.en.json`。在 `data/resume.*.json` 的 `resume.pdf_url` / `resume.online_url` 填上你的简历链接后，会出现「打开完整简历 / 查看在线简历」按钮。
+- **WPS 文档在线预览**：首屏「查看简历」弹窗内嵌金山文档（kdocs.cn）/ WPS 分享链接，完整 WPS 查看器（缩略图 / 缩放 / 工具栏）直接在站内可用。链接在 `data/resume.*.json` 的 `resume.online_url` 配置；`resume.pdf_url` 填了才会显示「下载简历」按钮。
 - **AI 分身（在线客服）**：右下角悬浮聊天窗，接你自己的模型网关（OpenAI 兼容 / 火山方舟 / 只收 `{message}` 的自定义网关均可）。密钥只放在后端：本地用 `pnpm chat-proxy`，公开部署用 `api/chat.js`（Vercel 模板）+ 环境变量。详见 [`docs/AI助手接入说明.md`](docs/AI助手接入说明.md)。未配置后端时窗口会给出明确的配置指引，不会静默失败。
+- **生产启用 AI 分身**：站点在 GitHub Pages（纯静态）托管，聊天后端需单独部署——把本仓库导入 Vercel（只部署 `api/`，忽略前端），然后把部署地址（如 `https://your-app.vercel.app/api/chat`）配置为仓库变量 `VITE_CHAT_API_URL`，CI 构建时会自动注入。
 
 ---
 
